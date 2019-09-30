@@ -54,7 +54,7 @@
             //Creo una imagen conun objeto Image de Javascript
             var img = new Image();
             //indico la URL de la imagen
-            img.src = 'img/img1.png';
+            img.src = 'img1.png';
             //defino el evento onload del objeto imagen
             img.onload = function(){
               //incluyo la imagen en el canvas
