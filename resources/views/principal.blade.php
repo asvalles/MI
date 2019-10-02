@@ -8,6 +8,8 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <script type="text/javascript" src="jquery.js"></script>
+  <script type="text/javascript" src="jquery/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="three/three.js"></script>
 
   <title>GameJap</title>
 
@@ -30,11 +32,7 @@
   <!-- Custom CSS -->
   <link href="css/stylish-portfolio.min.css" rel="stylesheet">
 
-  <script type="text/javascript" src="js/libs/jquery/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript" src="js/libs/three/three.js"></script>
-
-
-  <script type="text/javascript">
+  <!--<script type="text/javascript">
       function cargaContextoCanvas(micanvas){
         var elemento = document.getElementById(micanvas);
         if(elemento && elemento.getContext){
@@ -62,7 +60,7 @@
             }
         }
       }
-  </script>
+  </script>-->
 
   <script type="text/javascript">
       $(document).ready(function() {
@@ -121,6 +119,166 @@
           $("#registro").hide();
         });
     });
+  </script>
+
+  <script type="text/javascript">
+
+  //se divide en 3 componentes basicos
+
+  //COLECCION DE OBJETOS THREEJS
+  var scene;  //lugar donde vamos a guardar en el render, que quieres que aparezca en escena
+  //DIBUJA EN ESCENA
+  var renderer; //dibujar lo que esta en escena
+
+  //PUNTO DE VISTA
+  var camera;
+
+  var aux = false;
+  var aux2 = false;
+
+
+  $(document).ready(function() {
+
+    var tamanoCanvas = {
+      width: 1550,
+      height: 800
+
+    }
+
+    //Inicializamos el renderer
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize(
+      tamanoCanvas.width, 
+      tamanoCanvas.height
+    );
+    renderer.setClearColor( new THREE.Color(0.5, 0, 0.5) );  //tmb se puede colores exadecimales ("")
+
+    //Incializamos la camara
+    camera = new THREE.PerspectiveCamera(
+        75, //apertura de camara
+        tamanoCanvas.width / tamanoCanvas.height,
+        0.1, //que tan cercas para que se dibuje
+        100  //que tan lejos para que se dibuje por el render
+      );
+
+    //Inicializamos la escena
+    scene = new THREE.Scene();
+
+    //Agregamos el canvas
+    $('#can').append( renderer.domElement );
+
+    ///////////////////////////////////////////////////////// OBJETOS ////////////////////////////////
+
+    /*LA CLASE BASE DE LOS OBJETOS DE THREEJS
+      -Object3D
+        -position.x
+        -scale.x
+        -rotation.x
+
+      arreglo por cada objeto osease geometria
+    */
+
+    // 1.-Info del objeto (vertices, indices, coordenadas, etc..)
+    var geometry= new THREE.BoxGeometry(1, 1, 1); //ancho,alto y profundidad
+
+    // 2.- Material del objeto, define como se vera
+    var material = new THREE.MeshLambertMaterial({   //Basico
+      color: new THREE.Color(0.7, 0.0, 0.0)
+    });
+
+    // 3.- Mesh
+    var cube = new THREE.Mesh( geometry, material);
+
+    camera.position.z = 2;
+    //camera.position.set(0,0,2); con este afectamos los 3 ejes al mismo tiempo
+
+    scene.add( cube );
+
+    var material2 = new THREE.MeshPhongMaterial({ //refleja totalmente la luz, contrario de lambert
+      color: new THREE.Color(0.5, 0.5, 0.5),
+      specular: new THREE.Color(1, 1, 1),
+      shininess: 500
+    });
+
+    var cube2 = new THREE.Mesh( geometry, material2);
+    cube2.position.x = 1
+    cube.position.x = -1
+
+    scene.add( cube2 );
+
+    //Iluminacion
+
+    var ambient = new THREE.AmbientLight(
+        new THREE.Color(1, 1, 1),  //parametro de luz
+        1.0  //intencidad
+      );
+
+    var directional = new THREE.DirectionalLight(  //directonal
+        new THREE.Color(1, 1, 0),
+        0.4
+      );
+
+    directional.position.set(0, 0, 1);
+
+    scene.add( ambient );
+    scene.add( directional );
+
+    cube.name = "cubo1";
+    cube2.name = "cubo2";
+
+
+    render();
+  });
+
+  function render() { //SE ESTA LLAMANDO SIEMPRE, aqui logica de colisiones, animaciones, controles etc
+
+    var cubo1 = scene.getObjectByName('cubo1');
+    var cubo2 = scene.getObjectByName('cubo2');
+
+    //cubo1.rotation.y += THREE.Math.degToRad(1);
+    //cubo2.rotation.y -= THREE.Math.degToRad(1);
+
+    if(cubo1.position.x >= 1.5 && !aux)
+    {
+      aux = true;
+    }
+    if(cubo1.position.x <= -1.5 && aux)
+    {
+      aux = false;
+    }
+
+    if(!aux)
+    {
+      cubo1.position.x += .05
+    }
+    else
+    {
+      cubo1.position.x -= .05
+    }
+
+
+    if(cubo2.position.x <= -1.5 && !aux2)
+    {
+      aux2 = true;
+    }
+    if(cubo2.position.x >= 1.5 && aux2)
+    {
+      aux2 = false;
+    }
+
+    if(!aux2)
+    {
+      cubo2.position.x -= .05
+    }
+    else
+    {
+      cubo2.position.x += .05
+    }
+
+    renderer.render( scene, camera);
+
+    requestAnimationFrame(render); //recive el parametro y hace ciclo
+  }
   </script>
 
 </head>
@@ -182,14 +340,14 @@
           <br><br><h1>GameJap</h1>
                         <center>
                           <div id="can">
-                            <canvas id="micanvas" width="1550" height="800">
+                            <!--<canvas id="micanvas" width="1550" height="800">
                                 Tu navegador no soporta canvas.
-                            </canvas>
+                            </canvas>-->
                           </div>
                     
                           <div id="registro" style="display: none">
                               <br><br><br>
-                            <h1 class="h3 mb-3 font-weight-normal">Registro de Usuario</h1><br><br>
+                            <h1>Registro de Usuario</h1><br><br>
                                 <input type="text"  class="form-control col-md-5" placeholder="Usuario" data-toggle = "tooltip"  required="" ><br><br>
                                 <input type="password"  class="form-control col-md-5" placeholder="Password" data-toggle = "tooltip"  required=""><br><br>
                                 <button type="submit"class="btn btn-primary btn-lg">Registrarse</button>
@@ -197,7 +355,7 @@
 
                           <div id="login" style="display: none">
                               <br><br><br>
-                            <h1 class="h3 mb-3 font-weight-normal">Iniciar Secion</h1><br><br>
+                            <h1>Iniciar Secion</h1><br><br>
                             <label for="inputEmail" class="sr-only">Usuario</label>
                             <input type="email" id="inputEmail" class="form-control col-md-5" placeholder="Usuario" required="" autofocus=""><br><br>
                             <label for="inputPassword" class="sr-only">Contraseña</label>
