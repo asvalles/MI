@@ -3,6 +3,7 @@
 
 <head>
 
+  
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -10,59 +11,59 @@
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="jquery/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="three/three.js"></script>
-
+  
   <title>GameJap</title>
-
+  
   <!-- Font Awesome Icons -->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
+  
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
-
+  
   <!-- Plugin CSS -->
   <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
-
+  
   <!-- Theme CSS - Includes Bootstrap -->
   <link href="css/creative.min.css" rel="stylesheet">
-
+  
   <!-- Bootstrap Core CSS -->
   <link href="vendor/bootstrap.min.css" rel="stylesheet">
-
+  
   <!-- Custom CSS -->
   <link href="css/stylish-portfolio.min.css" rel="stylesheet">
-
+  
   <!--<script type="text/javascript">
-      function cargaContextoCanvas(micanvas){
-        var elemento = document.getElementById(micanvas);
-        if(elemento && elemento.getContext){
-            var contexto = elemento.getContext('2d');
-            if(contexto){
-              return contexto;
-            }
-        }
-        return FALSE;
+  function cargaContextoCanvas(micanvas){
+    var elemento = document.getElementById(micanvas);
+    if(elemento && elemento.getContext){
+      var contexto = elemento.getContext('2d');
+      if(contexto){
+        return contexto;
       }
-
-
-      window.onload = function(){
-        //Recibimos el elemento canvas
-        var ctx = cargaContextoCanvas('micanvas');
-        if(ctx){
-            //Creo una imagen conun objeto Image de Javascript
-            var img = new Image();
-            //indico la URL de la imagen
-            img.src = 'img1.png';
-            //defino el evento onload del objeto imagen
-            img.onload = function(){
-              //incluyo la imagen en el canvas
-              ctx.drawImage(img, 10, 10);
-            }
+    }
+    return FALSE;
+  }
+  
+  
+  window.onload = function(){
+    //Recibimos el elemento canvas
+    var ctx = cargaContextoCanvas('micanvas');
+    if(ctx){
+      //Creo una imagen conun objeto Image de Javascript
+      var img = new Image();
+      //indico la URL de la imagen
+      img.src = 'img1.png';
+      //defino el evento onload del objeto imagen
+      img.onload = function(){
+        //incluyo la imagen en el canvas
+        ctx.drawImage(img, 10, 10);
+      }
         }
       }
-  </script>-->
-
-  <script type="text/javascript">
+    </script>-->
+    
+    <script type="text/javascript">
       $(document).ready(function() {
 
         $('#btn_play').click(function() {
@@ -280,11 +281,12 @@
     requestAnimationFrame(render); //recive el parametro y hace ciclo
   }
   </script>
+  
 
 </head>
 
 <body id="page-top">
-
+  
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
     <div class="container">
@@ -295,13 +297,13 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
           <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#contact">Nombre_de_usuario_en_sesion</a>
+            <a class="nav-link js-scroll-trigger" href="#contact">Nombre_de_usuario_en_sesion</a>
           </li>
         </ul>
       </div>
     </div>
   </nav> 
-
+  
   <!-- Masthead -->
   <header class="masthead">
     <div class="container h-100">
@@ -344,7 +346,7 @@
                                 Tu navegador no soporta canvas.
                             </canvas>-->
                           </div>
-                    
+
                           <div id="registro" style="display: none">
                               <br><br><br>
                             <h1>Registro de Usuario</h1><br><br>
@@ -425,10 +427,10 @@
 
                               
                               <button class="btn btn-primary btn-xl js-scroll-trigger" href="#about">
-                                Compartir tu puntuacion en Facebook
+                                Compartir pagina en Facebook
                               </button><br><br>
                               <button class="btn btn-primary btn-xl js-scroll-trigger" href="#about">
-                                Compartir tu puntuacion en Instagram
+                                Compartir pagina en Instagram
                               </button><br><br>
 
                           </div>
