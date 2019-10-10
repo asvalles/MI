@@ -16,6 +16,7 @@ class UserTableSeeder extends Seeder
         $user = new User();
         $user->name = 'kazu';
         $user->password = Hash::make('julius19');
+        $user->puntuacion = 25;
         $user->save();
     }
 }

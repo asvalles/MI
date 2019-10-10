@@ -309,7 +309,7 @@
     <div class="container h-100">
       <div class="row h-100 align-items-center justify-content-center text-center">
         <div class="col-lg-10 align-self-end">
-          <h1 class="text-uppercase text-white font-weight-bold">GameJap</h1>
+          <h1 class="text-uppercase text-white font-weight-bold" style="font-size: 150px">GameJap</h1>
           <hr class="divider my-4">
         </div>
         <div class="col-lg-8 align-self-baseline">
@@ -324,22 +324,22 @@
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
-              <br><br><br><br><br><br><br><br><br>
+              <br><br><br><br><br><br><br><br>
               <!--<a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Instrucciones</a><br><br>-->
-              <button id="btn_regi" class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Registrarse</button><br><br>
-              <button id="btn_login" class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Log in</button><br><br>
-              <button id="btn_play" onclick="ocultar()" class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Play</button><br><br>
-              <button id="btn_pausa" class="btn btn-primary btn-xl js-scroll-trigger">Pausa</button><br><br>
-              <button id="btn_config" class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Configuraciones</button><br><br>
-              <button id="btn_punt" class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Puntuaciones</button><br><br>
-              <button id="btn_logout" class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Log out</button><br><br>
+              <button id="btn_regi" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" src="img/regis.png"/> Registrarse</button><br><br>
+              <button id="btn_login" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" src="img/login.png"/> Log in</button><br><br>
+              <button id="btn_play"  class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" src="img/play.png"/> Play</button><br><br>
+              <button id="btn_pausa" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" src="img/pause2.png"/> Pausa</button><br><br>
+              <button id="btn_config" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" src="img/config.png"/> Configuraciones</button><br><br>
+              <button id="btn_punt" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" src="img/punt.png"/> Puntuaciones</button><br><br>
+              <button id="btn_logout" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" src="img/logout.png"/> Log out</button><br><br>
               <br><br><br><br>
             </ul>       
           </div>
         </nav>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-          <br><br><h1>GameJap</h1>
+          <br><br><h1 style="font-size: 50px">GameJap</h1>
                         <center>
                           <div id="can">
                             <!--<canvas id="micanvas" width="1550" height="800">
@@ -427,10 +427,10 @@
 
                               
                               <button class="btn btn-primary btn-xl js-scroll-trigger" href="#about">
-                                Compartir pagina en Facebook
+                                Compartir tu puntaje en Facebook
                               </button><br><br>
                               <button class="btn btn-primary btn-xl js-scroll-trigger" href="#about">
-                                Compartir pagina en Instagram
+                                Compartir tu puntaje en Instagram
                               </button><br><br>
 
                           </div>
