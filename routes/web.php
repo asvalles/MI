@@ -20,3 +20,5 @@ Route::post('/logear', 'LoginController@logear');
 Route::get('/out', 'LoginController@salir');
 
 Route::post('/registrar', 'RegistroController@store');
+
+Route::get('/', 'PuntuacionController@index');

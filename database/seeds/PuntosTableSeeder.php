@@ -15,8 +15,9 @@ class PuntosTableSeeder extends Seeder
     {
         //
         $punto = new Puntuacion();
-        $punto->puntos = '25';
-        $punto->user_id = '1';
+        $punto->puntos = 25;
+        $punto->activo = 1;
+        $punto->user_id = 1;
         $punto->save();
     }
 }

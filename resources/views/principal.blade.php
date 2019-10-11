@@ -400,55 +400,33 @@
                           <div id="puntuacion" style="display: none">
                               <br><br><br>
                             <h1>PUNTUACIONES</h1>
-                            <div class="container">
-                            
-                                <div class="row">
-                                  
-                                    <div class="col-md-4">
-                                        <div class="card mb-4 shadow-sm">
-                                          <div class="card-body">
-                                            <p class="card-text">Jugador</p>
-                                            <div class="d-flex justify-content-between align-items-center">
-                                              <p class="card-text">Puntacion</p>
+                              <section>
+                                <div class="container">
+                                    <div class="row">
+                                    @foreach($punto as $p)
+                                        <div class="col-md-4">
+                                            <div class="card mb-4 shadow-sm">
+                                              <div class="card-body">
+                                                <input type="hidden" name="idPunto" value= "{{ $p->id }}">
+                                                <p class="card-text">{{ $usu->name }}</p>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                  <p class="card-text">{{ $p->puntos }}</p>
+                                                </div>
+                                              </div>
                                             </div>
                                           </div>
-                                        </div>
-                                      </div>
-
-                                  <div class="col-md-4">
-                                      <div class="card mb-4 shadow-sm">
-                                        <div class="card-body">
-                                          <p class="card-text">Jugador</p>
-                                          <div class="d-flex justify-content-between align-items-center">
-                                            <p class="card-text">Puntacion</p>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-
-                                  <div class="col-md-4">
-                                    <div class="card mb-4 shadow-sm">
-                                      <div class="card-body">
-                                        <p class="card-text">Jugador</p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                          <p class="card-text">Puntacion</p>
-                                        </div>
-                                      </div>
+                                    @endforeach
                                     </div>
                                   </div>
-
-                          
-                                </div>
-                              </div>
-
+                              </section>
+                                
+                                <button class="btn btn-primary btn-xl js-scroll-trigger" href="#about">
+                                  Compartir tu puntaje en Facebook
+                                </button><br><br>
+                                <button class="btn btn-primary btn-xl js-scroll-trigger" href="#about">
+                                  Compartir tu puntaje en Instagram
+                                </button><br><br>
                               
-                              <button class="btn btn-primary btn-xl js-scroll-trigger" href="#about">
-                                Compartir tu puntaje en Facebook
-                              </button><br><br>
-                              <button class="btn btn-primary btn-xl js-scroll-trigger" href="#about">
-                                Compartir tu puntaje en Instagram
-                              </button><br><br>
-
                           </div>
                          
                         </center>
