@@ -360,9 +360,12 @@
                           <div id="registro" style="display: none">
                               <br><br><br>
                             <h1>Registro de Usuario</h1><br><br>
-                                <input type="text"  class="form-control col-md-5" placeholder="Usuario" data-toggle = "tooltip"  required="" ><br><br>
-                                <input type="password"  class="form-control col-md-5" placeholder="Password" data-toggle = "tooltip"  required=""><br><br>
+                            <form enctype="multipart/form-data" action="/registrar" method="POST">
+                            @csrf
+                                <input name="usu" type="text"  class="form-control col-md-5" placeholder="Usuario" data-toggle = "tooltip"  required="" ><br><br>
+                                <input name="contra" type="password"  class="form-control col-md-5" placeholder="Password" data-toggle = "tooltip"  required=""><br><br>
                                 <button type="submit"class="btn btn-primary btn-lg">Registrarse</button>
+                            </form>
                           </div>
 
                           <div id="login" style="display: none">
