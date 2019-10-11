@@ -21,7 +21,7 @@ class PuntuacionController extends Controller
     {
         //
         $punto = Puntuacion::where('activo', 1)->take(12)->get();
-        //$punto->user_id = 1;
+        $punto->user_id = 1;
         $usu = User::find($punto->user_id);
         
         return view('principal',['punto'=>$punto, 'usu'=>$usu]);
