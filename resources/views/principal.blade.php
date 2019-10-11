@@ -11,6 +11,7 @@
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="jquery/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="three/three.js"></script>
+  <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
   
   <title>GameJap</title>
   
@@ -297,7 +298,9 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#contact">Nombre_de_usuario_en_sesion</a>
+          @auth
+            <a class="nav-link js-scroll-trigger" href="#contact">{{ Auth::user()->name }}</a>
+          @endauth
           </li>
         </ul>
       </div>
@@ -326,13 +329,20 @@
             <ul class="nav flex-column">
               <br><br><br><br><br><br><br><br>
               <!--<a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Instrucciones</a><br><br>-->
+              @guest
               <button id="btn_regi" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" src="img/regis.png"/> Registrarse</button><br><br>
               <button id="btn_login" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" src="img/login.png"/> Log in</button><br><br>
+              @endguest
               <button id="btn_play"  class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" src="img/play.png"/> Play</button><br><br>
               <button id="btn_pausa" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" src="img/pause2.png"/> Pausa</button><br><br>
               <button id="btn_config" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" src="img/config.png"/> Configuraciones</button><br><br>
               <button id="btn_punt" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" src="img/punt.png"/> Puntuaciones</button><br><br>
-              <button id="btn_logout" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" src="img/logout.png"/> Log out</button><br><br>
+              @auth
+                <form action="/out" method="GET">
+                @csrf
+                  <button id="btn_logout" class="btn btn-primary btn-xl js-scroll-trigger"><img width="25" height="25" src="img/logout.png"/> Log out</button><br><br>
+                </form>
+              @endauth
               <br><br><br><br>
             </ul>       
           </div>
@@ -358,11 +368,14 @@
                           <div id="login" style="display: none">
                               <br><br><br>
                             <h1>Iniciar Secion</h1><br><br>
-                            <label for="inputEmail" class="sr-only">Usuario</label>
-                            <input type="email" id="inputEmail" class="form-control col-md-5" placeholder="Usuario" required="" autofocus=""><br><br>
-                            <label for="inputPassword" class="sr-only">Contraseña</label>
-                            <input type="password" id="inputPassword" class="form-control col-md-5" placeholder="Password" required=""><br><br>
-                            <button class="btn btn-lg btn-primary btn-block col-md-5" type="submit">Entrar</button>
+                            <form enctype="multipart/form-data" action="/logear" method="POST">
+                            @csrf
+                                <label class="sr-only">Usuario</label>
+                                <input  name = "name" type="text" class="form-control col-md-5" placeholder="Usuario" required="" autofocus=""><br><br>
+                                <label class="sr-only">Contraseña</label>
+                                <input  name = "pas" type="password" class="form-control col-md-5" placeholder="Password" required=""><br><br>
+                                <button class="btn btn-lg btn-primary btn-block col-md-5" type="submit">Entrar</button> 
+                            </form>
                           </div>
 
 
@@ -454,6 +467,8 @@
  
    <!-- Custom scripts for this template -->
    <script src="js/stylish-portfolio.min.js"></script>
+
+   @include('sweetalert::alert')
 
 </body>
 

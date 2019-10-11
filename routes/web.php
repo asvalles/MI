@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('principal');
 });
+
+
+Route::post('/logear', 'LoginController@logear');
+Route::get('/out', 'LoginController@salir');
