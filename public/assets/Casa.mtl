@@ -1,0 +1,70 @@
+newmtl lambert22SG
+illum 4
+Kd 0.64 0.64 0.64
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd floorTexture.png
+Ni 1.00
+newmtl lambert23SG
+illum 4
+Kd 0.64 0.64 0.64
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd paper.jpg
+Ni 1.00
+newmtl lambert24SG
+illum 4
+Kd 0.64 0.64 0.64
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd wooden_roof.jpg
+Ni 1.00
+newmtl lambert25SG
+illum 4
+Kd 0.64 0.64 0.64
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd katana.jpg
+Ni 1.00
+newmtl lambert26SG
+illum 4
+Kd 0.64 0.64 0.64
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd shelf.jpg
+Ni 1.00
+newmtl lambert27SG
+illum 4
+Kd 0.64 0.64 0.64
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd latern_texture.jpg
+Ni 1.00
+newmtl lambert28SG
+illum 4
+Kd 0.64 0.64 0.64
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd wooden_wall.jpg
+Ni 1.00
+newmtl lambert29SG
+illum 4
+Kd 0.64 0.64 0.64
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd daoqiao.jpg
+Ni 1.00
+newmtl lambert30SG
+illum 4
+Kd 0.64 0.64 0.64
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd paper.jpg
+Ni 1.00
+newmtl lambert31SG
+illum 4
+Kd 0.64 0.64 0.64
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd wooden_wall.jpg
+Ni 1.00
