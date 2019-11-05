@@ -103,8 +103,7 @@
         var keys = {};
 
         var persona;
-        var personaje;
-        
+
         var raycaster;
         var objetosConColision = [];
                 
@@ -121,10 +120,10 @@
 
           clock=new THREE.Clock();
 
+          setupScene();
 
           //INICIALIZAMOS EL RAYCASTER
           raycaster= new THREE.Raycaster();
-          setupScene();
           camera.misRayos = [
             new THREE.Vector3(0,0,1),
             new THREE.Vector3(0,0,-1),
@@ -244,7 +243,7 @@
           });
 
           var loader = new THREE.FBXLoader();
-          loader.load('assets/PERSONAJE15.fbx', function (personaje) {
+          loader.load('assets/PERSONAJE17.fbx', function (personaje) {
             personaje.mixer = new THREE.AnimationMixer(personaje);
 
             mixers.push(personaje.mixer);
@@ -253,11 +252,12 @@
 
             personaje.position.z = 0;
             personaje.position.x = 0;
-            personaje.position.y = 10;
+            personaje.position.y = 8;
             personaje.scale.set(0.5, 0.5, 0.5);
             personaje.rotation.y = THREE.Math.degToRad(180);
+            //scene.add(personaje);
+            //persona.add(personaje);
 
-            
             personaje.traverse(function (child) {
               if (child.isMesh) {
                 child.castShadow = true;
@@ -265,20 +265,21 @@
               }
             });
 
-            persona = personaje.clone();
             camera.position.z = 8;
             camera.position.y = 14;
-            camera.rotation.x = THREE.Math.degToRad(-10);
+            //camera.rotation.y = THREE.Math.degToRad(180);
+
 
             scene.add(personaje);
-            //persona.add(personaje);
-            personaje.add(camera);
-            //scene.add(personaje);
+            persona.add(personaje);
+            persona.add(camera);
+            scene.add(persona);
           });
 
 
           //scene.add(persona);
-          
+          //camera.position.z = 8;
+          //camera.position.y = 14;
           //var grados = THREE.Math.degToRad(10);
           //camera.rotation.x = -grados;
           //persona.add(camera);
@@ -333,9 +334,9 @@
             yaw = -60;
           }
           if (keys["W"]) {
-            forward = -40;
+            forward = -1700;
           } else if (keys["S"]) {
-            forward = 40;
+            forward = 1700;
           }
 
           
