@@ -11,9 +11,11 @@
   <meta name="author" content="">
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="jquery/jquery-2.1.4.min.js"></script>
-  <script type="text/javascript" src="three/three.js"></script>
+  <script type="text/javascript" src="three/three2.js"></script>
 	<script type="text/javascript" src="three/MTLLoader.js"></script>
+  <script type="text/javascript" src="three/FBXLoader.js"></script>
 	<script type="text/javascript" src="three/OBJLoader.js"></script>
+  <script type="text/javascript" src="three/inflate.min.js"></script>
   <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
   
   
@@ -101,10 +103,17 @@
         var keys = {};
 
         var persona;
-
+        var personaje;
+        
         var raycaster;
         var objetosConColision = [];
-        
+                
+        // TODO: Modelo con animacion.
+        var mixers = [];
+        var objsWithAnimation = [];
+        var robotControl;
+        // TODO: End Modelo Animacion.
+
         var isWorldReady = [ false, false, false, false, false, false, false, false, false, false,
                               false, false, false, false, false, false, false ];
 
@@ -112,10 +121,10 @@
 
           clock=new THREE.Clock();
 
-          setupScene();
 
           //INICIALIZAMOS EL RAYCASTER
           raycaster= new THREE.Raycaster();
+          setupScene();
           camera.misRayos = [
             new THREE.Vector3(0,0,1),
             new THREE.Vector3(0,0,-1),
@@ -141,14 +150,14 @@
             isWorldReady[1] = true;
           });
 
-          loadOBJWithMTL("assets/", "Personaje.obj", "Personaje.mtl", (personaje) => {
-            personaje.position.z = -30;
-            personaje.position.x = -23;
-            personaje.rotation.y = THREE.Math.degToRad(180);
-            //scene.add(personaje);
-            persona.add(personaje);
-            isWorldReady[2] = true;
-          });
+          //loadOBJWithMTL("assets/", "Personaje.obj", "Personaje.mtl", (personaje) => {
+          //  personaje.position.z = -30;
+          //  personaje.position.x = -23;
+          //  personaje.rotation.y = THREE.Math.degToRad(180);
+          //  //scene.add(personaje);
+          //  persona.add(personaje);
+          //  isWorldReady[2] = true;
+          //});
 
           loadOBJWithMTL("assets/", "Arena2.obj", "Arena2.mtl", (arena) => {
             arena.position.z = -1;
@@ -234,13 +243,45 @@
             isWorldReady[16] = true;
           });
 
+          var loader = new THREE.FBXLoader();
+          loader.load('assets/PERSONAJE15.fbx', function (personaje) {
+            personaje.mixer = new THREE.AnimationMixer(personaje);
 
-          scene.add(persona);
-          camera.position.z = 8;
-          camera.position.y = 14;
+            mixers.push(personaje.mixer);
+            var action = personaje.mixer.clipAction(personaje.animations[0]);
+            action.play();
+
+            personaje.position.z = 0;
+            personaje.position.x = 0;
+            personaje.position.y = 10;
+            personaje.scale.set(0.5, 0.5, 0.5);
+            personaje.rotation.y = THREE.Math.degToRad(180);
+
+            
+            personaje.traverse(function (child) {
+              if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+              }
+            });
+
+            persona = personaje.clone();
+            camera.position.z = 8;
+            camera.position.y = 14;
+            camera.rotation.x = THREE.Math.degToRad(-10);
+
+            scene.add(personaje);
+            //persona.add(personaje);
+            personaje.add(camera);
+            //scene.add(personaje);
+          });
+
+
+          //scene.add(persona);
+          
           //var grados = THREE.Math.degToRad(10);
           //camera.rotation.x = -grados;
-          persona.add(camera);
+          //persona.add(camera);
 
           render();
 
@@ -274,19 +315,27 @@
         function render() {
           requestAnimationFrame(render);
           var bool=false;
+
+          if (mixers.length > 0) {
+            for (var i = 0; i < mixers.length; i++) {
+              mixers[i].update(clock.getDelta());
+            }
+          }
+
+
           deltaTime = clock.getDelta();	
 
           var yaw = 0;
           var forward = 0;
           if (keys["A"]) {
-            yaw = 5;
+            yaw = 60;
           } else if (keys["D"]) {
-            yaw = -5;
+            yaw = -60;
           }
           if (keys["W"]) {
-            forward = -20;
+            forward = -40;
           } else if (keys["S"]) {
-            forward = 20;
+            forward = 40;
           }
 
           
