@@ -94,8 +94,13 @@
 
       <script type="text/javascript">
         var scene;
+
         var camera;
+        var camera_2;
+
         var renderer;
+        var renderer_2;
+
         var controls;
         var objects = [];
         var clock;
@@ -103,9 +108,12 @@
         var keys = {};
 
         var persona;
+        var persona_2;
 
         var raycaster;
         var objetosConColision = [];
+
+        var sliderPos = window.innerWidth / 2;
                 
         // TODO: Modelo con animacion.
         var mixers = [];
@@ -117,7 +125,7 @@
                               false, false, false, false, false, false, false ];
 
         $(document).ready(function() {
-
+          persona_2 = new THREE.Object3D();
           clock=new THREE.Clock();
 
           setupScene();
@@ -269,11 +277,45 @@
             camera.position.y = 14;
             //camera.rotation.y = THREE.Math.degToRad(180);
 
-
             scene.add(personaje);
             persona.add(personaje);
             persona.add(camera);
             scene.add(persona);
+
+          });
+
+          loader.load('assets/PERSONAJE17.fbx', function (personaje) {
+            personaje.mixer = new THREE.AnimationMixer(personaje);
+
+            mixers.push(personaje.mixer);
+            var action = personaje.mixer.clipAction(personaje.animations[0]);
+            action.timeScale = 175;
+            action.play();
+
+            personaje.position.z = 0;
+            personaje.position.x = 0;
+            personaje.position.y = 8;
+            personaje.scale.set(0.5, 0.5, 0.5);
+            personaje.rotation.y = THREE.Math.degToRad(180);
+            //scene.add(personaje);
+            //persona.add(personaje);
+
+            personaje.traverse(function (child) {
+              if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+              }
+            });
+
+            camera_2.position.z = 8;
+            camera_2.position.y = 14;
+            //camera.rotation.y = THREE.Math.degToRad(180);
+            
+            scene.add(personaje);
+            persona_2.add(personaje);
+            persona_2.add(camera_2);
+            scene.add(persona_2);
+
           });
 
 
@@ -339,11 +381,23 @@
             forward = 1700;
           }
 
-          
+          var yaw_2 = 0;
+          var forward_2 = 0;
+          if (keys["J"]) {
+            yaw_2 = 60;
+          } else if (keys["L"]) {
+            yaw_2 = -60;
+          }
+          if (keys["I"]) {
+            forward_2 = -1700;
+          } else if (keys["K"]) {
+            forward_2 = 1700;
+          }
 
           if (isWorldReady[0] && isWorldReady[1]) {
 
             persona.translateZ(forward * deltaTime);
+            persona_2.translateZ(forward_2 * deltaTime);
 
             for(var i = 0; i < camera.misRayos.length; i++){
               var rayo = camera.misRayos[i];
@@ -368,6 +422,7 @@
             }
 
             persona.rotation.y += yaw * deltaTime;
+            persona_2.rotation.y += yaw_2 * deltaTime;
           }
           
           //if(bool == true)    for( i<objetosConColision.leght i++)
@@ -380,6 +435,7 @@
           //camera.lookAt( personaje.position );
           
           renderer.render(scene, camera);
+          renderer_2.render(scene, camera_2);
         }
 
         function setupScene() {		
@@ -388,14 +444,27 @@
           clock = new THREE.Clock();		
           scene = new THREE.Scene();
           persona = new THREE.Object3D();
-          camera = new THREE.PerspectiveCamera(75, visibleSize.width / visibleSize.height, 0.1, 1000);
+          
+          camera = new THREE.PerspectiveCamera(75, visibleSize.width / (visibleSize.height/2), 0.1, 1000);
           camera.position.z = 2;
           camera.position.y = 10;
 
+          camera_2 = new THREE.PerspectiveCamera(75, visibleSize.width / (visibleSize.height/2), 0.1, 1000);
+          camera_2.position.z = 2;
+          camera_2.position.y = 10;
+          
+
           renderer = new THREE.WebGLRenderer( {precision: "mediump" } );
           renderer.setClearColor(new THREE.Color(0, 0, 0));
-          renderer.setPixelRatio(visibleSize.width / visibleSize.height);
-          renderer.setSize(visibleSize.width, visibleSize.height);
+          //renderer.setPixelRatio(visibleSize.width / visibleSize.height/2);
+          renderer.setPixelRatio(window.devicePixelRatio);
+          renderer.setSize(visibleSize.width, visibleSize.height/2);
+
+          renderer_2 = new THREE.WebGLRenderer( {precision: "mediump" } );
+          renderer_2.setClearColor(new THREE.Color(0, 0, 0));
+          //renderer_2.setPixelRatio(visibleSize.width / visibleSize.height/2);
+          renderer_2.setPixelRatio(window.devicePixelRatio);
+          renderer_2.setSize(visibleSize.width, visibleSize.height/2);
 
           var ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 1.0);
           scene.add(ambientLight);
@@ -408,9 +477,11 @@
           grid.position.y = -1;
           scene.add(grid);
           
-          
+          var a = document.getElementById("can");
+          a.appendChild( renderer.domElement );
+          a.appendChild( renderer_2.domElement );
 
-          $('#can').append(renderer.domElement);
+          //$('#can').append(renderer.domElement);
         }
 
         </script>
