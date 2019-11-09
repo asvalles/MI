@@ -915,7 +915,7 @@
             Usuario2Gano = false;
 
             $('#JuegoTerminado1').css('display', 'block');
-            var ambientLight = new THREE.AmbientLight(new THREE.Color(1, 0, 0), 5.5); //1.0
+            var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 5.5); //1.0
             scene.add(ambientLight);
 
             Caman('#GameOver1', function () {
@@ -927,13 +927,30 @@
             });
 
             $('body').on('click', '#salir', function(){
-              $(location).attr('href', 'index.html');
+              $(location).attr('href', '/principal');
             });
           }
           
           if(cantidadfichas_2 >= 3 && Usuario2Gano == false && cantidadfichas_1 < 3){
-            alert("GANASTE JUGADOR 2, PERDISTE JUGADOR 1");
+            //alert("GANASTE JUGADOR 2, PERDISTE JUGADOR 1");
+            Usuario1Gano = false;
             Usuario2Gano = true;
+
+            $('#JuegoTerminado2').css('display', 'block');
+            var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 5.5); //1.0
+            scene.add(ambientLight);
+
+            Caman('#GameOver2', function () {
+                
+              this.sinCity();
+              this.noise(50);
+              this.render();
+
+            });
+
+            $('body').on('click', '#salir2', function(){
+              $(location).attr('href', '/principal');
+            });
           }
 
           renderer.render(scene, camera);
@@ -990,7 +1007,7 @@
         </script>
   
   <style>
-        #JuegoTerminado{
+        #JuegoTerminado1{
             display: none;
             z-index: 500;
         }
@@ -998,13 +1015,30 @@
             z-index: 600;
             position: absolute;
             left: 40%;
-            bottom: 48%;
+            bottom: 26%;
         }
         #salir{
             z-index: 700;
             position: absolute;
             left: 45%;
-            top: 48%;
+            top: 70%;
+        }
+
+        #JuegoTerminado2{
+            display: none;
+            z-index: 500;
+        }
+        #GameOver2{
+            z-index: 600;
+            position: absolute;
+            left: 40%;
+            bottom: 26%;
+        }
+        #salir2{
+            z-index: 700;
+            position: absolute;
+            left: 45%;
+            top: 70%;
         }
     </style>
 
@@ -1015,7 +1049,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
     <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="principal.html">GameJap</a>
+      <a class="navbar-brand js-scroll-trigger" href="/principal">GameJap</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -1092,6 +1126,11 @@
                           <div id="JuegoTerminado1" style="display: none">
                             <img id="GameOver1" src="img/gano1.jpg" z-index="2">
                             <button id="salir" class="btn btn-outline-dark">Exit Game</button>
+                          </div>
+
+                          <div id="JuegoTerminado2" style="display: none">
+                            <img id="GameOver2" src="img/gano2.jpg" z-index="3">
+                            <button id="salir2" class="btn btn-outline-dark">Exit Game</button>
                           </div>
 
                           <div id="can">
