@@ -17,6 +17,7 @@
 	<script type="text/javascript" src="three/OBJLoader.js"></script>
   <script type="text/javascript" src="three/inflate.min.js"></script>
   <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
+  <script type="text/javascript" src="three/mifacebook.js"></script>
   
   
   <!-- Font Awesome Icons -->
@@ -486,7 +487,10 @@
           render();
 
           document.addEventListener('keydown', onKeyDown);
-          document.addEventListener('keyup', onKeyUp);		
+          document.addEventListener('keyup', onKeyUp);	
+        
+          //$("#ptsUsuario").val(puntos_per1.html());
+          
         });
 
         function loadOBJWithMTL(path, objFile, mtlFile, onLoadCallback) {
@@ -752,9 +756,7 @@
                   colisionficha5.pop(colision5[0].object.parent);
 
                 }
-              }
-
-              
+              }            
             }
 
             for(var i = 0; i < persona_2.misRayos.length; i++){
@@ -906,7 +908,11 @@
               }
 
             }
+            //var puntuacion = puntos_per1;
 
+            //document.getElementsByName("ptsUsuario").value = puntuacion;
+            //document.getElementById("ptsUsuario").setAttribute("value",puntuacion);
+            
           }
           
           if(cantidadfichas_1 >= 3 && Usuario1Gano == false && cantidadfichas_2 < 3){
@@ -918,17 +924,16 @@
             var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 5.5); //1.0
             scene.add(ambientLight);
 
-            Caman('#GameOver1', function () {
-                
-              this.sinCity();
-              this.noise(50);
-              this.render();
+            $('#puntos').append("Puntos del Usuario : " + puntos_per1);
+            //debugger;
 
-            });
-
+            //$('#salir').onclick(function(){
+            //  $(location).attr('href', '/');
+            //});
             $('body').on('click', '#salir', function(){
               $(location).attr('href', '/');
             });
+
           }
           
           if(cantidadfichas_2 >= 3 && Usuario2Gano == false && cantidadfichas_1 < 3){
@@ -940,13 +945,7 @@
             var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 5.5); //1.0
             scene.add(ambientLight);
 
-            Caman('#GameOver2', function () {
-                
-              this.sinCity();
-              this.noise(50);
-              this.render();
-
-            });
+            $('#puntos2').append("Puntos del Usuario : " + puntos_per1);
 
             $('body').on('click', '#salir2', function(){
               $(location).attr('href', '/');
@@ -955,6 +954,10 @@
 
           renderer.render(scene, camera);
           renderer_2.render(scene, camera_2);
+
+          
+          //$('#puntos').html(puntos_per1);
+         
         }
 
 
@@ -1004,6 +1007,10 @@
           //$('#can').append(renderer.domElement);
         }
 
+        function shareFB() {
+		      shareScore(puntos_per1);
+	      }
+
         </script>
   
   <style>
@@ -1017,11 +1024,17 @@
             left: 40%;
             bottom: 26%;
         }
-        #salir{
+        #puntos{
             z-index: 700;
             position: absolute;
-            left: 45%;
-            top: 70%;
+            left: 44%;
+            top: 64%;
+        }
+        #salir{
+            z-index: 800;
+            position: absolute;
+            left: 41.5%;
+            top: 68%;
         }
 
         #JuegoTerminado2{
@@ -1034,11 +1047,17 @@
             left: 40%;
             bottom: 26%;
         }
-        #salir2{
+        #puntos2{
             z-index: 700;
             position: absolute;
-            left: 45%;
-            top: 70%;
+            left: 44%;
+            top: 64%;
+        }
+        #salir2{   
+            z-index: 800;
+            position: absolute;
+            left: 41.5%;
+            top: 68%;
         }
     </style>
 
@@ -1112,7 +1131,7 @@
 
                           <div id="NivelUno_Texto">
                             <h3>Palabra a recolectar: No<br>Hitokoto: いいえ (iie)<br></h3>
-                            <h3>JUGADOR 1 : 
+                            <h3>USUARIO : 
                               <label id="1" style="display: none">い</label>
                               <label id="2" style="display: none">い</label>
                               <label id="3" style="display: none">え</label>
@@ -1124,13 +1143,25 @@
                           </div>
 
                           <div id="JuegoTerminado1" style="display: none">
-                            <img id="GameOver1" src="img/gano1.jpg" z-index="2">
-                            <button id="salir" class="btn btn-outline-dark">Exit Game</button>
+                            <img id="GameOver1" src="img/usuario.jpg" z-index="2">
+                            @auth
+                            <input type="hidden" name="idUsuario" value= "{{ Auth::user()->id }}">
+                            @endauth
+                            <!-- <input type="text" id="puntos" name="ptsUsuario" disabled></input>
+                            <input type="text" value="" id="ptsUsuario"> 
+                            <button id="salir" class="btn btn-outline-dark">Compartir en facebook</button> --> 
+                            <div id="puntos"></div>
+                            <button onclick="shareFB();">Compartir en Facebook</button><br/>
+                            <button id="salir">Salir</button><br/>
                           </div>
 
                           <div id="JuegoTerminado2" style="display: none">
                             <img id="GameOver2" src="img/gano2.jpg" z-index="3">
-                            <button id="salir2" class="btn btn-outline-dark">Exit Game</button>
+                            @auth
+                            <input type="hidden" name="idUsuario" value= "{{ Auth::user()->id }}">
+                            @endauth
+                            <div id="puntos2"></div>
+                            <button id="salir2" class="btn btn-outline-dark">Compartir en facebook</button>
                           </div>
 
                           <div id="can">
