@@ -5,6 +5,7 @@
 
   <title>GameJap</title>
   <link rel="icon" href="bambu.ico" />
+  <!-- <meta property="og:image" content="img/img1.png" /> -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -166,6 +167,7 @@
         var ficha2_i_2 = false;
         var ficha3_e_2 = false;
         var estaEnNivelUno = false;
+        var strDownloadMime = "image/octet-stream";
 
         var sliderPos = window.innerWidth / 2;
                 
@@ -976,18 +978,28 @@
           camera_2.position.z = 2;
           camera_2.position.y = 10;
           
+          document.getElementById("face").addEventListener('click', saveAsImage);     ////////////////////aqui obtengo el button compartir facebook
+          document.getElementById("face2").addEventListener('click', saveAsImage2);
 
-          renderer = new THREE.WebGLRenderer( {precision: "mediump" } );
+          renderer = new THREE.WebGLRenderer({
+            precision: "mediump",
+            preserveDrawingBuffer: true
+          });
           renderer.setClearColor(new THREE.Color(0, 0, 0));
           //renderer.setPixelRatio(visibleSize.width / visibleSize.height/2);
           renderer.setPixelRatio(window.devicePixelRatio);
           renderer.setSize(visibleSize.width, visibleSize.height/2);
+          document.body.appendChild(renderer.domElement);          
 
-          renderer_2 = new THREE.WebGLRenderer( {precision: "mediump" } );
+          renderer_2 = new THREE.WebGLRenderer({
+            precision: "mediump",
+            preserveDrawingBuffer: true
+          });
           renderer_2.setClearColor(new THREE.Color(0, 0, 0));
           //renderer_2.setPixelRatio(visibleSize.width / visibleSize.height/2);
           renderer_2.setPixelRatio(window.devicePixelRatio);
           renderer_2.setSize(visibleSize.width, visibleSize.height/2);
+          document.body.appendChild(renderer_2.domElement); 
 
           var ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 1.0);
           scene.add(ambientLight);
@@ -1004,12 +1016,70 @@
           a.appendChild( renderer.domElement );
           a.appendChild( renderer_2.domElement );
 
+          a.addEventListener('resize', onWindowResize, false);
+          a.addEventListener('resize', onWindowResize2, false);
+
           //$('#can').append(renderer.domElement);
         }
 
         function shareFB() {
 		      shareScore(puntos_per1, puntos_per2);
-	      }
+        }
+
+        function onWindowResize() {
+          camera.aspect = visibleSize.width / (visibleSize.height/2);
+          camera.updateProjectionMatrix();
+          renderer.setSize(visibleSize.width, visibleSize.height/2);
+        }
+        
+        function onWindowResize2() {
+          camera_2.aspect = visibleSize.width / (visibleSize.height/2);
+          camera_2.updateProjectionMatrix();
+          renderer_2.setSize(visibleSize.width, visibleSize.height/2);
+        }
+
+        function saveAsImage() {
+          var imgData, imgNode;
+          try {
+              var strMime = "image/jpeg";
+              imgData = renderer.domElement.toDataURL(strMime);
+              saveFile(imgData.replace(strMime, strDownloadMime), "test.jpg");
+              //var w = window.open('', '');
+              //w.document.title = "Screenshot";
+              //var img = new Image();
+              //renderer.render(scene, camera);
+              //img.src = renderer.domElement.toDataURL();
+              //w.document.body.appendChild(img); 
+          } catch (e) {
+              console.log(e);
+              return;
+          }
+        }
+
+        function saveAsImage2() {
+          var imgData, imgNode;
+          try {
+              var strMime = "image/jpeg";
+              imgData = renderer_2.domElement.toDataURL(strMime);
+              saveFile(imgData.replace(strMime, strDownloadMime), "test2.jpg");
+          } catch (e) {
+              console.log(e);
+              return;
+          }
+        }
+
+        var saveFile = function (strData, filename) {
+          var link = document.createElement('a');
+          if (typeof link.download === 'string') {
+              document.body.appendChild(link); //Firefox requires the link to be in the body
+              link.download = filename;
+              link.href = strData;
+              link.click();
+              document.body.removeChild(link); //remove the link when done
+          } else {
+              location.replace(uri);
+          }
+        }
 
         </script>
   

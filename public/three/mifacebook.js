@@ -21,8 +21,15 @@ function shareScore(score, score2) {
 
     method: 'share',
     href: 'https://gamejap.herokuapp.com/',
+    //picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS4GNJYYGFc_OAQBhIftYMqobs4nASs7VoWbEWaf8izGH2oTl5k',
     quote: 'Mi puntuación: ' + score + ' Puntuación segundo jugador: ' + score2
-  }, function(respuesta){
+    }, function(respuesta){
 
+      //method: 'feed',
+      //link: 'https://gamejap.herokuapp.com/',
+      ////name: 'I got "+response.country+"! Which European are you destined to date?',
+      //quote: 'Mi puntuación: ' + score + ' Puntuación segundo jugador: ' + score2,
+      //picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS4GNJYYGFc_OAQBhIftYMqobs4nASs7VoWbEWaf8izGH2oTl5k'
   });
+
 }
