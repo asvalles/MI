@@ -16,12 +16,12 @@ window.fbAsyncInit = function() {
  }(document, 'script', 'facebook-jssdk')); 
 
 
-function shareScore(score) {
+function shareScore(score, score2) {
   FB.ui({
 
     method: 'share',
     href: 'https://gamejap.herokuapp.com/',
-    quote: 'Mi puntuación: ' + score
+    quote: 'Mi puntuación: ' + score + ' Puntuación segundo jugador: ' + score2
   }, function(respuesta){
 
   });

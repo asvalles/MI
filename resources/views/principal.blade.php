@@ -4,7 +4,7 @@
 <head>
 
   <title>GameJap</title>
-  
+  <link rel="icon" href="bambu.ico" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -847,7 +847,7 @@
                     ficha1_i_2 = true;
                   }
 
-                  puntos_per2 = puntos_per2 + cantidadfichas_2;
+                  puntos_per2 = puntos_per2 + 10;
                   cantidadfichas_2 = cantidadfichas_2 + 1;
 
                   scene.remove(colision3[0].object.parent);
@@ -872,7 +872,7 @@
                     ficha1_i_2 = true;
                   }
 
-                  puntos_per2 = puntos_per2 + cantidadfichas_2;
+                  puntos_per2 = puntos_per2 + 10;
                   cantidadfichas_2 = cantidadfichas_2 + 1;
 
                   scene.remove(colision4[0].object.parent);
@@ -897,7 +897,7 @@
                     ficha1_i_2 = true;
                   }
 
-                  puntos_per2 = puntos_per2 + cantidadfichas_2;
+                  puntos_per2 = puntos_per2 + 10;
                   cantidadfichas_2 = cantidadfichas_2 + 1;
 
                   scene.remove(colision5[0].object.parent);
@@ -1008,7 +1008,7 @@
         }
 
         function shareFB() {
-		      shareScore(puntos_per1);
+		      shareScore(puntos_per1, puntos_per2);
 	      }
 
         </script>
@@ -1028,13 +1028,19 @@
             z-index: 700;
             position: absolute;
             left: 44%;
-            top: 64%;
+            top: 64.5%;
         }
-        #salir{
+        #face{
             z-index: 800;
             position: absolute;
-            left: 41.5%;
-            top: 68%;
+            left: 43%;
+            top: 67%;
+        }
+        #salir{
+            z-index: 900;
+            position: absolute;
+            left: 47%;
+            top: 71%;
         }
 
         #JuegoTerminado2{
@@ -1051,13 +1057,19 @@
             z-index: 700;
             position: absolute;
             left: 44%;
-            top: 64%;
+            top: 64.5%;
         }
-        #salir2{   
+        #face2{
             z-index: 800;
             position: absolute;
-            left: 41.5%;
-            top: 68%;
+            left: 43%;
+            top: 67%;
+        }
+        #salir2{   
+            z-index: 900;
+            position: absolute;
+            left: 47%;
+            top: 71%;
         }
     </style>
 
@@ -1147,11 +1159,8 @@
                             @auth
                             <input type="hidden" name="idUsuario" value= "{{ Auth::user()->id }}">
                             @endauth
-                            <!-- <input type="text" id="puntos" name="ptsUsuario" disabled></input>
-                            <input type="text" value="" id="ptsUsuario"> 
-                            <button id="salir" class="btn btn-outline-dark">Compartir en facebook</button> --> 
                             <div id="puntos"></div>
-                            <button onclick="shareFB();">Compartir en Facebook</button><br/>
+                            <button id="face" onclick="shareFB();">Compartir en Facebook</button><br/>
                             <button id="salir">Salir</button><br/>
                           </div>
 
@@ -1161,7 +1170,8 @@
                             <input type="hidden" name="idUsuario" value= "{{ Auth::user()->id }}">
                             @endauth
                             <div id="puntos2"></div>
-                            <button id="salir2" class="btn btn-outline-dark">Compartir en facebook</button>
+                            <button id="face2" onclick="shareFB();">Compartir en Facebook</button><br/>
+                            <button id="salir2">Salir</button><br/>
                           </div>
 
                           <div id="can">
