@@ -41,17 +41,29 @@
   <script type="text/javascript">
       $(document).ready(function() {
 
-        $('#btn_play').click(function() {
-          $("#can").toggle();
-          $("#pausa").hide();
+        //$('#btn_play').click(function() {
+        //  $("#NIVELES").toogle();
+        //  $("#can").hide();
+        //  $("#pausa").hide();
+        //  $("#puntuacion").hide();
+        //  $("#configuracion").hide();
+        //  $("#login").hide();
+        //  $("#registro").hide();
+        //});
+
+        $('#btn_pausa').click(function() {
+          $("#pausa").toggle();
+          $("#NIVELES").hide();
+          $("#can").hide();
           $("#puntuacion").hide();
           $("#configuracion").hide();
           $("#login").hide();
           $("#registro").hide();
         });
 
-        $('#btn_pausa').click(function() {
-          $("#pausa").toggle();
+        $('#btn_niveles').click(function() {
+          $("#pausa").hide();
+          $("#NIVELES").toggle();
           $("#can").hide();
           $("#puntuacion").hide();
           $("#configuracion").hide();
@@ -60,9 +72,8 @@
         });
 
         $('#btn_config').click(function() {
-          //var score = $("#puntos").val();
-          
           $("#configuracion").toggle();
+          $("#NIVELES").hide();
           $("#pausa").hide();
           $("#puntuacion").hide();
           $("#can").hide();
@@ -72,6 +83,7 @@
         
         $('#btn_punt').click(function() {
           $("#puntuacion").toggle();
+          $("#NIVELES").hide();
           $("#pausa").hide();
           $("#configuracion").hide();
           $("#can").hide();
@@ -81,6 +93,7 @@
 
          $('#btn_regi').click(function() {
           $("#registro").toggle();
+          $("#NIVELES").hide();
           $("#pausa").hide();
           $("#configuracion").hide();
           $("#can").hide();
@@ -90,11 +103,24 @@
 
          $('#btn_login').click(function() {
           $("#login").toggle();
+          $("#NIVELES").hide();
           $("#pausa").hide();
           $("#configuracion").hide();
           $("#can").hide();
           $("#puntuacion").hide();
           $("#registro").hide();
+        });
+        
+        $('#btn_1').click(function() {
+          $("#NIVELES").hide();
+          $("#can").toggle();
+          $("#NivelUno_Texto").toggle();
+        });
+
+        $('#btn_2').click(function() {
+          $("#NIVELES").hide();
+          $("#can").toggle();
+          $("#NivelDos_Texto").toggle();
         });
     });
   </script>
@@ -174,6 +200,31 @@
         var estaEnNivelUno = false;
         var strDownloadMime = "image/octet-stream";
 
+        //NIVEL DOS
+        var estaEnNivelDos = false;
+        var colisionficha1_2 = [];
+        var colisionficha2_2 = [];
+        var colisionficha3_2 = [];
+        var colisionFarol_1 = [];
+
+        var cantidadfichas_1_2 = 0;
+        var cantidadfichas_2_2 = 0;
+        var Usuario1Gano_2 = false;
+        var Usuario2Gano_2 = false;
+        var puntos_per1_2 = 0;
+        var puntos_per2_2 = 0;
+
+        var ficha1_ka = false;
+        var ficha1_zo = false;
+        var ficha1_ku = false;
+        var ficha2_ka = false;
+        var ficha2_zo = false;
+        var ficha2_ku = false;
+        var fichaKUtoggle;
+        var sevefichaKUtoogle = false;
+
+        var timer = 1000;
+
         var sliderPos = window.innerWidth / 2;
                 
         // TODO: Modelo con animacion.
@@ -184,10 +235,11 @@
         // TODO: End Modelo Animacion.
 
         var isWorldReady = [ false, false, false, false, false, false, false, false, false, false,
-                              false, false, false, false, false, false, false ];
+                              false, false, false, false, false, false, false, false ];
 
         $(document).ready(function() {
           persona_2 = new THREE.Object3D();
+          fichaKUtoggle = new THREE.Object3D();
           clock=new THREE.Clock();
 
           setupScene();
@@ -276,8 +328,8 @@
           loadOBJWithMTL("assets/", "Farol.obj", "Farol.mtl", (farol) => {
             farol.position.z = -1;
             farol.scale.set(0.5, 0.5, 0.5);
-            objetosConColision.push(farol);
-            objetosConColision_2.push(farol);
+            //objetosConColision.push(farol);
+            colisionFarol_1.push(farol);
             scene.add(farol);
             isWorldReady[7] = true;
           });
@@ -337,26 +389,67 @@
               }
             });
 
-          
+            loadOBJWithMTL("assets/", "KA.obj", "KA.mtl", (ficha6) => {
+              if(estaEnNivelDos == true ){
+                ficha6.position.z = -65;
+                ficha6.position.x = -7;
+                ficha6.position.y = -1;
+                //ficha6.rotation.y = THREE.Math.degToRad(-90);
+                ficha6.scale.set(0.5, 0.5, 0.5);
+                colisionficha1_2.push(ficha6);
+                scene.add(ficha6);
+                isWorldReady[17] = true;
+              }
+            });
 
+            loadOBJWithMTL("assets/", "ZO.obj", "ZO.mtl", (ficha7) => {
+              if(estaEnNivelDos == true){
+                ficha7.position.z = -130;
+                ficha7.position.x = -65;
+                ficha7.position.y = -1;
+                //ficha7.rotation.y = THREE.Math.degToRad(-45);
+                ficha7.scale.set(0.5, 0.5, 0.5);
+                colisionficha2_2.push(ficha7);
+                scene.add(ficha7);
+              }
+            });
 
-          loadOBJWithMTL("assets/", "Mascara1.obj", "Mascara1.mtl", (mask1) => {
-            mask1.position.z = -1;
-            mask1.scale.set(0.5, 0.5, 0.5);
-            objetosConColision.push(mask1);
-            objetosConColision_2.push(mask1);
-            scene.add(mask1);
-            isWorldReady[9] = true;
-          });
+            loadOBJWithMTL("assets/", "KU.obj", "KU.mtl", (ficha8) => {
+              if(estaEnNivelDos == true){
+                  ficha8.position.z = -27;
+                  ficha8.position.x = 80;
+                  ficha8.position.y = -1;
+                  ficha8.rotation.y = THREE.Math.degToRad(-90);
+                  //ficha8.scale.set(0, 0, 0);
+                  colisionficha3_2.push(ficha8);
+                  //scene.add(ficha8);
+                  fichaKUtoggle.add(ficha8);
+                  scene.add(fichaKUtoggle);
+                  //scene.add(ficha8);    
+              }
+            });
 
-          loadOBJWithMTL("assets/", "Mascara2.obj", "Mascara2.mtl", (mask2) => {
-            mask2.position.z = -1;
-            mask2.scale.set(0.5, 0.5, 0.5);
-            objetosConColision.push(mask2);
-            objetosConColision_2.push(mask2);
-            scene.add(mask2);
-            isWorldReady[10] = true;
-          });
+             //if(fichaKUtoggle == true){
+             // scene.add(ficha8);
+             //}
+
+          //loadOBJWithMTL("assets/", "Mascara1.obj", "Mascara1.mtl", (mask1) => {
+          //  mask1.position.z = -1;
+          //  mask1.scale.set(0.5, 0.5, 0.5);
+          //  objetosConColision.push(mask1);
+          //  objetosConColision_2.push(mask1);
+          //  scene.add(mask1);
+          //  isWorldReady[9] = true;
+          //});
+
+          //loadOBJWithMTL("assets/", "Mascara2.obj", "Mascara2.mtl", (mask2) => {
+          //  mask2.position.z = -1;
+          //  mask2.scale.set(0.5, 0.5, 0.5);
+          //  objetosConColision.push(mask2);
+          //  objetosConColision_2.push(mask2);
+          //  scene.add(mask2);
+          //  isWorldReady[10] = true;
+          //});
 
           loadOBJWithMTL("assets/", "Puente4.obj", "Puente4.mtl", (puente) => {
             puente.position.z = -1;
@@ -483,31 +576,9 @@
             scene.add(persona_2);
 
           });
-
-          //var spriteMap = new THREE.TextureLoader().load( "palabra1.png" );
-          //var spriteMaterial = new THREE.SpriteMaterial( { map: spriteMap, color: 0xffffff } );
-          //var sprite = new THREE.Sprite( spriteMaterial );
-          //sprite.position.set(camera.position.x, camera.position.y, camera.position.z-2);
-          //sprite.scale.set(128, 128,1);
-          //scene.add( sprite );
-
-          //// create an AudioListener and add it to the camera
-          //var listener = new THREE.AudioListener();
-          //camera.add( listener );
-
-          //// create a global audio source
-          //var sound = new THREE.Audio( listener );
-
-          //// load a sound and set it as the Audio object's buffer
-          //var audioLoader = new THREE.AudioLoader();
-          //audioLoader.load( 'index.mp3', function( buffer ) {
-          //  sound.setBuffer( buffer );
-          //  sound.setLoop( true );
-          //  sound.setVolume( 0.5 );
-          //  sound.play();
-          //});
-
+          
           render();
+          render_2();
 
           document.addEventListener('keydown', onKeyDown);
           document.addEventListener('keyup', onKeyUp);	
@@ -1009,6 +1080,278 @@
          
         }
 
+        function render_2(){
+          requestAnimationFrame(render_2);
+          var bool=false;
+          deltaTime = clock.getDelta();	
+
+          if (mixers.length > 0) {
+            for (var i = 0; i < mixers.length; i++) {
+              mixers[i].update(deltaTime);
+            }
+          }
+
+          if (mixers_2.length > 0) {
+            for (var i = 0; i < mixers_2.length; i++) {
+              mixers_2[i].update(deltaTime);
+            }
+          }
+
+          var yaw = 0;
+          var forward = 0;
+          if (keys["A"]) {
+            yaw = 2;
+          } else if (keys["D"]) {
+            yaw = -2;
+          }
+          if (keys["W"]) {
+            forward = -20;
+          } else if (keys["S"]) {
+            forward = 20;
+          }
+
+          var yaw_2 = 0;
+          var forward_2 = 0;
+          if (keys["J"]) {
+            yaw_2 = 2;
+          } else if (keys["L"]) {
+            yaw_2 = -2;
+          }
+          if (keys["I"]) {
+            forward_2 = -20;
+          } else if (keys["K"]) {
+            forward_2 = 20;
+          }
+
+          estaEnNivelDos = true;
+          estaEnNivelUno = false;
+
+          if (isWorldReady[0] && isWorldReady[1]) {
+
+            persona.translateZ(forward * deltaTime);
+            persona_2.translateZ(forward_2 * deltaTime);
+
+            for(var i = 0; i < persona.misRayos.length; i++){
+              var rayo = persona.misRayos[i];
+
+              raycaster.set( persona.position, rayo );
+
+              var colision = raycaster.intersectObjects(
+                objetosConColision,
+                true
+              );
+
+              if( colision.length > 0 ){
+                if(colision[0].distance < 3){
+                  console.log("Estoy colisionando");
+                  persona.translateZ(-(forward * deltaTime));
+                }
+              }
+            }
+
+            for(var i = 0; i < persona_2.misRayos.length; i++){
+              var rayo_2 = persona_2.misRayos[i];
+
+              raycaster_2.set( persona_2.position, rayo_2 );
+
+              var colision_2 = raycaster_2.intersectObjects(
+                objetosConColision,
+                true
+              );
+
+              if( colision_2.length > 0 ){
+                if(colision_2[0].distance < 3){
+                  console.log("Estoy colisionando");
+                  persona_2.translateZ(-(forward_2 * deltaTime));
+                }
+              }
+            }
+            persona.rotation.y += yaw * deltaTime;
+            persona_2.rotation.y += yaw_2 * deltaTime;
+          }
+
+          if (isWorldReady[17]) {
+              for(var i = 0; i < persona.misRayos.length; i++){
+              var rayo = persona.misRayos[i];
+
+              raycaster.set( persona.position, rayo );
+
+              var colision = raycaster.intersectObjects(
+                colisionficha1_2,
+                true
+              );
+
+              var colision2 = raycaster.intersectObjects(
+                colisionficha2_2,
+                true
+              );
+
+              var colision3 = raycaster.intersectObjects(
+                colisionficha3_2,
+                true
+              );
+
+              var colision4 = raycaster.intersectObjects(
+                colisionFarol_1,
+                true
+              );
+
+              if( colision.length > 0 ){
+                if(colision[0].distance < 3){
+                  console.log("Estoy colisionando con la ficha huehuehue");
+                  persona.translateZ(-(forward * deltaTime));
+                  if(ficha1_ka == false){
+                    $("#7").toggle();
+                    ficha1_ka = true;
+                  }
+
+                  puntos_per1_2 = puntos_per1_2 + 15;
+                  cantidadfichas_1_2 = cantidadfichas_1_2 + 1;
+                  scene.remove(colision[0].object.parent);
+                  colisionficha1_2.pop(colision[0].object.parent);
+                }
+              }        
+
+              if( colision2.length > 0 ){
+                if(colision2[0].distance < 3){
+                  console.log("Estoy colisionando con la ficha huehuehue");
+                  persona.translateZ(-(forward * deltaTime));
+                  if(ficha1_zo == false){
+                    $("#8").toggle();
+                    ficha1_zo = true;
+                  }
+
+                  puntos_per1_2 = puntos_per1_2 + 15;
+                  cantidadfichas_1_2 = cantidadfichas_1_2 + 1;
+                  scene.remove(colision2[0].object.parent);
+                  colisionficha2_2.pop(colision2[0].object.parent);
+                }
+              }
+
+              if( colision3.length > 0 ){
+                if(colision3[0].distance < 3){
+                  console.log("Estoy colisionando con la ficha huehuehue");
+                  persona.translateZ(-(forward * deltaTime));
+                  if(ficha1_ku == false){
+                    $("#9").toggle();
+                    ficha1_ku = true;
+                  }
+
+                  sevefichaKUtoogle = false;
+                  puntos_per1_2 = puntos_per1_2 + 15;
+                  cantidadfichas_1_2 = cantidadfichas_1_2 + 1;
+                  scene.remove(colision3[0].object.parent);
+                  colisionficha3_2.pop(colision3[0].object.parent);
+                }
+              }
+
+              if( colision4.length > 0 ){
+                if(colision4[0].distance < 3){
+                  console.log("Estoy colisionando con el farol huehuehue");
+                  persona.translateZ(-(forward * deltaTime));
+                  sevefichaKUtoogle = true;
+                }
+              }
+
+              if(sevefichaKUtoogle == true){
+                fichaKUtoggle.scale.set(0.5, 0.5, 0.5);
+              }
+              else{
+                fichaKUtoggle.scale.set(0, 0, 0);
+              }
+            }
+
+            for(var i = 0; i < persona_2.misRayos.length; i++){
+              var rayo_2 = persona_2.misRayos[i];
+
+              raycaster_2.set( persona_2.position, rayo_2 );
+
+              var colision = raycaster_2.intersectObjects(
+                colisionficha,
+                true
+              );
+
+              var colision2 = raycaster_2.intersectObjects(
+                colisionficha2,
+                true
+              );
+
+              var colision3 = raycaster_2.intersectObjects(
+                colisionficha3,
+                true
+              );
+
+              var colision4 = raycaster_2.intersectObjects(
+                colisionficha4,
+                true
+              );
+
+              var colision5 = raycaster_2.intersectObjects(
+                colisionficha5,
+                true
+              );
+
+              if( colision.length > 0 ){
+                if(colision[0].distance < 3){
+                  console.log("Estoy colisionando con la ficha huehuehue");
+                  persona_2.translateZ(-(forward_2 * deltaTime));
+                  if(ficha3_e_2 == false){
+                    $("#6").toggle();
+                    ficha3_e = true;
+                  }
+
+                  puntos_per2_2 = puntos_per2_2 + 10;
+                  cantidadfichas_2_2 = cantidadfichas_2_2 + 1;
+                  scene.remove(colision[0].object.parent);
+                  colisionficha.pop(colision[0].object.parent);
+
+                  //debugger;
+                }
+              }
+
+            }
+          }
+
+          if(cantidadfichas_1_2 >= 3 && Usuario1Gano_2 == false && cantidadfichas_2_2 < 3){
+            //alert("GANASTE JUGADOR 1, PERDISTE JUGADOR 2");
+            Usuario1Gano_2 = true;
+            Usuario2Gano_2 = false;
+
+            $('#JuegoTerminado1').css('display', 'block');
+            var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 5.5); //1.0
+            scene.add(ambientLight);
+
+            $('#puntos').append("Puntos del Usuario : " + puntos_per1_2);
+
+            $('body').on('click', '#guardar', function(){
+              var idUsu = $("#usuid").val();
+              var score = puntos_per1_2;
+
+              var dataToSend = { action: "/puntuaciones", puntos: score, user_id: idUsu, activo: 1 };
+              $.ajax({
+                url: '/puntuaciones',
+                async: true,
+                method: 'POST',
+                data: dataToSend,
+                dataType: 'json',
+                success: function(respuestaDelServer){
+
+                  alert(respuestaDelServer.score);
+                },
+
+                error: function(x, h, r) {
+                  alert("Error: " + x + h + r);
+                }
+              });
+            });
+
+            $('body').on('click', '#salir', function(){
+              $(location).attr('href', '/');
+            });
+
+          }
+        }
+
         function setupScene() {		
           //var visibleSize = { width: window.innerWidth, height: window.innerHeight};
           var visibleSize = { width: 1500, height: 800};
@@ -1262,9 +1605,12 @@
               <button id="btn_regi" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" /> Registrarse</button><br><br>
               <button id="btn_login" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" /> Log in</button><br><br>
               @endguest
-              <button id="btn_play"  class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25"/> Play</button><br><br>
+              <!-- <button id="btn_play"  class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25"/> Play</button><br><br> -->
+              @auth
+              <button id="btn_niveles" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" /> Niveles</button><br><br>
               <button id="btn_pausa" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" /> Pausa</button><br><br>
               <button id="btn_config" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" /> Configuraciones</button><br><br>
+              @endauth
               <button id="btn_punt" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" /> Puntuaciones</button><br><br>
               @auth
                 <form action="/out" method="GET">
@@ -1283,7 +1629,7 @@
                         <!--<audio autoplay loop>
                               <source src="music/index.mp3"></audio>-->
 
-                          <div id="NivelUno_Texto">
+                          <div id="NivelUno_Texto" style="display: none">
                             <h3>Palabra a recolectar: No<br>Hitokoto: いいえ (iie)<br></h3>
                             <h3>USUARIO : 
                               <label id="1" style="display: none">い</label>
@@ -1293,6 +1639,19 @@
                               <label id="4" style="display: none">い</label>
                               <label id="5" style="display: none">い</label>
                               <label id="6" style="display: none">え</label>
+                            </h3>
+                          </div>
+
+                          <div id="NivelDos_Texto" style="display: none">
+                            <h3>Palabra a recolectar: Casa<br>Hitokoto: かぞく (ka zo ku)<br></h3>
+                            <h3>USUARIO : 
+                              <label id="7" style="display: none">か</label>
+                              <label id="8" style="display: none">ぞ</label>
+                              <label id="9" style="display: none">く</label>
+                              JUGADOR 2 :
+                              <label id="10" style="display: none">か</label>
+                              <label id="11" style="display: none">ぞ</label>
+                              <label id="12" style="display: none">く</label>
                             </h3>
                           </div>
 
@@ -1319,7 +1678,24 @@
                             <button id="salir2">Salir</button><br/>
                           </div>
 
-                          <div id="can">
+                          @auth
+                          <div id="NIVELES">
+                            <br><br><br>
+                            <h1>Escoge un nivel</h1><br><br>
+                            <button id="btn_1" class="btn btn-primary btn-xl js-scroll-trigger" onclick="render()">Nivel 1</button><br><br>
+                            <button id="btn_2" class="btn btn-primary btn-xl js-scroll-trigger" onclick="render_2()">Nivel 2</button><br><br>
+                            <button id="btn_3" class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Nivel 3</button><br><br>
+                          </div>
+                          @endauth
+                          
+
+                          @guest
+                          <div id="Validacion">
+                            <h3>Inicia sesion para jugar</h3> 
+                          </div>
+                          @endguest
+
+                          <div id="can" style="display: none">
                             <!--<canvas id="micanvas" width="1550" height="800">
                                 Tu navegador no soporta canvas.
                             </canvas>-->
@@ -1348,7 +1724,6 @@
                                 <button class="btn btn-lg btn-primary btn-block col-md-5" type="submit">Entrar</button> 
                             </form>
                           </div>
-
 
                           <div id="pausa" style="display: none">
                               <br><br><br>
