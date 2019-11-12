@@ -35,7 +35,7 @@ class PuntuacionController extends Controller
      */
     public function create()
     {
-        //
+        return view('/');
     }
 
     /**
@@ -47,6 +47,53 @@ class PuntuacionController extends Controller
     public function store(Request $request)
     {
         //
+        //$punto = new Puntuacion();
+        //$punto->puntos = $request->pun;
+        //$punto->user_id = $request->idUsuario;
+        //$punto->save();
+       
+    }
+
+    //function connect() {
+	//	$databasehost = "vhw3t8e71xdz9k14.cbetxkdyhwsb.us-east-1.rds.amazonaws.com";
+	//	$databasename = "c8vyri3wplgqr1k6";
+	//	$databaseuser = "mqfo6xclpuxa1g0j";
+	//	$databasepass = "x0gffr4wnwn1mhn1";
+
+	//	$mysqli = new mysqli($databasehost, $databaseuser, $databasepass, $databasename);
+	//	if ($mysqli->connect_errno) {
+	//		echo "Problema con la conexion a la base de datos";
+	//	}
+	//	return $mysqli;
+	//}
+
+	//function disconnect() {
+	//	mysqli_close();
+	//}
+
+	function addScore(Request $request) {
+	//	$score = $_POST["puntuacions"];
+	//	$mysqli = connect();
+
+	//	$result = $mysqli->query("call sp_addScore(".$score.");");	
+	//	
+	//	if (!$result) {
+	//		echo "Problema al hacer un query: " . $mysqli->error;								
+	//	} else {
+	//		echo "Todo salio bien";		
+	//	}
+        $punto = new Puntuacion();
+        $punto->puntos = $request->puntos;
+        $punto->activo = 1;
+        $punto->user_id = $request->user_id;
+        $punto->save();
+        //	mysqli_close($mysqli);
+        //return '{ "score": "25" }';
+        //return Puntuacion::all();
+    }
+    
+    function getScore(){
+        return Puntuacion::all();
     }
 
     /**

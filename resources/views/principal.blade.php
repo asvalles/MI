@@ -10,8 +10,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <script type="text/javascript" src="jquery.js"></script>
-  <script type="text/javascript" src="jquery/jquery-2.1.4.min.js"></script>
+
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
+  <!-- <script type="text/javascript" src="jquery.js"></script> -->
+  <script type="text/javascript" src="jquery/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="three/three2.js"></script>
 	<script type="text/javascript" src="three/MTLLoader.js"></script>
   <script type="text/javascript" src="three/FBXLoader.js"></script>
@@ -57,6 +60,8 @@
         });
 
         $('#btn_config').click(function() {
+          //var score = $("#puntos").val();
+          
           $("#configuracion").toggle();
           $("#pausa").hide();
           $("#puntuacion").hide();
@@ -485,6 +490,22 @@
           //sprite.position.set(camera.position.x, camera.position.y, camera.position.z-2);
           //sprite.scale.set(128, 128,1);
           //scene.add( sprite );
+
+          //// create an AudioListener and add it to the camera
+          //var listener = new THREE.AudioListener();
+          //camera.add( listener );
+
+          //// create a global audio source
+          //var sound = new THREE.Audio( listener );
+
+          //// load a sound and set it as the Audio object's buffer
+          //var audioLoader = new THREE.AudioLoader();
+          //audioLoader.load( 'index.mp3', function( buffer ) {
+          //  sound.setBuffer( buffer );
+          //  sound.setLoop( true );
+          //  sound.setVolume( 0.5 );
+          //  sound.play();
+          //});
 
           render();
 
@@ -932,6 +953,32 @@
             //$('#salir').onclick(function(){
             //  $(location).attr('href', '/');
             //});
+
+            $('body').on('click', '#guardar', function(){
+
+              //var score = $("#puntos").val();
+              var idUsu = $("#usuid").val();
+              var score = puntos_per1;
+
+              var dataToSend = { action: "/puntuaciones", puntos: score, user_id:idUsu, activo: 1 };
+              //debugger;
+              $.ajax({
+                url: '/puntuaciones',
+                async: true,
+                method: 'POST',
+                data: dataToSend,
+                dataType: 'json',
+                success: function(respuestaDelServer){
+
+                  alert(respuestaDelServer.score);
+                },
+
+                error: function(x, h, r) {
+                  alert("Error: " + x + h + r);
+                }
+              });
+            });
+
             $('body').on('click', '#salir', function(){
               $(location).attr('href', '/');
             });
@@ -962,6 +1009,25 @@
          
         }
 
+        function getPuntuacion(){
+
+          var dataToSend = { action: "/obpun" };
+
+          $.ajax({
+                url: '/obpun',
+                async: true,
+                method: 'POST',
+                data: dataToSend,
+                dataType: 'json',
+                success: function(respuestaDelServer){
+                  alert(respuestaDelServer.score);
+                },
+
+                error: function(x, h, r) {
+                  alert("Error: " + x + h + r);
+                }
+          });
+        }
 
         function setupScene() {		
           //var visibleSize = { width: window.innerWidth, height: window.innerHeight};
@@ -1023,7 +1089,24 @@
         }
 
         function shareFB() {
-		      shareScore(puntos_per1, puntos_per2);
+              //var imgData;
+              //var strMime = "image/jpeg";
+              //imgData = renderer.domElement.toDataURL(strMime);
+            //OBTENEMOS LA URL DEL PROYECTO OSEA EN MI CASO SERA http://www.localhost:8000/
+            var getUrl = window.location;
+            var baseUrl = getUrl .protocol + "//www." + getUrl.host + "/" ;
+            //+ getUrl.pathname.split('/')[1]
+            //var im = $('img').attr('src');
+            var im = "test.jpg";
+            //LE CONCATENAMOS LA RUTA DE LA IMAGEN EN ESTE CASO YO LO TENIA EN UN IMG ENTONCES SACO SU ATRIBUTO src
+            baseUrl = baseUrl + im;
+            //var score = $("#txtScore").val();
+            console.log(baseUrl);
+            console.log(im);
+            //LE AGREGUE UN 2DO PARAMETRO A LA FUNCION PARA RECIBIR LA URL
+            //shareScore(score,baseUrl);
+
+		      shareScore(puntos_per1, puntos_per2, baseUrl);
         }
 
         function onWindowResize() {
@@ -1081,6 +1164,7 @@
           }
         }
 
+
         </script>
   
   <style>
@@ -1106,11 +1190,17 @@
             left: 43%;
             top: 67%;
         }
-        #salir{
+        #guardar{
             z-index: 900;
             position: absolute;
             left: 47%;
             top: 71%;
+        }
+        #salir{
+            z-index: 1000;
+            position: absolute;
+            left: 47%;
+            top: 73%;
         }
 
         #JuegoTerminado2{
@@ -1189,13 +1279,13 @@
               <br><br><br><br><br><br><br><br>
               <!--<a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Instrucciones</a><br><br>-->
               @guest
-              <button id="btn_regi" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" src="img/regis.png"/> Registrarse</button><br><br>
-              <button id="btn_login" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" src="img/login.png"/> Log in</button><br><br>
+              <button id="btn_regi" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" /> Registrarse</button><br><br>
+              <button id="btn_login" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" /> Log in</button><br><br>
               @endguest
-              <button id="btn_play"  class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" src="img/play.png"/> Play</button><br><br>
-              <button id="btn_pausa" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" src="img/pause2.png"/> Pausa</button><br><br>
-              <button id="btn_config" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" src="img/config.png"/> Configuraciones</button><br><br>
-              <button id="btn_punt" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" src="img/punt.png"/> Puntuaciones</button><br><br>
+              <button id="btn_play"  class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25"/> Play</button><br><br>
+              <button id="btn_pausa" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" /> Pausa</button><br><br>
+              <button id="btn_config" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" /> Configuraciones</button><br><br>
+              <button id="btn_punt" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" /> Puntuaciones</button><br><br>
               @auth
                 <form action="/out" method="GET">
                 @csrf
@@ -1210,6 +1300,8 @@
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
           <br><br><h1 style="font-size: 50px">GameJap</h1>
                         <center>
+                        <!--<audio autoplay loop>
+                              <source src="music/index.mp3"></audio>-->
 
                           <div id="NivelUno_Texto">
                             <h3>Palabra a recolectar: No<br>Hitokoto: いいえ (iie)<br></h3>
@@ -1226,10 +1318,13 @@
 
                           <div id="JuegoTerminado1" style="display: none">
                             <img id="GameOver1" src="img/usuario.jpg" z-index="2">
-                            @auth
-                            <input type="hidden" name="idUsuario" value= "{{ Auth::user()->id }}">
-                            @endauth
-                            <div id="puntos"></div>
+                            
+                              @auth
+                              <input type="hidden" name="idUsuario" id="usuid" value= "{{ Auth::user()->id }}">
+                              @endauth
+                              <div name="pun" id="puntos"></div>
+                              <button id="guardar">Guardar Puntuacion</button>
+
                             <button id="face" onclick="shareFB();">Compartir en Facebook</button><br/>
                             <button id="salir">Salir</button><br/>
                           </div>
@@ -1312,13 +1407,6 @@
                                     </div>
                                   </div>
                               </section>
-                                
-                                <button class="btn btn-primary btn-xl js-scroll-trigger" href="#about">
-                                  Compartir tu puntaje en Facebook
-                                </button><br><br>
-                                <button class="btn btn-primary btn-xl js-scroll-trigger" href="#about">
-                                  Compartir tu puntaje en Instagram
-                                </button><br><br>
                               
                           </div>
                          

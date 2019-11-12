@@ -16,12 +16,14 @@ window.fbAsyncInit = function() {
  }(document, 'script', 'facebook-jssdk')); 
 
 
-function shareScore(score, score2) {
+function shareScore(score, score2, im) {
   FB.ui({
 
-    method: 'share',
-    href: 'https://gamejap.herokuapp.com/',
+    //method: 'share',
+    //href: 'https://gamejap.herokuapp.com/',
     //picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS4GNJYYGFc_OAQBhIftYMqobs4nASs7VoWbEWaf8izGH2oTl5k',
+    method: 'stream.share',
+    u: im,
     quote: 'Mi puntuación: ' + score + ' Puntuación segundo jugador: ' + score2
     }, function(respuesta){
 
@@ -31,5 +33,4 @@ function shareScore(score, score2) {
       //quote: 'Mi puntuación: ' + score + ' Puntuación segundo jugador: ' + score2,
       //picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS4GNJYYGFc_OAQBhIftYMqobs4nASs7VoWbEWaf8izGH2oTl5k'
   });
-
 }
