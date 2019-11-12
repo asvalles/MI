@@ -20,7 +20,7 @@ class PuntuacionController extends Controller
     public function index()
     {
         //
-        $punto = Puntuacion::where('activo', 1)->take(12)->get();
+        $punto = Puntuacion::where('activo', 1)->take(20)->get();
         $punto->user_id = 1;
         $usu = User::find($punto->user_id);
         
@@ -88,12 +88,8 @@ class PuntuacionController extends Controller
         $punto->user_id = $request->user_id;
         $punto->save();
         //	mysqli_close($mysqli);
-        //return '{ "score": "25" }';
+        return '{ "score": "Se guardo la puntuacion" }';
         //return Puntuacion::all();
-    }
-    
-    function getScore(){
-        return Puntuacion::all();
     }
 
     /**

@@ -960,7 +960,7 @@
               var idUsu = $("#usuid").val();
               var score = puntos_per1;
 
-              var dataToSend = { action: "/puntuaciones", puntos: score, user_id:idUsu, activo: 1 };
+              var dataToSend = { action: "/puntuaciones", puntos: score, user_id: idUsu, activo: 1 };
               //debugger;
               $.ajax({
                 url: '/puntuaciones',
