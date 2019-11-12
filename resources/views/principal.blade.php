@@ -1009,26 +1009,6 @@
          
         }
 
-        function getPuntuacion(){
-
-          var dataToSend = { action: "/obpun" };
-
-          $.ajax({
-                url: '/obpun',
-                async: true,
-                method: 'POST',
-                data: dataToSend,
-                dataType: 'json',
-                success: function(respuestaDelServer){
-                  alert(respuestaDelServer.score);
-                },
-
-                error: function(x, h, r) {
-                  alert("Error: " + x + h + r);
-                }
-          });
-        }
-
         function setupScene() {		
           //var visibleSize = { width: window.innerWidth, height: window.innerHeight};
           var visibleSize = { width: 1500, height: 800};
@@ -1094,7 +1074,7 @@
               //imgData = renderer.domElement.toDataURL(strMime);
             //OBTENEMOS LA URL DEL PROYECTO OSEA EN MI CASO SERA http://www.localhost:8000/
             var getUrl = window.location;
-            var baseUrl = getUrl .protocol + "//www." + getUrl.host + "/" ;
+            var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" ;
             //+ getUrl.pathname.split('/')[1]
             //var im = $('img').attr('src');
             var im = "test.jpg";
