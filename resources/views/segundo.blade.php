@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head> 
+<head>
 
-</head>
   <title>GameJap</title>
   <link rel="icon" href="bambu.ico" />
   <!-- <meta property="og:image" content="img/img1.png" /> -->
@@ -157,7 +156,7 @@
     });
   </script>
 
-  <script type="text/javascript">
+      <script type="text/javascript">
         var scene;
 
         var camera;
@@ -310,20 +309,11 @@
 
         var segundaColision = false;
         var segundaColision_2 = false;
-        var segundaColision2 = false;
-        var segundaColision2_2 = false;
 
-        var Usuario1Gano_3 = false;
-        var Usuario2Gano_3 = false;
 
         var timer_3 = 200;
         var seAcaboElTiempo_2 = false;
-        var intermedio_1;
-        var intermedio_2;
-        var unaVez3 = false;
-        var unaVez3_2 = false;
-        var unaVezguardarpuntuacion_3 = false;
-        var unaVezguardarpuntuacion2_3 = false;
+        var intermedio;
 
         var intermedio = setInterval(function(){ 
           if(seAcaboElTiempo_2 == false && inicioNivelTres == true && timer_3 >= 0){
@@ -1951,7 +1941,7 @@
           }
 
           if (isWorldReady[18]) {
-            for(var i = 0; i < persona.misRayos.length; i++){
+              for(var i = 0; i < persona.misRayos.length; i++){
                   var rayo = persona.misRayos[i];
 
                   raycaster.set( persona.position, rayo );
@@ -1966,11 +1956,6 @@
                     true
                   );
 
-                  var colision3 = raycaster.intersectObjects(
-                    colisionficha3_1_3,
-                    true
-                  );
-
                   if( colision.length > 0 ){
                     if(colision[0].distance < 3){
                       console.log("Estoy colisionando con la ficha huehuehue");
@@ -1982,7 +1967,7 @@
                       obtuvofichaTOMO = true;
                                           
                       ptsUsuario = ptsUsuario + 20;
-                      colision[0].object.scale.set(0,0,0);
+                      colision[0].object.parent.scale.set(0,0,0);
                       
                       if(fichitaTOMO.length == 0){
                         fichitaTOMO.push(colision[0].object.parent);
@@ -1996,17 +1981,16 @@
                   }
 
                   if(colisionofichaTOMO_2 == true){
-                    intermedio_1 = setInterval(function(){
-                      console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                    intermedio = setInterval(function(){
                       for(var i=0; i<fichitaTOMO.length; i++){
                         fichitaTOMO[i].scale.set(0.5, 0.5, 0.5);
-                        fichitaTOMO[i].children[0].scale.set(1, 1, 1);
                       } 
                       colisionofichaTOMO_2 = false;
+                      //clearInterval(inter);
                     }, 5000, "JavaScript");
                     segundaColision_2 = true;
                   }
-
+                  
                   if(segundaColision_2 == true){
                     if( colision.length > 0 ){
                       if(colision[0].distance < 3){
@@ -2018,7 +2002,7 @@
                     colisionofichaTOMO_2 = false;
                   }
 
-                if( colision2.length > 0 ){
+                  if( colision2.length > 0 ){
                     if(colision2[0].distance < 3){
                       console.log("Estoy colisionando con la ficha huehuehue");
                       persona.translateZ(-(forward * deltaTime));
@@ -2027,9 +2011,9 @@
                         ficha1_dachi = true;
                       }
                       obtuvofichaDACHI = true;
-                                          
+
                       ptsUsuario = ptsUsuario + 20;
-                      colision2[0].object.scale.set(0,0,0);
+                      colision2[0].object.parent.scale.set(0,0,0);
                       
                       if(fichitaDACHI.length == 0){
                         fichitaDACHI.push(colision2[0].object.parent);
@@ -2040,49 +2024,10 @@
                       }
                       colisionofichaDACHI = true;
                     }
-                }
-
-                if(colisionofichaDACHI_2 == true){
-                  intermedio_2 = setInterval(function(){
-                    console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-                    for(var i=0; i<fichitaDACHI.length; i++){
-                      fichitaDACHI[i].scale.set(0.5, 0.5, 0.5);
-                      fichitaDACHI[i].children[0].scale.set(1, 1, 1);
-                    } 
-                    colisionofichaDACHI_2 = false;
-                  }, 5000, "JavaScript");
-                  segundaColision2_2 = true;
-                }
-
-                if(segundaColision2_2 == true){
-                  if( colision2.length > 0 ){
-                    if(colision2[0].distance < 3){
-                      scene.remove(colision2[0].object.parent);
-                      colisionficha3_1_2.pop(colision2[0].object.parent);
-                    }
                   }
-                  segundaColision2_2 = false;
-                  colisionofichaDACHI_2 = false;
-                }
-                  
-              if( colision3.length > 0 ){
-                if(colision3[0].distance < 3){
-                  console.log("Estoy colisionando con la ficha huehuehue");
-                  persona.translateZ(-(forward * deltaTime));
-                  if(ficha1_comodin == false){
-                    $("#15").toggle();
-                    ficha1_comodin = true;
-                  }
-                  obtuvofichaCOMODIN = true;
-                  ptsUsuario = ptsUsuario + 40;
-                  scene.remove(colision3[0].object.parent);
-                  colisionficha3_1_3.pop(colision3[0].object.parent);
-                }
               }
 
-            }
-
-            for(var i = 0; i < persona_2.misRayos.length; i++){
+              for(var i = 0; i < persona_2.misRayos.length; i++){
               var rayo_2 = persona_2.misRayos[i];
 
               raycaster_2.set( persona_2.position, rayo_2 );
@@ -2095,14 +2040,9 @@
                   var colision2 = raycaster_2.intersectObjects(
                     colisionficha3_1_2,
                     true
-                  );     
+                  );
 
-                  var colision3 = raycaster_2.intersectObjects(
-                    colisionficha3_1_3,
-                    true
-                  );       
-
-                  if( colision.length > 0 ){
+              if( colision.length > 0 ){
                     if(colision[0].distance < 3){
                       console.log("Estoy colisionando con la ficha huehuehue");
                       persona_2.translateZ(-(forward_2 * deltaTime));
@@ -2110,33 +2050,32 @@
                         $("#16").toggle();
                         ficha2_tomo = true;
                       }
+                      
                       obtuvofichaTOMO_2 = true;
                       ptsJugador2 = ptsJugador2 + 20;
-                      colision[0].object.scale.set(0,0,0);
+                      colision[0].object.parent.scale.set(0,0,0);
                       
                       if(fichitaTOMO.length == 0){
                         fichitaTOMO.push(colision[0].object.parent);
                       }
-
                       for(var i=0; i<fichitaTOMO.length; i++){
-                        fichitaTOMO[i].scale.set(0,0,0);
+                        fichita[i].scale.set(0,0,0);
                       }
                       colisionofichaTOMO_2 = true;
                     }
-                  }  
+                  }
 
                   if(colisionofichaTOMO == true){
-                    intermedio_1 = setInterval(function(){
-                      console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                     intermedio = setInterval(function(){
                       for(var i=0; i<fichitaTOMO.length; i++){
                         fichitaTOMO[i].scale.set(0.5, 0.5, 0.5);
-                        fichitaTOMO[i].children[0].scale.set(1, 1, 1);
                       } 
-                    colisionofichaTOMO = false;
+                      colisionofichaTOMO = false;
+                      //clearInterval(inter);
                     }, 5000, "JavaScript");
                     segundaColision = true;
                   }
-
+                  
                   if(segundaColision == true){
                     if( colision.length > 0 ){
                       if(colision[0].distance < 3){
@@ -2156,10 +2095,10 @@
                         $("#17").toggle();
                         ficha2_dachi = true;
                       }
+                      
                       obtuvofichaDACHI_2 = true;
-                                          
                       ptsJugador2 = ptsJugador2 + 20;
-                      colision2[0].object.scale.set(0,0,0);
+                      colision2[0].object.parent.scale.set(0,0,0);
                       
                       if(fichitaDACHI.length == 0){
                         fichitaDACHI.push(colision2[0].object.parent);
@@ -2172,44 +2111,49 @@
                     }
                   }
 
-                if(colisionofichaDACHI == true){
-                  intermedio_2 = setInterval(function(){
-                    console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-                    for(var i=0; i<fichitaDACHI.length; i++){
-                      fichitaDACHI[i].scale.set(0.5, 0.5, 0.5);
-                      fichitaDACHI[i].children[0].scale.set(1, 1, 1);
-                    } 
-                    colisionofichaDACHI = false;
-                  }, 5000, "JavaScript");
-                  segundaColision2 = true;
-                }
-                if(segundaColision2 == true){
-                  if( colision2.length > 0 ){
-                    if(colision2[0].distance < 3){
-                      scene.remove(colision2[0].object.parent);
-                      colisionficha3_1_2.pop(colision2[0].object.parent);
-                    }
-                  }
-                  segundaColision2 = false;
-                  colisionofichaDACHI = false;
-                }
-
-                if( colision3.length > 0 ){
-                  if(colision3[0].distance < 3){
-                    console.log("Estoy colisionando con la ficha huehuehue");
-                    persona_2.translateZ(-(forward_2 * deltaTime));
-                    if(ficha2_comodin == false){
-                      $("#18").toggle();
-                      ficha2_comodin = true;
-                    }
-                    obtuvofichaCOMODIN_2 = true;
-                    ptsJugador2 = ptsJugador2 + 40;
-                    scene.remove(colision3[0].object.parent);
-                    colisionficha3_1_3.pop(colision3[0].object.parent);
-                  }
-                }
-            }
+                  //if(fichaZOColisionada == true){
+                  //   inter_2 = setInterval(function(){
+                  //    for(var i=0; i<fichita2.length; i++){
+                  //      fichita2[i].scale.set(0.5, 0.5, 0.5);
+                  //    } 
+                  //    fichaZOColisionada = false;
+                  //    //clearInterval(inter);
+                  //  }, 5000, "JavaScript");
+                  //  colisionoDeNuevo1 = true;
+                  //}
+                  //
+                  //if(colisionoDeNuevo1 == true){
+                  //  if( colision2.length > 0 ){
+                  //    if(colision2[0].distance < 3){
+                  //      scene.remove(colision2[0].object.parent);
+                  //      colisionficha2_2.pop(colision2[0].object.parent);
+                  //    }
+                  //  }
+                  //  colisionoDeNuevo1 = false;
+                  //  fichaZOColisionada = false;
+                  //} 
           }
+                  //if(fichaZOColisionada_2 == true){
+                  //   inter_2 = setInterval(function(){
+                  //    for(var i=0; i<fichita2.length; i++){
+                  //      fichita2[i].scale.set(0.5, 0.5, 0.5);
+                  //    } 
+                  //    fichaZOColisionada_2 = false;
+                  //    //clearInterval(inter);
+                  //  }, 5000, "JavaScript");
+                  //  colisionoDeNuevo1_2 = true;
+                  //}
+//
+                  //if(colisionoDeNuevo1_2 == true){
+                  //  if( colision2.length > 0 ){
+                  //    if(colision2[0].distance < 3){
+                  //      scene.remove(colision2[0].object.parent);
+                  //      colisionficha2_2.pop(colision2[0].object.parent);
+                  //    }
+                  //  }
+                  //  colisionoDeNuevo1_2 = false;
+                  //  fichaZOColisionada_2 = false;
+                  //} 
 
           if(timer_3 <= 0 && !seAcaboElTiempo_2){
             //GAMEOVER
@@ -2220,98 +2164,6 @@
               $(location).attr('href', '/');
             });
             seAcaboElTiempo_2 = true;
-          }
-
-          if((obtuvofichaTOMO == true && obtuvofichaCOMODIN == true) || 
-                (obtuvofichaDACHI == true && obtuvofichaCOMODIN == true) || 
-                (obtuvofichaTOMO == true && obtuvofichaDACHI == true)  && Usuario1Gano_3 == false   ){
-
-                  seAcaboElTiempo_2 = true;
-                  Usuario1Gano_3 = true;
-                  Usuario2Gano_3 = false;
-
-                  $('#TercerNivel').css('display', 'block');
-                  var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 4.5); //1.0
-                  scene.add(ambientLight);
-
-                  if(unaVez3 == false){
-                    $('#score_tercer').append("Puntos del Usuario : " + ptsUsuario);
-                    unaVez3 = true;
-                  }
-
-                  $('body').on('click', '#guardarNivelTres', function(){
-                    //var score = $("#puntos").val();
-                    var idUsu = $("#usuid_tercer").val();
-                    var score = ptsUsuario;
-                    var dataToSend = { action: "/puntuaciones", puntos: score, user_id: idUsu, activo: 1 };
-                    if(unaVezguardarpuntuacion_3 == false){
-                      //debugger;
-                        $.ajax({
-                          url: '/puntuaciones',
-                          async: true,
-                          method: 'POST',
-                          data: dataToSend,
-                          dataType: 'json',
-                          success: function(respuestaDelServer){
-                            alert(respuestaDelServer.score);
-                          },
-                          error: function(x, h, r) {
-                            alert("Error: " + x + h + r);
-                          }
-                        });
-                        unaVezguardarpuntuacion_3 = true;
-                    }
-                  });
-
-                  $('body').on('click', '#salir5', function(){
-                    $(location).attr('href', '/');
-                  });
-          }
-
-          if((obtuvofichaTOMO_2 == true && obtuvofichaCOMODIN_2 == true) || 
-                (obtuvofichaDACHI_2 == true && obtuvofichaCOMODIN_2 == true) || 
-                (obtuvofichaTOMO_2 == true && obtuvofichaDACHI_2 == true)  && Usuario2Gano_3 == false   ){
-
-                  seAcaboElTiempo_2 = true;
-                  Usuario1Gano_3 = false;
-                  Usuario2Gano_3 = true;
-
-                  $('#TercerNivel_2').css('display', 'block');
-                  var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 4.5); //1.0
-                  scene.add(ambientLight);
-
-                  if(unaVez3_2 == false){
-                    $('#score_tercer_2').append("Puntos del Usuario : " + ptsUsuario);
-                    unaVez3_2 = true;
-                  }
-
-                  $('body').on('click', '#guardarNivelTres_2', function(){
-                    //var score = $("#puntos").val();
-                    var idUsu = $("#usuid_tercer_2").val();
-                    var score = ptsUsuario;
-                    var dataToSend = { action: "/puntuaciones", puntos: score, user_id: idUsu, activo: 1 };
-                    if(unaVezguardarpuntuacion2_3 == false){
-                      //debugger;
-                        $.ajax({
-                          url: '/puntuaciones',
-                          async: true,
-                          method: 'POST',
-                          data: dataToSend,
-                          dataType: 'json',
-                          success: function(respuestaDelServer){
-                            alert(respuestaDelServer.score);
-                          },
-                          error: function(x, h, r) {
-                            alert("Error: " + x + h + r);
-                          }
-                        });
-                        unaVezguardarpuntuacion2_3 = true;
-                    }
-                  });
-
-                  $('body').on('click', '#salir5_2', function(){
-                    $(location).attr('href', '/');
-                  });
           }
         }
 
@@ -2334,8 +2186,6 @@
           document.getElementById("face2").addEventListener('click', saveAsImage2);
           document.getElementById("book").addEventListener('click', saveAsImage);
           document.getElementById("book_2").addEventListener('click', saveAsImage2);
-          document.getElementById("book_tercer").addEventListener('click', saveAsImage);
-          document.getElementById("book_tercer_2").addEventListener('click', saveAsImage2);
 
           renderer = new THREE.WebGLRenderer({
             precision: "mediump",
@@ -2409,16 +2259,6 @@
 		      shareScore(puntos_per1_2, puntos_per2_2, baseUrl);
         }
 
-        function shareTercer() {
-            var getUrl = window.location;
-            var baseUrl = getUrl .protocol + "//www." + getUrl.host + "/" ;
-            var im = "test.jpg";
-            baseUrl = baseUrl + im;
-            console.log(baseUrl);
-            console.log(im);
-		      shareScore(ptsUsuario, ptsJugador2, baseUrl);
-        }
-
         function onWindowResize() {
           camera.aspect = visibleSize.width / (visibleSize.height/2);
           camera.updateProjectionMatrix();
@@ -2474,7 +2314,8 @@
           }
         }
 
-  </script>
+
+        </script>
   
   <style>
         #JuegoTerminado1{
@@ -2599,6 +2440,7 @@
             display: none;
             z-index: 500;
         }
+        
         #pruebaImagen_2{
             z-index: 600;
             position: absolute;
@@ -2629,78 +2471,7 @@
             left: 47%;
             top: 73%;
         }
-
-        #TercerNivel{
-            display: none;
-            z-index: 500;
-        }
-        #tercerImagen{
-            z-index: 600;
-            position: absolute;
-            left: 40%;
-            bottom: 26%;
-        }
-        #score_tercer{
-            z-index: 700;
-            position: absolute;
-            left: 44%;
-            top: 64.7%;
-        }
-        #book_tercer{
-            z-index: 800;
-            position: absolute;
-            left: 43%;
-            top: 67%;
-        }
-        #guardarNivelTres{
-            z-index: 900;
-            position: absolute;
-            left: 44%;
-            top: 70%;
-        }
-        #salir5{   
-            z-index: 1000;
-            position: absolute;
-            left: 47%;
-            top: 73%;
-        }
-
-        #TercerNivel_2{
-            display: none;
-            z-index: 500;
-        }
-        #tercerImagen_2{
-            z-index: 600;
-            position: absolute;
-            left: 40%;
-            bottom: 26%;
-        }
-        #score_tercer_2{
-            z-index: 700;
-            position: absolute;
-            left: 44%;
-            top: 64.7%;
-        }
-        #book_tercer_2{
-            z-index: 800;
-            position: absolute;
-            left: 43%;
-            top: 67%;
-        }
-        #guardarNivelTres_2{
-            z-index: 900;
-            position: absolute;
-            left: 44%;
-            top: 70%;
-        }
-        #salir5_2{   
-            z-index: 1000;
-            position: absolute;
-            left: 47%;
-            top: 73%;
-        }
     </style>
-
 
 </head>
 
@@ -2865,28 +2636,6 @@
                             <button id="book_2" onclick="share();">Compartir en Facebook</button><br/>
                             <button id="guardarNivelDos_2">Guardar Puntuacion</button>
                             <button id="salir4_2">Salir</button><br/>
-                          </div>
-
-                          <div id="TercerNivel" style="display: none">
-                            <img id="tercerImagen" src="img/usuario.jpg" z-index="5">
-                            <div id="score_tercer"></div>
-                            @auth
-                            <input type="hidden" name="idUsuario" id="usuid_tercer" value= "{{ Auth::user()->id }}">
-                            @endauth
-                            <button id="book_tercer" onclick="shareTercer();">Compartir en Facebook</button><br/>
-                            <button id="guardarNivelTres">Guardar Puntuacion</button>
-                            <button id="salir5">Salir</button><br/>
-                          </div>
-
-                          <div id="TercerNivel_2" style="display: none">
-                            <img id="tercerImagen_2" src="img/gano2.jpg" z-index="5">
-                            <div id="score_tercer_2"></div>
-                            @auth
-                            <input type="hidden" name="idUsuario" id="usuid_tercer_2" value= "{{ Auth::user()->id }}">
-                            @endauth
-                            <button id="book_tercer_2" onclick="shareTercer();">Compartir en Facebook</button><br/>
-                            <button id="guardarNivelTres_2">Guardar Puntuacion</button>
-                            <button id="salir5_2">Salir</button><br/>
                           </div>
 
                           @auth
