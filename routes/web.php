@@ -35,3 +35,5 @@ Route::post('/image_3', 'ImagenController@GuardarImg_3')->name('guardarImagen_3'
 Route::post('/image_4', 'ImagenController@GuardarImg_4')->name('guardarImagen_4');
 
 Route::post('/image_5', 'ImagenController@GuardarImg_5')->name('guardarImagen_5');
+
+Route::post('/image_6', 'ImagenController@GuardarImg_6')->name('guardarImagen_6');

@@ -98,4 +98,21 @@ class ImagenController extends Controller
             ]);
         }
     }
+
+    public function GuardarImg_6(Request $request){
+        $imagen = $request->input('idscreen_6');
+        $puntuacion = $request->input('puntuacionUsuario_6');
+        //var_dump($imagen);
+        //var_dump($puntuacion);
+        //die();
+        if(preg_match('/^data:image\/(\w+);base64,/', $imagen)){
+            $image_full =  substr($imagen, strpos($imagen, ',') + 1);
+            $image_full = base64_decode($image_full);
+            Storage::disk('public')->put("screen.png",($image_full));
+            return view('segundo',[
+            'imagen' => $image_full, 
+            'puntuacion' => $puntuacion
+            ]);
+        }
+    }
 }

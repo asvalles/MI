@@ -2503,6 +2503,7 @@
                     $('#score_tercer_2').append("Puntos del Usuario : " + ptsUsuario);
                     unaVez3_2 = true;
                   }
+                  $('#puntuacionUsuario_6').val(ptsUsuario);
 
                   $('body').on('click', '#guardarNivelTres_2', function(){
                     //var score = $("#puntos").val();
@@ -2777,6 +2778,14 @@
           var strMime = "image/jpeg";
           imgData = renderer.domElement.toDataURL(strMime);
           var screenshot = document.getElementById("idscreen_5");
+          screenshot.value = imgData;
+        }
+
+        function tomarScreen_6(){
+          var imgData;
+          var strMime = "image/jpeg";
+          imgData = renderer.domElement.toDataURL(strMime);
+          var screenshot = document.getElementById("idscreen_6");
           screenshot.value = imgData;
         }
 
@@ -3226,7 +3235,15 @@
                             @auth
                             <input type="hidden" name="idUsuario" id="usuid_tercer_2" value= "{{ Auth::user()->id }}">
                             @endauth
-                            <button id="book_tercer_2" onclick="shareTercer();">Compartir en Facebook</button><br/>
+                            <!-- <button id="book_tercer_2" onclick="shareTercer();">Compartir en Facebook</button><br/>-->
+
+                            <form action="{{route('guardarImagen_6')}}" method="POST" id="formo">
+                            {{ csrf_field() }}
+                              <input type="hidden" id="puntuacionUsuario_6" name="puntuacionUsuario_6">
+                              <input type="hidden" id="idscreen_6" name="idscreen_6">
+                              <button id="book_tercer_2" onclick="tomarScreen_6();">Compartir en Facebook</button><br/>
+                            </form>
+
                             <button id="guardarNivelTres_2">Guardar Puntuacion</button>
                             <button id="salir5_2">Salir</button><br/>
                           </div>
