@@ -921,19 +921,19 @@
             if(gamepad_2.connected){
               if(gamepad_2.axes[0]>.5){
                 console.log('entro button pressed');
-                yaw_2 = -8;
+                yaw_2 = -2;
               }
               if(gamepad_2.axes[1]>.5){
                 console.log('entro axes 1 >');
-                forward_2 = 200;
+                forward_2 = 20;
               }
               if(gamepad_2.axes[0]<-.5){
                 console.log('entro axes 0 < ');
-                yaw_2 = 8;
+                yaw_2 = 2;
               }
               if(gamepad_2.axes[1]<-.5){
                 console.log('entro axes 1 < ');
-                forward_2 = -200;
+                forward_2 = -20;
               }
               else{
                 console.log('entro al if del connected pero a ningun axes');
@@ -989,7 +989,7 @@
           if (isWorldReady[0] && isWorldReady[1]) {
 
             persona.translateZ(forward * deltaTime);
-            //persona_2.translateZ(forward_2 * deltaTime);
+            persona_2.translateZ(forward_2 * deltaTime);
 
             for(var i = 0; i < persona.misRayos.length; i++){
               var rayo = persona.misRayos[i];
@@ -1027,7 +1027,7 @@
               }
             }
             persona.rotation.y += yaw * deltaTime;
-            //persona_2.rotation.y += yaw_2 * deltaTime;
+            persona_2.rotation.y += yaw_2 * deltaTime;
           }
 
           if (isWorldReady[8]) {
@@ -1493,19 +1493,19 @@
               if(gamepad_2.connected){
                 if(gamepad_2.axes[0]>.5){
                   console.log('entro button pressed');
-                  yaw_2 = -8;
+                  yaw_2 = -2;
                 }
                 if(gamepad_2.axes[1]>.5){
                   console.log('entro axes 1 >');
-                  forward_2 = 200;
+                  forward_2 = 20;
                 }
                 if(gamepad_2.axes[0]<-.5){
                   console.log('entro axes 0 < ');
-                  yaw_2 = 8;
+                  yaw_2 = 2;
                 }
                 if(gamepad_2.axes[1]<-.5){
                   console.log('entro axes 1 < ');
-                  forward_2 = -200;
+                  forward_2 = -20;
                 }
                 else{
                   console.log('entro al if del connected pero a ningun axes');
@@ -1534,7 +1534,7 @@
             if (isWorldReady[0] && isWorldReady[1]) {
 
               persona.translateZ(forward * deltaTime);
-              //persona_2.translateZ(forward_2 * deltaTime);
+              persona_2.translateZ(forward_2 * deltaTime);
 
               for(var i = 0; i < persona.misRayos.length; i++){
                 var rayo = persona.misRayos[i];
@@ -1572,7 +1572,7 @@
                 }
               }
               persona.rotation.y += yaw * deltaTime;
-              //persona_2.rotation.y += yaw_2 * deltaTime;
+              persona_2.rotation.y += yaw_2 * deltaTime;
             }
 
             if (isWorldReady[17]) {
@@ -2082,25 +2082,25 @@
           if (gamepad_2.length>0){
               gamepad_2 = gamepad_2[0];
           }
-
+          
           if(gamepad_2){
             console.log('entro gamepad_2');
             if(gamepad_2.connected){
               if(gamepad_2.axes[0]>.5){
                 console.log('entro button pressed');
-                yaw_2 = -7.5;
+                yaw_2 = -2;
               }
               if(gamepad_2.axes[1]>.5){
                 console.log('entro axes 1 >');
-                forward_2 = 85;
+                forward_2 = 20;
               }
               if(gamepad_2.axes[0]<-.5){
                 console.log('entro axes 0 < ');
-                yaw_2 = 7.5;
+                yaw_2 = 2;
               }
               if(gamepad_2.axes[1]<-.5){
                 console.log('entro axes 1 < ');
-                forward_2 = -85;
+                forward_2 = -20;
               }
               else{
                 console.log('entro al if del connected pero a ningun axes');
