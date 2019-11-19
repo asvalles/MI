@@ -1397,6 +1397,7 @@
             scene.add(ambientLight);
 
             $('#puntos2').append("Puntos del Usuario : " + puntos_per1);
+            $('#puntuacionUsuario').val(puntos_per1);
 
             $('body').on('click', '#guardar_2', function(){
 
@@ -2544,7 +2545,7 @@
           camera_2.position.y = 10;
           
           //document.getElementById("face").addEventListener('click', saveAsImage);     ////////////////////aqui obtengo el button compartir facebook
-          document.getElementById("face2").addEventListener('click', saveAsImage2);
+          //document.getElementById("face2").addEventListener('click', saveAsImage2);
           document.getElementById("book").addEventListener('click', saveAsImage);
           document.getElementById("book_2").addEventListener('click', saveAsImage2);
           document.getElementById("book_tercer").addEventListener('click', saveAsImage);
@@ -3109,7 +3110,14 @@
                             <input type="hidden" name="idUsuario" id="usuid2" value= "{{ Auth::user()->id }}">
                             @endauth
                             <div id="puntos2"></div>
-                            <button id="face2" onclick="shareFB();">Compartir en Facebook</button><br/>
+
+                            <form action="{{route('guardarImagen')}}" method="POST" id="formo">
+                            {{ csrf_field() }}
+                              <input type="hidden" id="puntuacionUsuario" name="puntuacionUsuario">
+                              <input type="hidden" id="idscreen" name="idscreen">
+                              <button id="face2" onclick="tomarScreen();">Compartir en Facebook</button><br/>
+                            </form>
+                            
                             <button id="guardar_2">Guardar Puntuacion</button>
                             <button id="salir2">Salir</button><br/>
                           </div>
