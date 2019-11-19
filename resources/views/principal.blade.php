@@ -2547,7 +2547,7 @@
           
           //document.getElementById("face").addEventListener('click', saveAsImage);     ////////////////////aqui obtengo el button compartir facebook
           //document.getElementById("face2").addEventListener('click', saveAsImage2);
-          document.getElementById("book").addEventListener('click', saveAsImage);
+          //document.getElementById("book").addEventListener('click', saveAsImage);
           document.getElementById("book_2").addEventListener('click', saveAsImage2);
           document.getElementById("book_tercer").addEventListener('click', saveAsImage);
           document.getElementById("book_tercer_2").addEventListener('click', saveAsImage2);
