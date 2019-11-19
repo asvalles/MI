@@ -2456,6 +2456,8 @@
                     unaVez3 = true;
                   }
 
+                  $('#puntuacionUsuario_5').val(ptsUsuario);
+
                   $('body').on('click', '#guardarNivelTres', function(){
                     //var score = $("#puntos").val();
                     var idUsu = $("#usuid_tercer").val();
@@ -2551,8 +2553,8 @@
           //document.getElementById("face2").addEventListener('click', saveAsImage2);
           //document.getElementById("book").addEventListener('click', saveAsImage);
           //document.getElementById("book_2").addEventListener('click', saveAsImage2);
-          document.getElementById("book_tercer").addEventListener('click', saveAsImage);
-          document.getElementById("book_tercer_2").addEventListener('click', saveAsImage2);
+          //document.getElementById("book_tercer").addEventListener('click', saveAsImage);
+          //document.getElementById("book_tercer_2").addEventListener('click', saveAsImage2);
 
           //
           scene.fog = new THREE.FogExp2( 0x000000, 0.0008 );
@@ -2767,6 +2769,14 @@
           var strMime = "image/jpeg";
           imgData = renderer.domElement.toDataURL(strMime);
           var screenshot = document.getElementById("idscreen_4");
+          screenshot.value = imgData;
+        }
+
+        function tomarScreen_5(){
+          var imgData;
+          var strMime = "image/jpeg";
+          imgData = renderer.domElement.toDataURL(strMime);
+          var screenshot = document.getElementById("idscreen_5");
           screenshot.value = imgData;
         }
 
@@ -3197,7 +3207,15 @@
                             @auth
                             <input type="hidden" name="idUsuario" id="usuid_tercer" value= "{{ Auth::user()->id }}">
                             @endauth
-                            <button id="book_tercer" onclick="shareTercer();">Compartir en Facebook</button><br/>
+                            <!-- <button id="book_tercer" onclick="shareTercer();">Compartir en Facebook</button><br/> -->
+
+                            <form action="{{route('guardarImagen_5')}}" method="POST" id="formo">
+                            {{ csrf_field() }}
+                              <input type="hidden" id="puntuacionUsuario_5" name="puntuacionUsuario_5">
+                              <input type="hidden" id="idscreen_5" name="idscreen_5">
+                              <button id="book_tercer" onclick="tomarScreen_5();">Compartir en Facebook</button><br/>
+                            </form>
+
                             <button id="guardarNivelTres">Guardar Puntuacion</button>
                             <button id="salir5">Salir</button><br/>
                           </div>
