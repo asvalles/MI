@@ -1951,6 +1951,7 @@
                 $('#score_puntos').append("Puntos del Usuario : " + puntos_per1_2);
                 unaVez = true;
               }
+              $('#puntuacionUsuario_3').val(puntos_per1_2);
 
               $('body').on('click', '#guardarNivelDos', function(){
                 //var score = $("#puntos").val();
@@ -3140,7 +3141,15 @@
                             @auth
                             <input type="hidden" name="idUsuario" id="usuid3" value= "{{ Auth::user()->id }}">
                             @endauth
-                            <button id="book" onclick="share();">Compartir en Facebook</button><br/>
+                            <!-- <button id="book" onclick="share();">Compartir en Facebook</button><br/>-->
+
+                            <form action="{{route('guardarImagen_3')}}" method="POST" id="formo">
+                            {{ csrf_field() }}
+                              <input type="hidden" id="puntuacionUsuario_3" name="puntuacionUsuario_3">
+                              <input type="hidden" id="idscreen_3" name="idscreen_3">
+                              <button id="book" onclick="tomarScreen_3();">Compartir en Facebook</button><br/>
+                            </form>
+
                             <button id="guardarNivelDos">Guardar Puntuacion</button>
                             <button id="salir4">Salir</button><br/>
                           </div>
