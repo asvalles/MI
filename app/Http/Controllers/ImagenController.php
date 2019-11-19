@@ -17,9 +17,9 @@ class ImagenController extends Controller
     public function GuardarImg(Request $request){
         $imagen = $request->input('idscreen');
         $puntuacion = $request->input('puntuacionUsuario');
-        var_dump($imagen);
-        var_dump($puntuacion);
-        die();
+        //var_dump($imagen);
+        //var_dump($puntuacion);
+        //die();
         if(preg_match('/^data:image\/(\w+);base64,/', $imagen)){
             $image_full =  substr($imagen, strpos($imagen, ',') + 1);
             $image_full = base64_decode($image_full);
