@@ -42,31 +42,20 @@
   <script type="text/javascript">
       $(document).ready(function() {
 
-        //$('#btn_play').click(function() {
-        //  $("#NIVELES").toogle();
+        //$('#btn_pausa').click(function() {
+        //  $("#pausa").toggle();
+        //  $("#NIVELES").hide();
         //  $("#can").hide();
-        //  $("#pausa").hide();
         //  $("#puntuacion").hide();
         //  $("#configuracion").hide();
         //  $("#login").hide();
         //  $("#registro").hide();
+        //  $("#NivelUno_Texto").hide();
+        //  $("#NivelDos_Texto").hide();
+        //  $("#NivelTres_Texto").hide();
         //});
 
-        $('#btn_pausa').click(function() {
-          $("#pausa").toggle();
-          $("#NIVELES").hide();
-          $("#can").hide();
-          $("#puntuacion").hide();
-          $("#configuracion").hide();
-          $("#login").hide();
-          $("#registro").hide();
-          $("#NivelUno_Texto").hide();
-          $("#NivelDos_Texto").hide();
-          $("#NivelTres_Texto").hide();
-        });
-
         $('#btn_niveles').click(function() {
-          $("#pausa").hide();
           $("#NIVELES").toggle();
           $("#can").hide();
           $("#puntuacion").hide();
@@ -81,7 +70,6 @@
         $('#btn_config').click(function() {
           $("#configuracion").toggle();
           $("#NIVELES").hide();
-          $("#pausa").hide();
           $("#puntuacion").hide();
           $("#can").hide();
           $("#login").hide();
@@ -94,7 +82,6 @@
         $('#btn_punt').click(function() {
           $("#puntuacion").toggle();
           $("#NIVELES").hide();
-          $("#pausa").hide();
           $("#configuracion").hide();
           $("#can").hide();
           $("#login").hide();
@@ -107,7 +94,6 @@
          $('#btn_regi').click(function() {
           $("#registro").toggle();
           $("#NIVELES").hide();
-          $("#pausa").hide();
           $("#configuracion").hide();
           $("#can").hide();
           $("#login").hide();
@@ -120,7 +106,6 @@
          $('#btn_login').click(function() {
           $("#login").toggle();
           $("#NIVELES").hide();
-          $("#pausa").hide();
           $("#configuracion").hide();
           $("#can").hide();
           $("#puntuacion").hide();
@@ -348,9 +333,11 @@
         var unaVezguardarpuntuacion_3 = false;
         var unaVezguardarpuntuacion2_3 = false;
 
-        var arcoiris;
-        var gamepad_2;
-        var materials = [];
+        var arcoiris;    /// shaders
+        var gamepad_2;   ///control gamepad
+        var materials = []; //particulas
+        var pause = false;   ///boton pausa
+
 
         var intermedio = setInterval(function(){ 
           if(seAcaboElTiempo_2 == false && inicioNivelTres == true && timer_3 >= 0){
@@ -792,6 +779,21 @@
           for(var i = 0; i < NIVELTRES.length; i++){
             scene.add(NIVELTRES[i]);
           }
+
+          $("#btn_pausa").on({		
+            mouseenter: function(){
+              pause=true;
+              console.log(pause);
+            },
+            mouseleave: function(){
+              pause=false;
+              console.log(pause);
+            },
+            click: function(){
+              pause=true;
+              console.log(pause);
+            }
+				});
          
           render();
           render_2();
@@ -942,9 +944,6 @@
             else{
               console.log('entro al else del connected');
             }
-          }
-          else{
-            console.log('no esta entrando al if gamepad_2');
           }
 
           //var yaw_2 = 0;
@@ -1350,6 +1349,7 @@
             scene.add(ambientLight);
 
             $('#puntos').append("Puntos del Usuario : " + puntos_per1);
+            $('#puntuacionUsuario').val(puntos_per1);
             //debugger;
 
             //$('#salir').onclick(function(){
@@ -1434,596 +1434,601 @@
         }
 
         function render_2(){
-          requestAnimationFrame(render_2); 
-          var bool=false;
-          deltaTime = clock.getDelta();	
-          Usuario1Gano_2 = false;
-          
+          if(pause == false){
+            requestAnimationFrame(render_2); 
+            var bool=false;
+            deltaTime = clock.getDelta();	
+            Usuario1Gano_2 = false;
+            
 
-          for(var i = 0; i < NIVELDOS.length; i++){
-            if(estaEnNivelDos == true){
-              if(i != 2){
-                NIVELDOS[i].scale.set(0.5, 0.5, 0.5);
-              }
-              if(sevefichaKUtoogle == false && i==2){
-                NIVELDOS[i].scale.set(1, 1, 1);
-              }
-            }
-            else{
-              NIVELDOS[i].scale.set(0, 0, 0);
-            }
-          }
-
-          if (mixers.length > 0) {
-            for (var i = 0; i < mixers.length; i++) {
-              mixers[i].update(deltaTime);
-            }
-          }
-
-          if (mixers_2.length > 0) {
-            for (var i = 0; i < mixers_2.length; i++) {
-              mixers_2[i].update(deltaTime);
-            }
-          }
-
-          var yaw = 0;
-          var forward = 0;
-          if (keys["A"]) {
-            yaw = 2;
-          } else if (keys["D"]) {
-            yaw = -2;
-          }
-          if (keys["W"]) {
-            forward = -20;
-          } else if (keys["S"]) {
-            forward = 20;
-          }
-
-          var yaw_2 = 0;
-          var forward_2 = 0;
-          gamepad_2 = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
-          if (gamepad_2.length>0){
-              gamepad_2 = gamepad_2[0];
-          }
-
-          if(gamepad_2){
-            console.log('entro gamepad_2');
-            if(gamepad_2.connected){
-              if(gamepad_2.axes[0]>.5){
-                console.log('entro button pressed');
-                yaw_2 = -8;
-              }
-              if(gamepad_2.axes[1]>.5){
-                console.log('entro axes 1 >');
-                forward_2 = 200;
-              }
-              if(gamepad_2.axes[0]<-.5){
-                console.log('entro axes 0 < ');
-                yaw_2 = 8;
-              }
-              if(gamepad_2.axes[1]<-.5){
-                console.log('entro axes 1 < ');
-                forward_2 = -200;
+            for(var i = 0; i < NIVELDOS.length; i++){
+              if(estaEnNivelDos == true){
+                if(i != 2){
+                  NIVELDOS[i].scale.set(0.5, 0.5, 0.5);
+                }
+                if(sevefichaKUtoogle == false && i==2){
+                  NIVELDOS[i].scale.set(1, 1, 1);
+                }
               }
               else{
-                console.log('entro al if del connected pero a ningun axes');
+                NIVELDOS[i].scale.set(0, 0, 0);
               }
-              console.log(gamepad_2.axes[0] + "---" + gamepad_2.axes[1]);
+            }
+
+            if (mixers.length > 0) {
+              for (var i = 0; i < mixers.length; i++) {
+                mixers[i].update(deltaTime);
+              }
+            }
+
+            if (mixers_2.length > 0) {
+              for (var i = 0; i < mixers_2.length; i++) {
+                mixers_2[i].update(deltaTime);
+              }
+            }
+
+            var yaw = 0;
+            var forward = 0;
+            if (keys["A"]) {
+              yaw = 2;
+            } else if (keys["D"]) {
+              yaw = -2;
+            }
+            if (keys["W"]) {
+              forward = -20;
+            } else if (keys["S"]) {
+              forward = 20;
+            }
+
+            var yaw_2 = 0;
+            var forward_2 = 0;
+            gamepad_2 = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
+            if (gamepad_2.length>0){
+                gamepad_2 = gamepad_2[0];
+            }
+
+            if(gamepad_2){
+              console.log('entro gamepad_2');
+              if(gamepad_2.connected){
+                if(gamepad_2.axes[0]>.5){
+                  console.log('entro button pressed');
+                  yaw_2 = -8;
+                }
+                if(gamepad_2.axes[1]>.5){
+                  console.log('entro axes 1 >');
+                  forward_2 = 200;
+                }
+                if(gamepad_2.axes[0]<-.5){
+                  console.log('entro axes 0 < ');
+                  yaw_2 = 8;
+                }
+                if(gamepad_2.axes[1]<-.5){
+                  console.log('entro axes 1 < ');
+                  forward_2 = -200;
+                }
+                else{
+                  console.log('entro al if del connected pero a ningun axes');
+                }
+                console.log(gamepad_2.axes[0] + "---" + gamepad_2.axes[1]);
+              }
+              
+              else{
+                console.log('entro al else del connected');
+              }
+            }
+
+            //var yaw_2 = 0;
+            //var forward_2 = 0;
+            //if (keys["J"]) {
+            //  yaw_2 = 2;
+            //} else if (keys["L"]) {
+            //  yaw_2 = -2;
+            //}
+            //if (keys["I"]) {
+            //  forward_2 = -20;
+            //} else if (keys["K"]) {
+            //  forward_2 = 20;
+            //}
+
+            if (isWorldReady[0] && isWorldReady[1]) {
+
+              persona.translateZ(forward * deltaTime);
+              //persona_2.translateZ(forward_2 * deltaTime);
+
+              for(var i = 0; i < persona.misRayos.length; i++){
+                var rayo = persona.misRayos[i];
+
+                raycaster.set( persona.position, rayo );
+
+                var colision = raycaster.intersectObjects(
+                  objetosConColision,
+                  true
+                );
+
+                if( colision.length > 0 ){
+                  if(colision[0].distance < 3){
+                    console.log("Estoy colisionando");
+                    persona.translateZ(-(forward * deltaTime));
+                  }
+                }
+              }
+
+              for(var i = 0; i < persona_2.misRayos.length; i++){
+                var rayo_2 = persona_2.misRayos[i];
+
+                raycaster_2.set( persona_2.position, rayo_2 );
+
+                var colision_2 = raycaster_2.intersectObjects(
+                  objetosConColision,
+                  true
+                );
+
+                if( colision_2.length > 0 ){
+                  if(colision_2[0].distance < 3){
+                    console.log("Estoy colisionando");
+                    persona_2.translateZ(-(forward_2 * deltaTime));
+                  }
+                }
+              }
+              persona.rotation.y += yaw * deltaTime;
+              //persona_2.rotation.y += yaw_2 * deltaTime;
+            }
+
+            if (isWorldReady[17]) {
+                for(var i = 0; i < persona.misRayos.length; i++){
+                    var rayo = persona.misRayos[i];
+
+                    raycaster.set( persona.position, rayo );
+
+                    var colision = raycaster.intersectObjects(
+                      colisionficha1_2,
+                      true
+                    );
+
+                    var colision2 = raycaster.intersectObjects(
+                      colisionficha2_2,
+                      true
+                    );
+
+                    var colision3 = raycaster.intersectObjects(
+                      colisionficha3_2,
+                      true
+                    );
+
+                    var colision4 = raycaster.intersectObjects(
+                      colisionFarol_1,
+                      true
+                    );
+
+                    if( colision.length > 0 ){
+                      if(colision[0].distance < 3){
+                        console.log("Estoy colisionando con la ficha huehuehue");
+                        persona.translateZ(-(forward * deltaTime));
+                        if(ficha1_ka == false){
+                          $("#7").toggle();
+                          ficha1_ka = true;
+                        }
+
+                        obtuvofichaKA = true;
+                                            
+                        puntos_per1_2 = puntos_per1_2 + 15;
+
+                        colision[0].object.scale.set(0,0,0);
+                        
+                        if(fichita.length == 0){
+                          fichita.push(colision[0].object.parent);
+                        }
+
+                        for(var i=0; i<fichita.length; i++){
+                          fichita[i].scale.set(0,0,0);
+                        }
+                        fichaKAColisionada = true;
+                      }
+                    }
+
+                    if(fichaKAColisionada_2 == true){
+                      inter = setInterval(function(){
+                        for(var i=0; i<fichita.length; i++){
+                          fichita[i].scale.set(0.5, 0.5, 0.5);
+                          fichita[i].children[0].scale.set(1, 1, 1);
+                        } 
+                        fichaKAColisionada_2 = false;
+                        //clearInterval(inter);
+                      }, 5000, "JavaScript");
+                      colisionoDeNuevo_2 = true;
+                    }
+
+                    if(colisionoDeNuevo_2 == true){
+                      if( colision.length > 0 ){
+                        if(colision[0].distance < 3){
+                          scene.remove(colision[0].object.parent);
+                          colisionficha1_2.pop(colision[0].object.parent);
+                        }
+                      }
+                      colisionoDeNuevo_2 = false;
+                      fichaKAColisionada_2 = false;
+                    }
+
+                    if( colision2.length > 0 ){
+                      if(colision2[0].distance < 3){
+                        console.log("Estoy colisionando con la ficha huehuehue");
+                        persona.translateZ(-(forward * deltaTime));
+                        if(ficha1_zo == false){
+                          $("#8").toggle();
+                          ficha1_zo = true;
+                        }
+
+                        //puntos_per1_2 = puntos_per1_2 + 15;
+                        obtuvofichaZO = true;
+
+                        colision2[0].object.scale.set(0,0,0);
+                        
+                        if(fichita2.length == 0){
+                          fichita2.push(colision2[0].object.parent);
+                        }
+
+                        for(var i=0; i<fichita2.length; i++){
+                          fichita2[i].scale.set(0,0,0);
+                        }
+                        fichaZOColisionada = true;
+
+                        //fichita2.push(colision2[0].object.parent);
+                        //fichita2[0].scale.set(0,0,0);
+                        //fichaZOColisionada = true;
+                        //scene.remove(colision2[0].object.parent);
+                        //colisionficha2_2.pop(colision2[0].object.parent);
+                      }
+                    }
+
+                    if(fichaZOColisionada_2 == true){
+                      inter_2 = setInterval(function(){
+                        for(var i=0; i<fichita2.length; i++){
+                          fichita2[i].scale.set(0.5, 0.5, 0.5);
+                          fichita2[i].children[0].scale.set(1, 1, 1);
+                        } 
+                        fichaZOColisionada_2 = false;
+                        //clearInterval(inter);
+                      }, 5000, "JavaScript");
+                      colisionoDeNuevo1_2 = true;
+                    }
+
+                    if(colisionoDeNuevo1_2 == true){
+                      if( colision2.length > 0 ){
+                        if(colision2[0].distance < 3){
+                          scene.remove(colision2[0].object.parent);
+                          colisionficha2_2.pop(colision2[0].object.parent);
+                        }
+                      }
+                      colisionoDeNuevo1_2 = false;
+                      fichaZOColisionada_2 = false;
+                    } 
+
+                    if( colision3.length > 0 ){
+                      if(colision3[0].distance < 3){
+                        console.log("Estoy colisionando con la ficha huehuehue");
+                        persona.translateZ(-(forward * deltaTime));
+                        if(ficha1_ku == false){
+                          $("#9").toggle();
+                          ficha1_ku = true;
+                        }
+
+                        sevefichaKUtoogle = false;
+                        //puntos_per1_2 = puntos_per1_2 + 15;
+                        obtuvofichaKU = true;
+                        
+                        fichita3.push(colision3[0].object.parent);
+                        fichita3[0].scale.set(0,0,0);
+                        fichaKUColisionada = true;
+                        //scene.remove(colision3[0].object.parent);
+                        //colisionficha3_2.pop(colision3[0].object.parent);
+                      }
+                    }
+                    if(fichaKUColisionada == true){
+                      var inter4 = setInterval(function(){ 
+                        fichita3[0].scale.set(1, 1, 1);
+                        fichita3[0].children[0].scale.set(1, 1, 1);
+                      }, 5000, "JavaScript");
+                    }  
+
+                    if( colision4.length > 0 ){
+                      if(colision4[0].distance < 3){
+                        console.log("Estoy colisionando con el farol huehuehue");
+                        persona.translateZ(-(forward * deltaTime));
+                        sevefichaKUtoogle = true;
+                      }
+                    }
+
+                    if(sevefichaKUtoogle == true){
+                      fichaKUtoggle.scale.set(0.5, 0.5, 0.5);
+                    }
+                    else{
+                      fichaKUtoggle.scale.set(0, 0, 0);
+                    }
+              }
+
+              for(var i = 0; i < persona_2.misRayos.length; i++){
+                var rayo_2 = persona_2.misRayos[i];
+
+                raycaster_2.set( persona_2.position, rayo_2 );
+
+                var colision = raycaster_2.intersectObjects(
+                      colisionficha1_2,
+                      true
+                    );
+
+                    var colision2 = raycaster_2.intersectObjects(
+                      colisionficha2_2,
+                      true
+                    );
+
+                    var colision3 = raycaster_2.intersectObjects(
+                      colisionficha3_2,
+                      true
+                    );
+
+                    var colision4 = raycaster_2.intersectObjects(
+                      colisionFarol_1,
+                      true
+                    );
+
+                if( colision.length > 0 ){
+                      if(colision[0].distance < 3){
+                        console.log("Estoy colisionando con la ficha huehuehue");
+                        persona_2.translateZ(-(forward_2 * deltaTime));
+                        if(ficha2_ka == false){
+                          $("#10").toggle();
+                          ficha2_ka = true;
+                        }
+                        
+                        obtuvofichaKA_2 = true;
+                        puntos_per2_2 = puntos_per2_2 + 15;
+                        //cantidadfichas_2_2 = cantidadfichas_2_2 + 1;
+
+                        colision[0].object.scale.set(0,0,0);
+                        
+                        if(fichita.length == 0){
+                          fichita.push(colision[0].object.parent);
+                        }
+                        for(var i=0; i<fichita.length; i++){
+                          fichita[i].scale.set(0,0,0);
+                        }
+                        fichaKAColisionada_2 = true;
+                      }
+                    }
+
+                    if(fichaKAColisionada == true){
+                      inter = setInterval(function(){
+                        for(var i=0; i<fichita.length; i++){
+                          fichita[i].scale.set(0.5, 0.5, 0.5);
+                          fichita[i].children[0].scale.set(1, 1, 1);
+                        } 
+                        fichaKAColisionada = false;
+                        //clearInterval(inter);
+                      }, 5000, "JavaScript");
+                      colisionoDeNuevo = true;
+                    }
+
+                    if(colisionoDeNuevo == true){
+                      if( colision.length > 0 ){
+                        if(colision[0].distance < 3){
+                          scene.remove(colision[0].object.parent);
+                          colisionficha1_2.pop(colision[0].object.parent);
+                        }
+                      }
+                      colisionoDeNuevo = false;
+                      fichaKAColisionada = false;
+                    }
+
+
+
+
+                    if( colision2.length > 0 ){
+                      if(colision2[0].distance < 3){
+                        console.log("Estoy colisionando con la ficha huehuehue");
+                        persona_2.translateZ(-(forward_2 * deltaTime));
+                        if(ficha2_zo == false){
+                          $("#11").toggle();
+                          ficha2_zo = true;
+                        }
+                        
+                        obtuvofichaZO_2 = true; 
+                        //puntos_per2_2 = puntos_per2_2 + 15;
+                        //cantidadfichas_2_2 = cantidadfichas_2_2 + 1;
+
+                        colision2[0].object.scale.set(0,0,0);
+                        
+                        if(fichita2.length == 0){
+                          fichita2.push(colision2[0].object.parent);
+                        }
+
+                        for(var i=0; i<fichita2.length; i++){
+                          fichita2[i].scale.set(0,0,0);
+                        }
+                        fichaZOColisionada_2 = true;
+
+                        //fichita2.push(colision2[0].object.parent);
+                        //fichita2[0].scale.set(0,0,0);
+                        //fichaZOColisionada = true;
+                        //scene.remove(colision2[0].object.parent);
+                        //colisionficha2_2.pop(colision2[0].object.parent);
+                      }
+                    }
+
+                    if(fichaZOColisionada == true){
+                      inter_2 = setInterval(function(){
+                        for(var i=0; i<fichita2.length; i++){
+                          fichita2[i].scale.set(0.5, 0.5, 0.5);
+                          fichita2[i].children[0].scale.set(1, 1, 1);
+                        } 
+                        fichaZOColisionada = false;
+                        //clearInterval(inter);
+                      }, 5000, "JavaScript");
+                      colisionoDeNuevo1 = true;
+                    }
+
+                    if(colisionoDeNuevo1 == true){
+                      if( colision2.length > 0 ){
+                        if(colision2[0].distance < 3){
+                          scene.remove(colision2[0].object.parent);
+                          colisionficha2_2.pop(colision2[0].object.parent);
+                        }
+                      }
+                      colisionoDeNuevo1 = false;
+                      fichaZOColisionada = false;
+                    } 
+
+
+
+                    if( colision3.length > 0 ){
+                      if(colision3[0].distance < 3){
+                        console.log("Estoy colisionando con la ficha huehuehue");
+                        persona_2.translateZ(-(forward_2 * deltaTime));
+                        if(ficha2_ku == false){
+                          $("#12").toggle();
+                          ficha2_ku = true;
+                        }
+
+                        obtuvofichaKU_2 = true;
+                        sevefichaKUtoogle = false;
+                        //puntos_per2_2 = puntos_per2_2 + 15;
+                        //cantidadfichas_2_2 = cantidadfichas_2_2 + 1;
+                        
+                        fichita3_2.push(colision3[0].object.parent);
+                        fichita3_2[0].scale.set(0,0,0);
+                        fichaKUColisionada_2 = true;
+                        //scene.remove(colision3[0].object.parent);
+                        //colisionficha3_2.pop(colision3[0].object.parent);
+                      }
+                    }
+                    if(fichaKUColisionada_2 == true){
+                      var inter3 = setInterval(function(){ 
+                        fichita3_2[0].scale.set(1, 1, 1);
+                        fichita3_2[0].children[0].scale.set(1, 1, 1);
+                      }, 5000, "JavaScript");
+                    }  
+
+                    if( colision4.length > 0 ){
+                      if(colision4[0].distance < 3){
+                        console.log("Estoy colisionando con el farol huehuehue");
+                        persona_2.translateZ(-(forward_2 * deltaTime));
+                        sevefichaKUtoogle = true;
+                      }
+                    }
+
+                    if(sevefichaKUtoogle == true){
+                      fichaKUtoggle.scale.set(0.5, 0.5, 0.5);
+                    }
+                    else{
+                      fichaKUtoggle.scale.set(0, 0, 0);
+                    }
+
+              }
             }
             
-            else{
-              console.log('entro al else del connected');
-            }
-          }
-          else{
-            console.log('no esta entrando al if gamepad_2');
-          }
+            if(timer <= 0 && !seAcaboElTiempo){
+              //GAMEOVER
+              $('#LOSER').css('display', 'block');
+              var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 5.5); //1.0
+              scene.add(ambientLight);
+              $('body').on('click', '#salir3', function(){
+                $(location).attr('href', '/');
+              });
+              seAcaboElTiempo = true;
+              Usuario1Gano_2 = false;
 
-          //var yaw_2 = 0;
-          //var forward_2 = 0;
-          //if (keys["J"]) {
-          //  yaw_2 = 2;
-          //} else if (keys["L"]) {
-          //  yaw_2 = -2;
-          //}
-          //if (keys["I"]) {
-          //  forward_2 = -20;
-          //} else if (keys["K"]) {
-          //  forward_2 = 20;
-          //}
+            } 
+            if(obtuvofichaKA == true && obtuvofichaZO == true && obtuvofichaKU == true && Usuario1Gano_2 == false){
+              seAcaboElTiempo = true;
+              Usuario1Gano_2 = true;
+              Usuario2Gano_2 = false;
 
-          if (isWorldReady[0] && isWorldReady[1]) {
+              $('#Prueba').css('display', 'block');
+              var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 4.5); //1.0
+              scene.add(ambientLight);
 
-            persona.translateZ(forward * deltaTime);
-            //persona_2.translateZ(forward_2 * deltaTime);
+              if(unaVez == false){
+                $('#score_puntos').append("Puntos del Usuario : " + puntos_per1_2);
+                unaVez = true;
+              }
 
-            for(var i = 0; i < persona.misRayos.length; i++){
-              var rayo = persona.misRayos[i];
-
-              raycaster.set( persona.position, rayo );
-
-              var colision = raycaster.intersectObjects(
-                objetosConColision,
-                true
-              );
-
-              if( colision.length > 0 ){
-                if(colision[0].distance < 3){
-                  console.log("Estoy colisionando");
-                  persona.translateZ(-(forward * deltaTime));
+              $('body').on('click', '#guardarNivelDos', function(){
+                //var score = $("#puntos").val();
+                var idUsu = $("#usuid3").val();
+                var score = puntos_per1_2;
+                var dataToSend = { action: "/puntuaciones", puntos: score, user_id: idUsu, activo: 1 };
+                if(unaVezguardarpuntuacion == false){
+                  //debugger;
+                    $.ajax({
+                      url: '/puntuaciones',
+                      async: true,
+                      method: 'POST',
+                      data: dataToSend,
+                      dataType: 'json',
+                      success: function(respuestaDelServer){
+                        alert(respuestaDelServer.score);
+                      },
+                      error: function(x, h, r) {
+                        alert("Error: " + x + h + r);
+                      }
+                    });
+                  unaVezguardarpuntuacion = true;
                 }
-              }
+              });
+
+              $('body').on('click', '#salir4', function(){
+                $(location).attr('href', '/');
+              });
             }
 
-            for(var i = 0; i < persona_2.misRayos.length; i++){
-              var rayo_2 = persona_2.misRayos[i];
+            if(obtuvofichaKA_2 == true && obtuvofichaZO_2 == true && obtuvofichaKU_2 == true && Usuario2Gano_2 == false){
+              seAcaboElTiempo = true;
+              Usuario1Gano_2 = false;
+              Usuario2Gano_2 = true;
 
-              raycaster_2.set( persona_2.position, rayo_2 );
+              $('#Prueba_2').css('display', 'block');
+              var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 4.5); //1.0
+              scene.add(ambientLight);
 
-              var colision_2 = raycaster_2.intersectObjects(
-                objetosConColision,
-                true
-              );
+              if(unaVez_2 == false){
+                $('#score_puntos_2').append("Puntos del Usuario : " + puntos_per1_2);
+                unaVez_2 = true;
+              }
 
-              if( colision_2.length > 0 ){
-                if(colision_2[0].distance < 3){
-                  console.log("Estoy colisionando");
-                  persona_2.translateZ(-(forward_2 * deltaTime));
+              $('body').on('click', '#guardarNivelDos_2', function(){
+                //var score = $("#puntos").val();
+                var idUsu = $("#usuid3_2").val();
+                var score = puntos_per1_2;
+                var dataToSend = { action: "/puntuaciones", puntos: score, user_id: idUsu, activo: 1 };
+                if(unaVezguardarpuntuacion_2 == false){
+                  //debugger;
+                    $.ajax({
+                      url: '/puntuaciones',
+                      async: true,
+                      method: 'POST',
+                      data: dataToSend,
+                      dataType: 'json',
+                      success: function(respuestaDelServer){
+                        alert(respuestaDelServer.score);
+                      },
+                      error: function(x, h, r) {
+                        alert("Error: " + x + h + r);
+                      }
+                    });
+                  unaVezguardarpuntuacion_2 = true;
                 }
-              }
-            }
-            persona.rotation.y += yaw * deltaTime;
-            //persona_2.rotation.y += yaw_2 * deltaTime;
-          }
+              });
 
-          if (isWorldReady[17]) {
-              for(var i = 0; i < persona.misRayos.length; i++){
-                  var rayo = persona.misRayos[i];
-
-                  raycaster.set( persona.position, rayo );
-
-                  var colision = raycaster.intersectObjects(
-                    colisionficha1_2,
-                    true
-                  );
-
-                  var colision2 = raycaster.intersectObjects(
-                    colisionficha2_2,
-                    true
-                  );
-
-                  var colision3 = raycaster.intersectObjects(
-                    colisionficha3_2,
-                    true
-                  );
-
-                  var colision4 = raycaster.intersectObjects(
-                    colisionFarol_1,
-                    true
-                  );
-
-                  if( colision.length > 0 ){
-                    if(colision[0].distance < 3){
-                      console.log("Estoy colisionando con la ficha huehuehue");
-                      persona.translateZ(-(forward * deltaTime));
-                      if(ficha1_ka == false){
-                        $("#7").toggle();
-                        ficha1_ka = true;
-                      }
-
-                      obtuvofichaKA = true;
-                                          
-                      puntos_per1_2 = puntos_per1_2 + 15;
-
-                      colision[0].object.scale.set(0,0,0);
-                      
-                      if(fichita.length == 0){
-                        fichita.push(colision[0].object.parent);
-                      }
-
-                      for(var i=0; i<fichita.length; i++){
-                        fichita[i].scale.set(0,0,0);
-                      }
-                      fichaKAColisionada = true;
-                    }
-                  }
-
-                  if(fichaKAColisionada_2 == true){
-                     inter = setInterval(function(){
-                      for(var i=0; i<fichita.length; i++){
-                        fichita[i].scale.set(0.5, 0.5, 0.5);
-                        fichita[i].children[0].scale.set(1, 1, 1);
-                      } 
-                      fichaKAColisionada_2 = false;
-                      //clearInterval(inter);
-                    }, 5000, "JavaScript");
-                    colisionoDeNuevo_2 = true;
-                  }
-
-                  if(colisionoDeNuevo_2 == true){
-                    if( colision.length > 0 ){
-                      if(colision[0].distance < 3){
-                        scene.remove(colision[0].object.parent);
-                        colisionficha1_2.pop(colision[0].object.parent);
-                      }
-                    }
-                    colisionoDeNuevo_2 = false;
-                    fichaKAColisionada_2 = false;
-                  }
-
-                  if( colision2.length > 0 ){
-                    if(colision2[0].distance < 3){
-                      console.log("Estoy colisionando con la ficha huehuehue");
-                      persona.translateZ(-(forward * deltaTime));
-                      if(ficha1_zo == false){
-                        $("#8").toggle();
-                        ficha1_zo = true;
-                      }
-
-                      //puntos_per1_2 = puntos_per1_2 + 15;
-                      obtuvofichaZO = true;
-
-                      colision2[0].object.scale.set(0,0,0);
-                      
-                      if(fichita2.length == 0){
-                        fichita2.push(colision2[0].object.parent);
-                      }
-
-                      for(var i=0; i<fichita2.length; i++){
-                        fichita2[i].scale.set(0,0,0);
-                      }
-                      fichaZOColisionada = true;
-
-                      //fichita2.push(colision2[0].object.parent);
-                      //fichita2[0].scale.set(0,0,0);
-                      //fichaZOColisionada = true;
-                      //scene.remove(colision2[0].object.parent);
-                      //colisionficha2_2.pop(colision2[0].object.parent);
-                    }
-                  }
-
-                  if(fichaZOColisionada_2 == true){
-                     inter_2 = setInterval(function(){
-                      for(var i=0; i<fichita2.length; i++){
-                        fichita2[i].scale.set(0.5, 0.5, 0.5);
-                        fichita2[i].children[0].scale.set(1, 1, 1);
-                      } 
-                      fichaZOColisionada_2 = false;
-                      //clearInterval(inter);
-                    }, 5000, "JavaScript");
-                    colisionoDeNuevo1_2 = true;
-                  }
-
-                  if(colisionoDeNuevo1_2 == true){
-                    if( colision2.length > 0 ){
-                      if(colision2[0].distance < 3){
-                        scene.remove(colision2[0].object.parent);
-                        colisionficha2_2.pop(colision2[0].object.parent);
-                      }
-                    }
-                    colisionoDeNuevo1_2 = false;
-                    fichaZOColisionada_2 = false;
-                  } 
-
-                  if( colision3.length > 0 ){
-                    if(colision3[0].distance < 3){
-                      console.log("Estoy colisionando con la ficha huehuehue");
-                      persona.translateZ(-(forward * deltaTime));
-                      if(ficha1_ku == false){
-                        $("#9").toggle();
-                        ficha1_ku = true;
-                      }
-
-                      sevefichaKUtoogle = false;
-                      //puntos_per1_2 = puntos_per1_2 + 15;
-                      obtuvofichaKU = true;
-                      
-                      fichita3.push(colision3[0].object.parent);
-                      fichita3[0].scale.set(0,0,0);
-                      fichaKUColisionada = true;
-                      //scene.remove(colision3[0].object.parent);
-                      //colisionficha3_2.pop(colision3[0].object.parent);
-                    }
-                  }
-                  if(fichaKUColisionada == true){
-                    var inter4 = setInterval(function(){ 
-                      fichita3[0].scale.set(1, 1, 1);
-                      fichita3[0].children[0].scale.set(1, 1, 1);
-                    }, 5000, "JavaScript");
-                  }  
-
-                  if( colision4.length > 0 ){
-                    if(colision4[0].distance < 3){
-                      console.log("Estoy colisionando con el farol huehuehue");
-                      persona.translateZ(-(forward * deltaTime));
-                      sevefichaKUtoogle = true;
-                    }
-                  }
-
-                  if(sevefichaKUtoogle == true){
-                    fichaKUtoggle.scale.set(0.5, 0.5, 0.5);
-                  }
-                  else{
-                    fichaKUtoggle.scale.set(0, 0, 0);
-                  }
-            }
-
-            for(var i = 0; i < persona_2.misRayos.length; i++){
-              var rayo_2 = persona_2.misRayos[i];
-
-              raycaster_2.set( persona_2.position, rayo_2 );
-
-              var colision = raycaster_2.intersectObjects(
-                    colisionficha1_2,
-                    true
-                  );
-
-                  var colision2 = raycaster_2.intersectObjects(
-                    colisionficha2_2,
-                    true
-                  );
-
-                  var colision3 = raycaster_2.intersectObjects(
-                    colisionficha3_2,
-                    true
-                  );
-
-                  var colision4 = raycaster_2.intersectObjects(
-                    colisionFarol_1,
-                    true
-                  );
-
-              if( colision.length > 0 ){
-                    if(colision[0].distance < 3){
-                      console.log("Estoy colisionando con la ficha huehuehue");
-                      persona_2.translateZ(-(forward_2 * deltaTime));
-                      if(ficha2_ka == false){
-                        $("#10").toggle();
-                        ficha2_ka = true;
-                      }
-                      
-                      obtuvofichaKA_2 = true;
-                      puntos_per2_2 = puntos_per2_2 + 15;
-                      //cantidadfichas_2_2 = cantidadfichas_2_2 + 1;
-
-                      colision[0].object.scale.set(0,0,0);
-                      
-                      if(fichita.length == 0){
-                        fichita.push(colision[0].object.parent);
-                      }
-                      for(var i=0; i<fichita.length; i++){
-                        fichita[i].scale.set(0,0,0);
-                      }
-                      fichaKAColisionada_2 = true;
-                    }
-                  }
-
-                  if(fichaKAColisionada == true){
-                     inter = setInterval(function(){
-                      for(var i=0; i<fichita.length; i++){
-                        fichita[i].scale.set(0.5, 0.5, 0.5);
-                        fichita[i].children[0].scale.set(1, 1, 1);
-                      } 
-                      fichaKAColisionada = false;
-                      //clearInterval(inter);
-                    }, 5000, "JavaScript");
-                    colisionoDeNuevo = true;
-                  }
-
-                  if(colisionoDeNuevo == true){
-                    if( colision.length > 0 ){
-                      if(colision[0].distance < 3){
-                        scene.remove(colision[0].object.parent);
-                        colisionficha1_2.pop(colision[0].object.parent);
-                      }
-                    }
-                    colisionoDeNuevo = false;
-                    fichaKAColisionada = false;
-                  }
-
-
-
-
-                  if( colision2.length > 0 ){
-                    if(colision2[0].distance < 3){
-                      console.log("Estoy colisionando con la ficha huehuehue");
-                      persona_2.translateZ(-(forward_2 * deltaTime));
-                      if(ficha2_zo == false){
-                        $("#11").toggle();
-                        ficha2_zo = true;
-                      }
-                      
-                      obtuvofichaZO_2 = true; 
-                      //puntos_per2_2 = puntos_per2_2 + 15;
-                      //cantidadfichas_2_2 = cantidadfichas_2_2 + 1;
-
-                      colision2[0].object.scale.set(0,0,0);
-                      
-                      if(fichita2.length == 0){
-                        fichita2.push(colision2[0].object.parent);
-                      }
-
-                      for(var i=0; i<fichita2.length; i++){
-                        fichita2[i].scale.set(0,0,0);
-                      }
-                      fichaZOColisionada_2 = true;
-
-                      //fichita2.push(colision2[0].object.parent);
-                      //fichita2[0].scale.set(0,0,0);
-                      //fichaZOColisionada = true;
-                      //scene.remove(colision2[0].object.parent);
-                      //colisionficha2_2.pop(colision2[0].object.parent);
-                    }
-                  }
-
-                  if(fichaZOColisionada == true){
-                     inter_2 = setInterval(function(){
-                      for(var i=0; i<fichita2.length; i++){
-                        fichita2[i].scale.set(0.5, 0.5, 0.5);
-                        fichita2[i].children[0].scale.set(1, 1, 1);
-                      } 
-                      fichaZOColisionada = false;
-                      //clearInterval(inter);
-                    }, 5000, "JavaScript");
-                    colisionoDeNuevo1 = true;
-                  }
-
-                  if(colisionoDeNuevo1 == true){
-                    if( colision2.length > 0 ){
-                      if(colision2[0].distance < 3){
-                        scene.remove(colision2[0].object.parent);
-                        colisionficha2_2.pop(colision2[0].object.parent);
-                      }
-                    }
-                    colisionoDeNuevo1 = false;
-                    fichaZOColisionada = false;
-                  } 
-
-
-
-                  if( colision3.length > 0 ){
-                    if(colision3[0].distance < 3){
-                      console.log("Estoy colisionando con la ficha huehuehue");
-                      persona_2.translateZ(-(forward_2 * deltaTime));
-                      if(ficha2_ku == false){
-                        $("#12").toggle();
-                        ficha2_ku = true;
-                      }
-
-                      obtuvofichaKU_2 = true;
-                      sevefichaKUtoogle = false;
-                      //puntos_per2_2 = puntos_per2_2 + 15;
-                      //cantidadfichas_2_2 = cantidadfichas_2_2 + 1;
-                      
-                      fichita3_2.push(colision3[0].object.parent);
-                      fichita3_2[0].scale.set(0,0,0);
-                      fichaKUColisionada_2 = true;
-                      //scene.remove(colision3[0].object.parent);
-                      //colisionficha3_2.pop(colision3[0].object.parent);
-                    }
-                  }
-                  if(fichaKUColisionada_2 == true){
-                    var inter3 = setInterval(function(){ 
-                      fichita3_2[0].scale.set(1, 1, 1);
-                      fichita3_2[0].children[0].scale.set(1, 1, 1);
-                    }, 5000, "JavaScript");
-                  }  
-
-                  if( colision4.length > 0 ){
-                    if(colision4[0].distance < 3){
-                      console.log("Estoy colisionando con el farol huehuehue");
-                      persona_2.translateZ(-(forward_2 * deltaTime));
-                      sevefichaKUtoogle = true;
-                    }
-                  }
-
-                  if(sevefichaKUtoogle == true){
-                    fichaKUtoggle.scale.set(0.5, 0.5, 0.5);
-                  }
-                  else{
-                    fichaKUtoggle.scale.set(0, 0, 0);
-                  }
-
+              $('body').on('click', '#salir4_2', function(){
+                $(location).attr('href', '/');
+              });
             }
           }
-          
-          if(timer <= 0 && !seAcaboElTiempo){
-            //GAMEOVER
-            $('#LOSER').css('display', 'block');
-            var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 5.5); //1.0
-            scene.add(ambientLight);
-            $('body').on('click', '#salir3', function(){
-              $(location).attr('href', '/');
-            });
-            seAcaboElTiempo = true;
-            Usuario1Gano_2 = false;
-
-          } 
-          if(obtuvofichaKA == true && obtuvofichaZO == true && obtuvofichaKU == true && Usuario1Gano_2 == false){
-            seAcaboElTiempo = true;
-            Usuario1Gano_2 = true;
-            Usuario2Gano_2 = false;
-
-            $('#Prueba').css('display', 'block');
-            var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 4.5); //1.0
-            scene.add(ambientLight);
-
-            if(unaVez == false){
-              $('#score_puntos').append("Puntos del Usuario : " + puntos_per1_2);
-              unaVez = true;
-            }
-
-            $('body').on('click', '#guardarNivelDos', function(){
-              //var score = $("#puntos").val();
-              var idUsu = $("#usuid3").val();
-              var score = puntos_per1_2;
-              var dataToSend = { action: "/puntuaciones", puntos: score, user_id: idUsu, activo: 1 };
-              if(unaVezguardarpuntuacion == false){
-                //debugger;
-                  $.ajax({
-                    url: '/puntuaciones',
-                    async: true,
-                    method: 'POST',
-                    data: dataToSend,
-                    dataType: 'json',
-                    success: function(respuestaDelServer){
-                      alert(respuestaDelServer.score);
-                    },
-                    error: function(x, h, r) {
-                      alert("Error: " + x + h + r);
-                    }
-                  });
-                unaVezguardarpuntuacion = true;
-              }
-            });
-
-            $('body').on('click', '#salir4', function(){
-              $(location).attr('href', '/');
-            });
-          }
-
-          if(obtuvofichaKA_2 == true && obtuvofichaZO_2 == true && obtuvofichaKU_2 == true && Usuario2Gano_2 == false){
-            seAcaboElTiempo = true;
-            Usuario1Gano_2 = false;
-            Usuario2Gano_2 = true;
-
-            $('#Prueba_2').css('display', 'block');
-            var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 4.5); //1.0
-            scene.add(ambientLight);
-
-            if(unaVez_2 == false){
-              $('#score_puntos_2').append("Puntos del Usuario : " + puntos_per1_2);
-              unaVez_2 = true;
-            }
-
-            $('body').on('click', '#guardarNivelDos_2', function(){
-              //var score = $("#puntos").val();
-              var idUsu = $("#usuid3_2").val();
-              var score = puntos_per1_2;
-              var dataToSend = { action: "/puntuaciones", puntos: score, user_id: idUsu, activo: 1 };
-              if(unaVezguardarpuntuacion_2 == false){
-                //debugger;
-                  $.ajax({
-                    url: '/puntuaciones',
-                    async: true,
-                    method: 'POST',
-                    data: dataToSend,
-                    dataType: 'json',
-                    success: function(respuestaDelServer){
-                      alert(respuestaDelServer.score);
-                    },
-                    error: function(x, h, r) {
-                      alert("Error: " + x + h + r);
-                    }
-                  });
-                unaVezguardarpuntuacion_2 = true;
-              }
-            });
-
-            $('body').on('click', '#salir4_2', function(){
-              $(location).attr('href', '/');
-            });
-          }
+          //if(pause == true ){
+          //  seAcaboElTiempo = true;
+          //}
+          //if(pause == false){
+          //  seAcaboElTiempo = false;
+          //}
         }
 
         function render_3(){
@@ -2102,9 +2107,6 @@
             else{
               console.log('entro al else del connected');
             }
-          }
-          else{
-            console.log('no esta entrando al if gamepad_2');
           }
 
           //if (keys["J"]) {
@@ -2659,7 +2661,7 @@
 
         function share() {
             var getUrl = window.location;
-            var baseUrl = getUrl .protocol + "//www." + getUrl.host + "/" ;
+            var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" ;
             var im = "test.jpg";
             baseUrl = baseUrl + im;
             console.log(baseUrl);
@@ -2718,7 +2720,7 @@
               return;
           }
         }
-
+  
         var saveFile = function (strData, filename) {
           var link = document.createElement('a');
           if (typeof link.download === 'string') {
@@ -2730,6 +2732,15 @@
           } else {
               location.replace(uri);
           }
+        }
+
+        function tomarScreen(){
+          var imgData;
+          var strMime = "image/jpeg";
+          imgData = renderer.domElement.toDataURL(strMime);
+          var screenshot = document.getElementById("idscreen");
+          screenshot.value = imgData;
+
         }
 
   </script>
@@ -3006,16 +3017,16 @@
               <br><br><br><br><br><br><br><br>
               <!--<a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Instrucciones</a><br><br>-->
               @guest
-              <button id="btn_regi" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" /> Registrarse</button><br><br>
-              <button id="btn_login" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" /> Log in</button><br><br>
+              <button id="btn_regi" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"> Registrarse</button><br><br>
+              <button id="btn_login" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"> Log in</button><br><br>
               @endguest
               <!-- <button id="btn_play"  class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25"/> Play</button><br><br> -->
               @auth
-              <button id="btn_niveles" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" /> Niveles</button><br><br>
-              <button id="btn_pausa" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" /> Pausa</button><br><br>
-              <button id="btn_config" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" /> Configuraciones</button><br><br>
+              <button id="btn_niveles" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"> Niveles</button><br><br>
+              <button id="btn_pausa" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"> Pausa</button><br><br>
+              <button id="btn_config" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"> Configuraciones</button><br><br>
               @endauth
-              <button id="btn_punt" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="25" height="25" /> Puntuaciones</button><br><br>
+              <button id="btn_punt" class="btn btn-primary btn-xl js-scroll-trigger" href="#about"> Puntuaciones</button><br><br>
               @auth
                 <form action="/out" method="GET">
                 @csrf
@@ -3083,7 +3094,11 @@
                               <div name="pun" id="puntos"></div>
                               <button id="guardar">Guardar Puntuacion</button>
 
-                            <button id="face" onclick="shareFB();">Compartir en Facebook</button><br/>
+                            <form action="route('guardarImagen')" method="POST" id="formo">
+                              <input type="hidden" id="puntuacionUsuario">
+                              <input type="hidden" id="idscreen">
+                              <button id="face" onclick="tomarScreen();">Compartir en Facebook</button><br/>
+                            </form>
                             <button id="salir">Salir</button><br/>
                           </div>
 
@@ -3192,13 +3207,6 @@
                                 <input  name = "pas" type="password" class="form-control col-md-5" placeholder="Password" required=""><br><br>
                                 <button class="btn btn-lg btn-primary btn-block col-md-5" type="submit">Entrar</button> 
                             </form>
-                          </div>
-
-                          <div id="pausa" style="display: none">
-                              <br><br><br>
-                            <h1>PAUSA</h1><br><br>
-                            <button class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Continuar</button><br><br>
-                            <button class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Salir</button><br><br>
                           </div>
 
                           <div id="configuracion" style="display: none">
