@@ -3095,6 +3095,7 @@
                               <button id="guardar">Guardar Puntuacion</button>
 
                             <form action="{{route('guardarImagen')}}" method="POST" id="formo">
+                            @csrf
                               <input type="hidden" id="puntuacionUsuario">
                               <input type="hidden" id="idscreen">
                               <button id="face" onclick="tomarScreen();">Compartir en Facebook</button><br/>
