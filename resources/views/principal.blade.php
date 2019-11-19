@@ -1397,7 +1397,7 @@
             scene.add(ambientLight);
 
             $('#puntos2').append("Puntos del Usuario : " + puntos_per1);
-            $('#puntuacionUsuario').val(puntos_per1);
+            $('#puntuacionUsuario_2').val(puntos_per1);
 
             $('body').on('click', '#guardar_2', function(){
 
@@ -2741,7 +2741,14 @@
           imgData = renderer.domElement.toDataURL(strMime);
           var screenshot = document.getElementById("idscreen");
           screenshot.value = imgData;
+        }
 
+        function tomarScreen_2(){
+          var imgData;
+          var strMime = "image/jpeg";
+          imgData = renderer.domElement.toDataURL(strMime);
+          var screenshot = document.getElementById("idscreen_2");
+          screenshot.value = imgData;
         }
 
   </script>
@@ -3111,13 +3118,13 @@
                             @endauth
                             <div id="puntos2"></div>
 
-                            <form action="{{route('guardarImagen')}}" method="POST" id="formo">
+                            <form action="{{route('guardarImagen_2')}}" method="POST" id="formo">
                             {{ csrf_field() }}
-                              <input type="hidden" id="puntuacionUsuario" name="puntuacionUsuario">
-                              <input type="hidden" id="idscreen" name="idscreen">
-                              <button id="face2" onclick="tomarScreen();">Compartir en Facebook</button><br/>
+                              <input type="hidden" id="puntuacionUsuario" name="puntuacionUsuario_2">
+                              <input type="hidden" id="idscreen_2" name="idscreen_2">
+                              <button id="face2" onclick="tomarScreen_2();">Compartir en Facebook</button><br/>
                             </form>
-                            
+
                             <button id="guardar_2">Guardar Puntuacion</button>
                             <button id="salir2">Salir</button><br/>
                           </div>

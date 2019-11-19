@@ -27,3 +27,5 @@ Route::post('/puntuaciones', 'PuntuacionController@addScore');
 Route::get('/puntuaciones', 'PuntuacionController@addScore');
 
 Route::post('/image', 'ImagenController@GuardarImg')->name('guardarImagen');
+
+Route::post('/image_2', 'ImagenController@GuardarImg_2')->name('guardarImagen_2');
