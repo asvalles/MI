@@ -275,8 +275,10 @@
         var unaVezguardarpuntuacion_2 = false;
 
         var inter = setInterval(function(){ 
-          if(seAcaboElTiempo == false && inicioNivelDos == true && timer >= 0){
-            document.getElementById("tiempo").innerHTML = timer--; 
+          if(pause == false){
+            if(seAcaboElTiempo == false && inicioNivelDos == true && timer >= 0){
+              document.getElementById("tiempo").innerHTML = timer--; 
+            }
           }
         }, 1000, "JavaScript");
 
@@ -340,8 +342,10 @@
 
 
         var intermedio = setInterval(function(){ 
-          if(seAcaboElTiempo_2 == false && inicioNivelTres == true && timer_3 >= 0){
-            document.getElementById("tiempo_2").innerHTML = timer_3--; 
+          if(pause == false){
+            if(seAcaboElTiempo_2 == false && inicioNivelTres == true && timer_3 >= 0){
+              document.getElementById("tiempo_2").innerHTML = timer_3--; 
+            }
           }
         }, 1000, "JavaScript");
 
@@ -792,7 +796,7 @@
               pause=true;
               console.log(pause);
             }
-        });
+          });
         
           $("#gris").click( function(){
               document.body.style.backgroundColor = "LightSteelBlue";
@@ -899,575 +903,577 @@
         }
         
         function render() {
-
           requestAnimationFrame(render);
-          var bool=false;
-          deltaTime = clock.getDelta();
+          if(pause == false){
+            var bool=false;
+            deltaTime = clock.getDelta();
+            
           
-        
-          for(var i = 0; i < NIVELUNO.length; i++){
-            if(estaEnNivelUno == true){
-              NIVELUNO[i].scale.set(0.5, 0.5, 0.5);
-            }
-            else{
-              NIVELUNO[i].scale.set(0, 0, 0);
-            }
-          }
-        
-
-          if (mixers.length > 0) {
-            for (var i = 0; i < mixers.length; i++) {
-              mixers[i].update(deltaTime);
-            }
-          }
-
-          if (mixers_2.length > 0) {
-            for (var i = 0; i < mixers_2.length; i++) {
-              mixers_2[i].update(deltaTime);
-            }
-          }
-
-          var yaw = 0;
-          var forward = 0;
-          if (keys["A"]) {
-            yaw = 2;
-          } else if (keys["D"]) {
-            yaw = -2;
-          }
-          if (keys["W"]) {
-            forward = -20;
-          } else if (keys["S"]) {
-            forward = 20;
-          }
-
-          var yaw_2 = 0;
-          var forward_2 = 0;
-          gamepad_2 = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
-          if (gamepad_2.length>0){
-              gamepad_2 = gamepad_2[0];
-          }
-
-          if(gamepad_2){
-            console.log('entro gamepad_2');
-            if(gamepad_2.connected){
-              if(gamepad_2.axes[0]>.5){
-                console.log('entro button pressed');
-                yaw_2 = -2;
-              }
-              if(gamepad_2.axes[1]>.5){
-                console.log('entro axes 1 >');
-                forward_2 = 20;
-              }
-              if(gamepad_2.axes[0]<-.5){
-                console.log('entro axes 0 < ');
-                yaw_2 = 2;
-              }
-              if(gamepad_2.axes[1]<-.5){
-                console.log('entro axes 1 < ');
-                forward_2 = -20;
+            for(var i = 0; i < NIVELUNO.length; i++){
+              if(estaEnNivelUno == true){
+                NIVELUNO[i].scale.set(0.5, 0.5, 0.5);
               }
               else{
-                console.log('entro al if del connected pero a ningun axes');
+                NIVELUNO[i].scale.set(0, 0, 0);
               }
-              console.log(gamepad_2.axes[0] + "---" + gamepad_2.axes[1]);
+            }
+          
+
+            if (mixers.length > 0) {
+              for (var i = 0; i < mixers.length; i++) {
+                mixers[i].update(deltaTime);
+              }
+            }
+
+            if (mixers_2.length > 0) {
+              for (var i = 0; i < mixers_2.length; i++) {
+                mixers_2[i].update(deltaTime);
+              }
+            }
+
+            var yaw = 0;
+            var forward = 0;
+            if (keys["A"]) {
+              yaw = 2;
+            } else if (keys["D"]) {
+              yaw = -2;
+            }
+            if (keys["W"]) {
+              forward = -20;
+            } else if (keys["S"]) {
+              forward = 20;
+            }
+
+            var yaw_2 = 0;
+            var forward_2 = 0;
+            gamepad_2 = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
+            if (gamepad_2.length>0){
+                gamepad_2 = gamepad_2[0];
+            }
+
+            if(gamepad_2){
+              console.log('entro gamepad_2');
+              if(gamepad_2.connected){
+                if(gamepad_2.axes[0]>.5){
+                  console.log('entro button pressed');
+                  yaw_2 = -2;
+                }
+                if(gamepad_2.axes[1]>.5){
+                  console.log('entro axes 1 >');
+                  forward_2 = 20;
+                }
+                if(gamepad_2.axes[0]<-.5){
+                  console.log('entro axes 0 < ');
+                  yaw_2 = 2;
+                }
+                if(gamepad_2.axes[1]<-.5){
+                  console.log('entro axes 1 < ');
+                  forward_2 = -20;
+                }
+                else{
+                  console.log('entro al if del connected pero a ningun axes');
+                }
+                console.log(gamepad_2.axes[0] + "---" + gamepad_2.axes[1]);
+              }
+              
+              else{
+                console.log('entro al else del connected');
+              }
+            }
+
+            //var yaw_2 = 0;
+            //var forward_2 = 0;
+            //if (keys["J"]) {
+            //  yaw_2 = 2;
+            //} else if (keys["L"]) {
+            //  yaw_2 = -2;
+            //}
+            //if (keys["I"]) {
+            //  forward_2 = -20;
+            //} else if (keys["K"]) {
+            //  forward_2 = 20;
+            //}
+
+            // PARTICULASSSSSSSSSSSSSSSSSSSSSSSSS
+
+            var time = Date.now() * 0.00005;
+
+            for ( var i = 0; i < scene.children.length; i ++ ) {
+
+              var object = scene.children[ i ];
+
+              if ( object instanceof THREE.Points ) {
+
+                object.rotation.y = time * ( i < 4 ? i + 1 : - ( i + 1 ) );
+
+              }
+
+            }
+
+            for ( var i = 0; i < materials.length; i ++ ) {
+
+              var color = parameters[ i ][ 0 ];
+
+              var h = ( 360 * ( color[ 0 ] + time ) % 360 ) / 360;
+              materials[ i ].color.setHSL( h, color[ 1 ], color[ 2 ] );
+
             }
             
-            else{
-              console.log('entro al else del connected');
-            }
-          }
+            // EENNNNNDDDDDDDD PARTICULASSSSSSSSSSSSSSSSSSSS
 
-          //var yaw_2 = 0;
-          //var forward_2 = 0;
-          //if (keys["J"]) {
-          //  yaw_2 = 2;
-          //} else if (keys["L"]) {
-          //  yaw_2 = -2;
-          //}
-          //if (keys["I"]) {
-          //  forward_2 = -20;
-          //} else if (keys["K"]) {
-          //  forward_2 = 20;
-          //}
+            if (isWorldReady[0] && isWorldReady[1]) {
 
-          // PARTICULASSSSSSSSSSSSSSSSSSSSSSSSS
+              persona.translateZ(forward * deltaTime);
+              persona_2.translateZ(forward_2 * deltaTime);
 
-          var time = Date.now() * 0.00005;
+              for(var i = 0; i < persona.misRayos.length; i++){
+                var rayo = persona.misRayos[i];
 
-          for ( var i = 0; i < scene.children.length; i ++ ) {
+                raycaster.set( persona.position, rayo );
 
-            var object = scene.children[ i ];
+                var colision = raycaster.intersectObjects(
+                  objetosConColision,
+                  true
+                );
 
-            if ( object instanceof THREE.Points ) {
-
-              object.rotation.y = time * ( i < 4 ? i + 1 : - ( i + 1 ) );
-
-            }
-
-          }
-
-          for ( var i = 0; i < materials.length; i ++ ) {
-
-            var color = parameters[ i ][ 0 ];
-
-            var h = ( 360 * ( color[ 0 ] + time ) % 360 ) / 360;
-            materials[ i ].color.setHSL( h, color[ 1 ], color[ 2 ] );
-
-          }
-          
-          // EENNNNNDDDDDDDD PARTICULASSSSSSSSSSSSSSSSSSSS
-
-          if (isWorldReady[0] && isWorldReady[1]) {
-
-            persona.translateZ(forward * deltaTime);
-            persona_2.translateZ(forward_2 * deltaTime);
-
-            for(var i = 0; i < persona.misRayos.length; i++){
-              var rayo = persona.misRayos[i];
-
-              raycaster.set( persona.position, rayo );
-
-              var colision = raycaster.intersectObjects(
-                objetosConColision,
-                true
-              );
-
-              if( colision.length > 0 ){
-                if(colision[0].distance < 3){
-                  console.log("Estoy colisionando");
-                  persona.translateZ(-(forward * deltaTime));
+                if( colision.length > 0 ){
+                  if(colision[0].distance < 3){
+                    console.log("Estoy colisionando");
+                    persona.translateZ(-(forward * deltaTime));
+                  }
                 }
               }
+
+              for(var i = 0; i < persona_2.misRayos.length; i++){
+                var rayo_2 = persona_2.misRayos[i];
+
+                raycaster_2.set( persona_2.position, rayo_2 );
+
+                var colision_2 = raycaster_2.intersectObjects(
+                  objetosConColision,
+                  true
+                );
+
+                if( colision_2.length > 0 ){
+                  if(colision_2[0].distance < 3){
+                    console.log("Estoy colisionando");
+                    persona_2.translateZ(-(forward_2 * deltaTime));
+                  }
+                }
+              }
+              persona.rotation.y += yaw * deltaTime;
+              persona_2.rotation.y += yaw_2 * deltaTime;
             }
 
-            for(var i = 0; i < persona_2.misRayos.length; i++){
-              var rayo_2 = persona_2.misRayos[i];
+            if (isWorldReady[8]) {
 
-              raycaster_2.set( persona_2.position, rayo_2 );
+              for(var i = 0; i < persona.misRayos.length; i++){
+                var rayo = persona.misRayos[i];
 
-              var colision_2 = raycaster_2.intersectObjects(
-                objetosConColision,
-                true
-              );
+                raycaster.set( persona.position, rayo );
 
-              if( colision_2.length > 0 ){
-                if(colision_2[0].distance < 3){
-                  console.log("Estoy colisionando");
-                  persona_2.translateZ(-(forward_2 * deltaTime));
+                var colision = raycaster.intersectObjects(
+                  colisionficha,
+                  true
+                );
+
+                var colision2 = raycaster.intersectObjects(
+                  colisionficha2,
+                  true
+                );
+
+                var colision3 = raycaster.intersectObjects(
+                  colisionficha3,
+                  true
+                );
+
+                var colision4 = raycaster.intersectObjects(
+                  colisionficha4,
+                  true
+                );
+
+                var colision5 = raycaster.intersectObjects(
+                  colisionficha5,
+                  true
+                );
+
+                if( colision.length > 0 ){
+                  if(colision[0].distance < 3){
+                    console.log("Estoy colisionando con la ficha huehuehue");
+                    persona.translateZ(-(forward * deltaTime));
+                    if(ficha3_e == false){
+                      $("#3").toggle();
+                      ficha3_e = true;
+                    }
+
+                    puntos_per1 = puntos_per1 + 10;
+                    cantidadfichas_1 = cantidadfichas_1 + 1;
+                    scene.remove(colision[0].object.parent);
+                    colisionficha.pop(colision[0].object.parent);
+
+                    //debugger;
+                  }
                 }
+
+                if( colision2.length > 0 ){
+                  if(colision2[0].distance < 3){
+                    console.log("Estoy colisionando con la ficha huehuehue");
+                    persona.translateZ(-(forward * deltaTime));
+                    if(ficha1_i == false && ficha2_i == false){
+                      $("#1").toggle();
+                      ficha1_i = true;
+                      ficha2_i = false;
+                    }
+                    else if(ficha1_i == true &&  ficha2_i == false){
+                      $("#2").toggle();
+                      ficha2_i = true;
+                      ficha1_i = true;
+                    }
+
+                    puntos_per1 = puntos_per1 + 10;
+                    cantidadfichas_1 = cantidadfichas_1 + 1;
+
+                    scene.remove(colision2[0].object.parent);
+                    colisionficha2.pop(colision2[0].object.parent);
+
+
+                    //debugger;
+                  }
+                }
+
+                if( colision3.length > 0 ){
+                  if(colision3[0].distance < 3){
+                    console.log("Estoy colisionando con la ficha huehuehue");
+                    persona.translateZ(-(forward * deltaTime));
+                    if(ficha1_i == false && ficha2_i == false){
+                      $("#1").toggle();
+                      ficha1_i = true;
+                      ficha2_i = false;
+                    }
+                    else if(ficha1_i == true &&  ficha2_i == false){
+                      $("#2").toggle();
+                      ficha2_i = true;
+                      ficha1_i = true;
+                    }
+
+                    puntos_per1 = puntos_per1 + 10;
+                    cantidadfichas_1 = cantidadfichas_1 + 1;
+
+                    scene.remove(colision3[0].object.parent);
+                    colisionficha3.pop(colision3[0].object.parent);
+
+
+                    //debugger;
+                  }
+                }
+
+                if( colision4.length > 0 ){
+                  if(colision4[0].distance < 3){
+                    console.log("Estoy colisionando con la ficha huehuehue");
+                    persona.translateZ(-(forward * deltaTime));
+                    if(ficha1_i == false && ficha2_i == false){
+                      $("#1").toggle();
+                      ficha1_i = true;
+                      ficha2_i = false;
+                    }
+                    else if(ficha1_i == true &&  ficha2_i == false){
+                      $("#2").toggle();
+                      ficha2_i = true;
+                      ficha1_i = true;
+                    }
+
+                    puntos_per1 = puntos_per1 + 10;
+                    cantidadfichas_1 = cantidadfichas_1 + 1;
+
+                    scene.remove(colision4[0].object.parent);
+                    colisionficha4.pop(colision4[0].object.parent);
+
+
+                    //debugger;
+                  }
+                }
+
+                if( colision5.length > 0 ){
+                  if(colision5[0].distance < 3){
+                    console.log("Estoy colisionando con la ficha huehuehue");
+                    persona.translateZ(-(forward * deltaTime));
+                    if(ficha1_i == false && ficha2_i == false){
+                      $("#1").toggle();
+                      ficha1_i = true;
+                      ficha2_i = false;
+                    }
+                    else if(ficha1_i == true &&  ficha2_i == false){
+                      $("#2").toggle();
+                      ficha2_i = true;
+                      ficha1_i = true;
+                    }
+
+                    puntos_per1 = puntos_per1 + 10;
+                    cantidadfichas_1 = cantidadfichas_1 + 1;
+
+                    scene.remove(colision5[0].object.parent);
+                    colisionficha5.pop(colision5[0].object.parent);
+
+                  }
+                }            
               }
+
+              for(var i = 0; i < persona_2.misRayos.length; i++){
+                var rayo_2 = persona_2.misRayos[i];
+
+                raycaster_2.set( persona_2.position, rayo_2 );
+
+                var colision = raycaster_2.intersectObjects(
+                  colisionficha,
+                  true
+                );
+
+                var colision2 = raycaster_2.intersectObjects(
+                  colisionficha2,
+                  true
+                );
+
+                var colision3 = raycaster_2.intersectObjects(
+                  colisionficha3,
+                  true
+                );
+
+                var colision4 = raycaster_2.intersectObjects(
+                  colisionficha4,
+                  true
+                );
+
+                var colision5 = raycaster_2.intersectObjects(
+                  colisionficha5,
+                  true
+                );
+
+                if( colision.length > 0 ){
+                  if(colision[0].distance < 3){
+                    console.log("Estoy colisionando con la ficha huehuehue");
+                    persona_2.translateZ(-(forward_2 * deltaTime));
+                    if(ficha3_e_2 == false){
+                      $("#6").toggle();
+                      ficha3_e = true;
+                    }
+
+                    puntos_per2 = puntos_per2 + 10;
+                    cantidadfichas_2 = cantidadfichas_2 + 1;
+                    scene.remove(colision[0].object.parent);
+                    colisionficha.pop(colision[0].object.parent);
+
+                    //debugger;
+                  }
+                }
+
+                if( colision2.length > 0 ){
+                  if(colision2[0].distance < 3){
+                    console.log("Estoy colisionando con la ficha huehuehue");
+                    persona_2.translateZ(-(forward_2 * deltaTime));
+                    if(ficha1_i_2 == false && ficha2_i_2 == false){
+                      $("#4").toggle();
+                      ficha1_i_2 = true;
+                      ficha2_i_2 = false;
+                    }
+                    else if(ficha1_i_2 == true &&  ficha2_i_2 == false){
+                      $("#5").toggle();
+                      ficha2_i_2 = true;
+                      ficha1_i_2 = true;
+                    }
+
+                    puntos_per2 = puntos_per2 + 10;
+                    cantidadfichas_2 = cantidadfichas_2 + 1;
+
+                    scene.remove(colision2[0].object.parent);
+                    colisionficha2.pop(colision2[0].object.parent);
+
+                    //debugger;
+                  }
+                }
+
+                if( colision3.length > 0 ){
+                  if(colision3[0].distance < 3){
+                    console.log("Estoy colisionando con la ficha huehuehue");
+                    persona_2.translateZ(-(forward_2 * deltaTime));
+                    if(ficha1_i_2 == false && ficha2_i_2 == false){
+                      $("#4").toggle();
+                      ficha1_i_2 = true;
+                      ficha2_i_2 = false;
+                    }
+                    else if(ficha1_i_2 == true &&  ficha2_i_2 == false){
+                      $("#5").toggle();
+                      ficha2_i_2 = true;
+                      ficha1_i_2 = true;
+                    }
+
+                    puntos_per2 = puntos_per2 + 10;
+                    cantidadfichas_2 = cantidadfichas_2 + 1;
+
+                    scene.remove(colision3[0].object.parent);
+                    colisionficha3.pop(colision3[0].object.parent);
+
+                    //debugger;
+                  }
+                }
+
+                if( colision4.length > 0 ){
+                  if(colision4[0].distance < 3){
+                    console.log("Estoy colisionando con la ficha huehuehue");
+                    persona_2.translateZ(-(forward_2 * deltaTime));
+                    if(ficha1_i_2 == false && ficha2_i_2 == false){
+                      $("#4").toggle();
+                      ficha1_i_2 = true;
+                      ficha2_i_2 = false;
+                    }
+                    else if(ficha1_i_2 == true &&  ficha2_i_2 == false){
+                      $("#5").toggle();
+                      ficha2_i_2 = true;
+                      ficha1_i_2 = true;
+                    }
+
+                    puntos_per2 = puntos_per2 + 10;
+                    cantidadfichas_2 = cantidadfichas_2 + 1;
+
+                    scene.remove(colision4[0].object.parent);
+                    colisionficha4.pop(colision4[0].object.parent);
+
+                    //debugger;
+                  }
+                }
+
+                if( colision5.length > 0 ){
+                  if(colision5[0].distance < 3){
+                    console.log("Estoy colisionando con la ficha huehuehue");
+                    persona_2.translateZ(-(forward_2 * deltaTime));
+                    if(ficha1_i_2 == false && ficha2_i_2 == false){
+                      $("#4").toggle();
+                      ficha1_i_2 = true;
+                      ficha2_i_2 = false;
+                    }
+                    else if(ficha1_i_2 == true &&  ficha2_i_2 == false){
+                      $("#5").toggle();
+                      ficha2_i_2 = true;
+                      ficha1_i_2 = true;
+                    }
+
+                    puntos_per2 = puntos_per2 + 10;
+                    cantidadfichas_2 = cantidadfichas_2 + 1;
+
+                    scene.remove(colision5[0].object.parent);
+                    colisionficha5.pop(colision5[0].object.parent);
+
+                    //debugger;
+                  }
+                }
+
+              }
+              //var puntuacion = puntos_per1;
+
+              //document.getElementsByName("ptsUsuario").value = puntuacion;
+              //document.getElementById("ptsUsuario").setAttribute("value",puntuacion);
+              
             }
-            persona.rotation.y += yaw * deltaTime;
-            persona_2.rotation.y += yaw_2 * deltaTime;
-          }
-
-          if (isWorldReady[8]) {
-
-            for(var i = 0; i < persona.misRayos.length; i++){
-              var rayo = persona.misRayos[i];
-
-              raycaster.set( persona.position, rayo );
-
-              var colision = raycaster.intersectObjects(
-                colisionficha,
-                true
-              );
-
-              var colision2 = raycaster.intersectObjects(
-                colisionficha2,
-                true
-              );
-
-              var colision3 = raycaster.intersectObjects(
-                colisionficha3,
-                true
-              );
-
-              var colision4 = raycaster.intersectObjects(
-                colisionficha4,
-                true
-              );
-
-              var colision5 = raycaster.intersectObjects(
-                colisionficha5,
-                true
-              );
-
-              if( colision.length > 0 ){
-                if(colision[0].distance < 3){
-                  console.log("Estoy colisionando con la ficha huehuehue");
-                  persona.translateZ(-(forward * deltaTime));
-                  if(ficha3_e == false){
-                    $("#3").toggle();
-                    ficha3_e = true;
-                  }
-
-                  puntos_per1 = puntos_per1 + 10;
-                  cantidadfichas_1 = cantidadfichas_1 + 1;
-                  scene.remove(colision[0].object.parent);
-                  colisionficha.pop(colision[0].object.parent);
-
-                  //debugger;
-                }
-              }
-
-              if( colision2.length > 0 ){
-                if(colision2[0].distance < 3){
-                  console.log("Estoy colisionando con la ficha huehuehue");
-                  persona.translateZ(-(forward * deltaTime));
-                  if(ficha1_i == false && ficha2_i == false){
-                    $("#1").toggle();
-                    ficha1_i = true;
-                    ficha2_i = false;
-                  }
-                  else if(ficha1_i == true &&  ficha2_i == false){
-                    $("#2").toggle();
-                    ficha2_i = true;
-                    ficha1_i = true;
-                  }
-
-                  puntos_per1 = puntos_per1 + 10;
-                  cantidadfichas_1 = cantidadfichas_1 + 1;
-
-                  scene.remove(colision2[0].object.parent);
-                  colisionficha2.pop(colision2[0].object.parent);
-
-
-                  //debugger;
-                }
-              }
-
-              if( colision3.length > 0 ){
-                if(colision3[0].distance < 3){
-                  console.log("Estoy colisionando con la ficha huehuehue");
-                  persona.translateZ(-(forward * deltaTime));
-                  if(ficha1_i == false && ficha2_i == false){
-                    $("#1").toggle();
-                    ficha1_i = true;
-                    ficha2_i = false;
-                  }
-                  else if(ficha1_i == true &&  ficha2_i == false){
-                    $("#2").toggle();
-                    ficha2_i = true;
-                    ficha1_i = true;
-                  }
-
-                  puntos_per1 = puntos_per1 + 10;
-                  cantidadfichas_1 = cantidadfichas_1 + 1;
-
-                  scene.remove(colision3[0].object.parent);
-                  colisionficha3.pop(colision3[0].object.parent);
-
-
-                  //debugger;
-                }
-              }
-
-              if( colision4.length > 0 ){
-                if(colision4[0].distance < 3){
-                  console.log("Estoy colisionando con la ficha huehuehue");
-                  persona.translateZ(-(forward * deltaTime));
-                  if(ficha1_i == false && ficha2_i == false){
-                    $("#1").toggle();
-                    ficha1_i = true;
-                    ficha2_i = false;
-                  }
-                  else if(ficha1_i == true &&  ficha2_i == false){
-                    $("#2").toggle();
-                    ficha2_i = true;
-                    ficha1_i = true;
-                  }
-
-                  puntos_per1 = puntos_per1 + 10;
-                  cantidadfichas_1 = cantidadfichas_1 + 1;
-
-                  scene.remove(colision4[0].object.parent);
-                  colisionficha4.pop(colision4[0].object.parent);
-
-
-                  //debugger;
-                }
-              }
-
-              if( colision5.length > 0 ){
-                if(colision5[0].distance < 3){
-                  console.log("Estoy colisionando con la ficha huehuehue");
-                  persona.translateZ(-(forward * deltaTime));
-                  if(ficha1_i == false && ficha2_i == false){
-                    $("#1").toggle();
-                    ficha1_i = true;
-                    ficha2_i = false;
-                  }
-                  else if(ficha1_i == true &&  ficha2_i == false){
-                    $("#2").toggle();
-                    ficha2_i = true;
-                    ficha1_i = true;
-                  }
-
-                  puntos_per1 = puntos_per1 + 10;
-                  cantidadfichas_1 = cantidadfichas_1 + 1;
-
-                  scene.remove(colision5[0].object.parent);
-                  colisionficha5.pop(colision5[0].object.parent);
-
-                }
-              }            
-            }
-
-            for(var i = 0; i < persona_2.misRayos.length; i++){
-              var rayo_2 = persona_2.misRayos[i];
-
-              raycaster_2.set( persona_2.position, rayo_2 );
-
-              var colision = raycaster_2.intersectObjects(
-                colisionficha,
-                true
-              );
-
-              var colision2 = raycaster_2.intersectObjects(
-                colisionficha2,
-                true
-              );
-
-              var colision3 = raycaster_2.intersectObjects(
-                colisionficha3,
-                true
-              );
-
-              var colision4 = raycaster_2.intersectObjects(
-                colisionficha4,
-                true
-              );
-
-              var colision5 = raycaster_2.intersectObjects(
-                colisionficha5,
-                true
-              );
-
-              if( colision.length > 0 ){
-                if(colision[0].distance < 3){
-                  console.log("Estoy colisionando con la ficha huehuehue");
-                  persona_2.translateZ(-(forward_2 * deltaTime));
-                  if(ficha3_e_2 == false){
-                    $("#6").toggle();
-                    ficha3_e = true;
-                  }
-
-                  puntos_per2 = puntos_per2 + 10;
-                  cantidadfichas_2 = cantidadfichas_2 + 1;
-                  scene.remove(colision[0].object.parent);
-                  colisionficha.pop(colision[0].object.parent);
-
-                  //debugger;
-                }
-              }
-
-              if( colision2.length > 0 ){
-                if(colision2[0].distance < 3){
-                  console.log("Estoy colisionando con la ficha huehuehue");
-                  persona_2.translateZ(-(forward_2 * deltaTime));
-                  if(ficha1_i_2 == false && ficha2_i_2 == false){
-                    $("#4").toggle();
-                    ficha1_i_2 = true;
-                    ficha2_i_2 = false;
-                  }
-                  else if(ficha1_i_2 == true &&  ficha2_i_2 == false){
-                    $("#5").toggle();
-                    ficha2_i_2 = true;
-                    ficha1_i_2 = true;
-                  }
-
-                  puntos_per2 = puntos_per2 + 10;
-                  cantidadfichas_2 = cantidadfichas_2 + 1;
-
-                  scene.remove(colision2[0].object.parent);
-                  colisionficha2.pop(colision2[0].object.parent);
-
-                  //debugger;
-                }
-              }
-
-              if( colision3.length > 0 ){
-                if(colision3[0].distance < 3){
-                  console.log("Estoy colisionando con la ficha huehuehue");
-                  persona_2.translateZ(-(forward_2 * deltaTime));
-                  if(ficha1_i_2 == false && ficha2_i_2 == false){
-                    $("#4").toggle();
-                    ficha1_i_2 = true;
-                    ficha2_i_2 = false;
-                  }
-                  else if(ficha1_i_2 == true &&  ficha2_i_2 == false){
-                    $("#5").toggle();
-                    ficha2_i_2 = true;
-                    ficha1_i_2 = true;
-                  }
-
-                  puntos_per2 = puntos_per2 + 10;
-                  cantidadfichas_2 = cantidadfichas_2 + 1;
-
-                  scene.remove(colision3[0].object.parent);
-                  colisionficha3.pop(colision3[0].object.parent);
-
-                  //debugger;
-                }
-              }
-
-              if( colision4.length > 0 ){
-                if(colision4[0].distance < 3){
-                  console.log("Estoy colisionando con la ficha huehuehue");
-                  persona_2.translateZ(-(forward_2 * deltaTime));
-                  if(ficha1_i_2 == false && ficha2_i_2 == false){
-                    $("#4").toggle();
-                    ficha1_i_2 = true;
-                    ficha2_i_2 = false;
-                  }
-                  else if(ficha1_i_2 == true &&  ficha2_i_2 == false){
-                    $("#5").toggle();
-                    ficha2_i_2 = true;
-                    ficha1_i_2 = true;
-                  }
-
-                  puntos_per2 = puntos_per2 + 10;
-                  cantidadfichas_2 = cantidadfichas_2 + 1;
-
-                  scene.remove(colision4[0].object.parent);
-                  colisionficha4.pop(colision4[0].object.parent);
-
-                  //debugger;
-                }
-              }
-
-              if( colision5.length > 0 ){
-                if(colision5[0].distance < 3){
-                  console.log("Estoy colisionando con la ficha huehuehue");
-                  persona_2.translateZ(-(forward_2 * deltaTime));
-                  if(ficha1_i_2 == false && ficha2_i_2 == false){
-                    $("#4").toggle();
-                    ficha1_i_2 = true;
-                    ficha2_i_2 = false;
-                  }
-                  else if(ficha1_i_2 == true &&  ficha2_i_2 == false){
-                    $("#5").toggle();
-                    ficha2_i_2 = true;
-                    ficha1_i_2 = true;
-                  }
-
-                  puntos_per2 = puntos_per2 + 10;
-                  cantidadfichas_2 = cantidadfichas_2 + 1;
-
-                  scene.remove(colision5[0].object.parent);
-                  colisionficha5.pop(colision5[0].object.parent);
-
-                  //debugger;
-                }
-              }
-
-            }
-            //var puntuacion = puntos_per1;
-
-            //document.getElementsByName("ptsUsuario").value = puntuacion;
-            //document.getElementById("ptsUsuario").setAttribute("value",puntuacion);
             
-          }
-          
-          if(cantidadfichas_1 >= 3 && Usuario1Gano == false && cantidadfichas_2 < 3){
-            //alert("GANASTE JUGADOR 1, PERDISTE JUGADOR 2");
-            Usuario1Gano = true;
-            Usuario2Gano = false;
+            if(cantidadfichas_1 >= 3 && Usuario1Gano == false && cantidadfichas_2 < 3){
+              //alert("GANASTE JUGADOR 1, PERDISTE JUGADOR 2");
+              Usuario1Gano = true;
+              Usuario2Gano = false;
 
-            $('#JuegoTerminado1').css('display', 'block');
-            var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 5.5); //1.0
-            scene.add(ambientLight);
+              $('#JuegoTerminado1').css('display', 'block');
+              var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 5.5); //1.0
+              scene.add(ambientLight);
 
-            $('#puntos').append("Puntos del Usuario : " + puntos_per1);
-            $('#puntuacionUsuario').val(puntos_per1);
-            //debugger;
-
-            //$('#salir').onclick(function(){
-            //  $(location).attr('href', '/');
-            //});
-
-            $('body').on('click', '#guardar', function(){
-
-              //var score = $("#puntos").val();
-              var idUsu = $("#usuid").val();
-              var score = puntos_per1;
-
-              var dataToSend = { action: "/puntuaciones", puntos: score, user_id: idUsu, activo: 1 };
+              $('#puntos').append("Puntos del Usuario : " + puntos_per1);
+              $('#puntuacionUsuario').val(puntos_per1);
               //debugger;
-              $.ajax({
-                url: '/puntuaciones',
-                async: true,
-                method: 'POST',
-                data: dataToSend,
-                dataType: 'json',
-                success: function(respuestaDelServer){
 
-                  alert(respuestaDelServer.score);
-                },
+              //$('#salir').onclick(function(){
+              //  $(location).attr('href', '/');
+              //});
 
-                error: function(x, h, r) {
-                  alert("Error: " + x + h + r);
-                }
+              $('body').on('click', '#guardar', function(){
+
+                //var score = $("#puntos").val();
+                var idUsu = $("#usuid").val();
+                var score = puntos_per1;
+
+                var dataToSend = { action: "/puntuaciones", puntos: score, user_id: idUsu, activo: 1 };
+                //debugger;
+                $.ajax({
+                  url: '/puntuaciones',
+                  async: true,
+                  method: 'POST',
+                  data: dataToSend,
+                  dataType: 'json',
+                  success: function(respuestaDelServer){
+
+                    alert(respuestaDelServer.score);
+                  },
+
+                  error: function(x, h, r) {
+                    alert("Error: " + x + h + r);
+                  }
+                });
               });
-            });
 
-            $('body').on('click', '#salir', function(){
-              $(location).attr('href', '/');
-            });
-
-          }
-          
-          if(cantidadfichas_2 >= 3 && Usuario2Gano == false && cantidadfichas_1 < 3){
-            //alert("GANASTE JUGADOR 2, PERDISTE JUGADOR 1");
-            Usuario1Gano = false;
-            Usuario2Gano = true;
-
-            $('#JuegoTerminado2').css('display', 'block');
-            var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 5.5); //1.0
-            scene.add(ambientLight);
-
-            $('#puntos2').append("Puntos del Usuario : " + puntos_per1);
-            $('#puntuacionUsuario_2').val(puntos_per1);
-
-            $('body').on('click', '#guardar_2', function(){
-
-              //var score = $("#puntos").val();
-              var idUsu = $("#usuid2").val();
-              var score = puntos_per1;
-
-              var dataToSend = { action: "/puntuaciones", puntos: score, user_id: idUsu, activo: 1 };
-              //debugger;
-              $.ajax({
-                url: '/puntuaciones',
-                async: true,
-                method: 'POST',
-                data: dataToSend,
-                dataType: 'json',
-                success: function(respuestaDelServer){
-
-                  alert(respuestaDelServer.score);
-                },
-
-                error: function(x, h, r) {
-                  alert("Error: " + x + h + r);
-                }
+              $('body').on('click', '#salir', function(){
+                $(location).attr('href', '/');
               });
-            });
 
-            $('body').on('click', '#salir2', function(){
-              $(location).attr('href', '/');
-            });
-          }
+            }
+            
+            if(cantidadfichas_2 >= 3 && Usuario2Gano == false && cantidadfichas_1 < 3){
+              //alert("GANASTE JUGADOR 2, PERDISTE JUGADOR 1");
+              Usuario1Gano = false;
+              Usuario2Gano = true;
 
-          
-          renderer.render(scene, camera);
-          renderer_2.render(scene, camera_2);         
+              $('#JuegoTerminado2').css('display', 'block');
+              var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 5.5); //1.0
+              scene.add(ambientLight);
+
+              $('#puntos2').append("Puntos del Usuario : " + puntos_per1);
+              $('#puntuacionUsuario_2').val(puntos_per1);
+
+              $('body').on('click', '#guardar_2', function(){
+
+                //var score = $("#puntos").val();
+                var idUsu = $("#usuid2").val();
+                var score = puntos_per1;
+
+                var dataToSend = { action: "/puntuaciones", puntos: score, user_id: idUsu, activo: 1 };
+                //debugger;
+                $.ajax({
+                  url: '/puntuaciones',
+                  async: true,
+                  method: 'POST',
+                  data: dataToSend,
+                  dataType: 'json',
+                  success: function(respuestaDelServer){
+
+                    alert(respuestaDelServer.score);
+                  },
+
+                  error: function(x, h, r) {
+                    alert("Error: " + x + h + r);
+                  }
+                });
+              });
+
+              $('body').on('click', '#salir2', function(){
+                $(location).attr('href', '/');
+              });
+            }
+
+            
+            renderer.render(scene, camera);
+            renderer_2.render(scene, camera_2);      
+          } 
+            
         }
 
         function render_2(){
+          requestAnimationFrame(render_2); 
           if(pause == false){
-            requestAnimationFrame(render_2); 
             var bool=false;
             deltaTime = clock.getDelta();	
             Usuario1Gano_2 = false;
@@ -2068,502 +2074,505 @@
 
         function render_3(){
           requestAnimationFrame(render_3);
-          var bool=false;
-          deltaTime = clock.getDelta();
+          if(pause == false){
+            var bool=false;
+            deltaTime = clock.getDelta();
 
-          arcoiris.time.value += 0.5*deltaTime;
-        
-          for(var i = 0; i < NIVELTRES.length; i++){
-            if(estaEnNivelTres == true){
-              NIVELTRES[i].scale.set(0.5, 0.5, 0.5);
-            }
-            else{
-              NIVELTRES[i].scale.set(0, 0, 0);
-            }
-          }
-
-          if (mixers.length > 0) {
-            for (var i = 0; i < mixers.length; i++) {
-              mixers[i].update(deltaTime);
-            }
-          }
-
-          if (mixers_2.length > 0) {
-            for (var i = 0; i < mixers_2.length; i++) {
-              mixers_2[i].update(deltaTime);
-            }
-          }
-
-          var yaw = 0;
-          var forward = 0;
-          if (keys["A"]) {
-            yaw = 2;
-          } else if (keys["D"]) {
-            yaw = -2;
-          }
-          if (keys["W"]) {
-            forward = -20;
-          } else if (keys["S"]) {
-            forward = 20;
-          }
-
-          var yaw_2 = 0;
-          var forward_2 = 0;
-          gamepad_2 = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
-          if (gamepad_2.length>0){
-              gamepad_2 = gamepad_2[0];
-          }
+            arcoiris.time.value += 0.5*deltaTime;
           
-          if(gamepad_2){
-            console.log('entro gamepad_2');
-            if(gamepad_2.connected){
-              if(gamepad_2.axes[0]>.5){
-                console.log('entro button pressed');
-                yaw_2 = -2;
-              }
-              if(gamepad_2.axes[1]>.5){
-                console.log('entro axes 1 >');
-                forward_2 = 20;
-              }
-              if(gamepad_2.axes[0]<-.5){
-                console.log('entro axes 0 < ');
-                yaw_2 = 2;
-              }
-              if(gamepad_2.axes[1]<-.5){
-                console.log('entro axes 1 < ');
-                forward_2 = -20;
+            for(var i = 0; i < NIVELTRES.length; i++){
+              if(estaEnNivelTres == true){
+                NIVELTRES[i].scale.set(0.5, 0.5, 0.5);
               }
               else{
-                console.log('entro al if del connected pero a ningun axes');
+                NIVELTRES[i].scale.set(0, 0, 0);
               }
-              console.log(gamepad_2.axes[0] + "---" + gamepad_2.axes[1]);
+            }
+
+            if (mixers.length > 0) {
+              for (var i = 0; i < mixers.length; i++) {
+                mixers[i].update(deltaTime);
+              }
+            }
+
+            if (mixers_2.length > 0) {
+              for (var i = 0; i < mixers_2.length; i++) {
+                mixers_2[i].update(deltaTime);
+              }
+            }
+
+            var yaw = 0;
+            var forward = 0;
+            if (keys["A"]) {
+              yaw = 2;
+            } else if (keys["D"]) {
+              yaw = -2;
+            }
+            if (keys["W"]) {
+              forward = -20;
+            } else if (keys["S"]) {
+              forward = 20;
+            }
+
+            var yaw_2 = 0;
+            var forward_2 = 0;
+            gamepad_2 = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
+            if (gamepad_2.length>0){
+                gamepad_2 = gamepad_2[0];
             }
             
-            else{
-              console.log('entro al else del connected');
-            }
-          }
-
-          //if (keys["J"]) {
-          //  yaw_2 = 2;
-          //} else if (keys["L"]) {
-          //  yaw_2 = -2;
-          //}
-          //if (keys["I"]) {
-          //  forward_2 = -20;
-          //} else if (keys["K"]) {
-          //  forward_2 = 20;
-          //}
-
-          if (isWorldReady[0] && isWorldReady[1]) {
-            persona.translateZ(forward * deltaTime);
-            persona_2.translateZ(forward_2 * deltaTime);
-
-            for(var i = 0; i < persona.misRayos.length; i++){
-              var rayo = persona.misRayos[i];
-
-              raycaster.set( persona.position, rayo );
-
-              var colision = raycaster.intersectObjects(
-                objetosConColision,
-                true
-              );
-
-              if( colision.length > 0 ){
-                if(colision[0].distance < 3){
-                  console.log("Estoy colisionando");
-                  persona.translateZ(-(forward * deltaTime));
+            if(gamepad_2){
+              console.log('entro gamepad_2');
+              if(gamepad_2.connected){
+                if(gamepad_2.axes[0]>.5){
+                  console.log('entro button pressed');
+                  yaw_2 = -2;
                 }
+                if(gamepad_2.axes[1]>.5){
+                  console.log('entro axes 1 >');
+                  forward_2 = 20;
+                }
+                if(gamepad_2.axes[0]<-.5){
+                  console.log('entro axes 0 < ');
+                  yaw_2 = 2;
+                }
+                if(gamepad_2.axes[1]<-.5){
+                  console.log('entro axes 1 < ');
+                  forward_2 = -20;
+                }
+                else{
+                  console.log('entro al if del connected pero a ningun axes');
+                }
+                console.log(gamepad_2.axes[0] + "---" + gamepad_2.axes[1]);
+              }
+              
+              else{
+                console.log('entro al else del connected');
               }
             }
 
-            for(var i = 0; i < persona_2.misRayos.length; i++){
-              var rayo_2 = persona_2.misRayos[i];
+            //if (keys["J"]) {
+            //  yaw_2 = 2;
+            //} else if (keys["L"]) {
+            //  yaw_2 = -2;
+            //}
+            //if (keys["I"]) {
+            //  forward_2 = -20;
+            //} else if (keys["K"]) {
+            //  forward_2 = 20;
+            //}
 
-              raycaster_2.set( persona_2.position, rayo_2 );
+            if (isWorldReady[0] && isWorldReady[1]) {
+              persona.translateZ(forward * deltaTime);
+              persona_2.translateZ(forward_2 * deltaTime);
 
-              var colision_2 = raycaster_2.intersectObjects(
-                objetosConColision,
-                true
-              );
+              for(var i = 0; i < persona.misRayos.length; i++){
+                var rayo = persona.misRayos[i];
 
-              if( colision_2.length > 0 ){
-                if(colision_2[0].distance < 3){
-                  console.log("Estoy colisionando");
-                  persona_2.translateZ(-(forward_2 * deltaTime));
-                }
-              }
-            }
-            persona.rotation.y += yaw * deltaTime;
-            persona_2.rotation.y += yaw_2 * deltaTime;
-          }
+                raycaster.set( persona.position, rayo );
 
-          if (isWorldReady[18]) {
-            for(var i = 0; i < persona.misRayos.length; i++){
-                  var rayo = persona.misRayos[i];
+                var colision = raycaster.intersectObjects(
+                  objetosConColision,
+                  true
+                );
 
-                  raycaster.set( persona.position, rayo );
-
-                  var colision = raycaster.intersectObjects(
-                    colisionficha3_1,
-                    true
-                  );
-
-                  var colision2 = raycaster.intersectObjects(
-                    colisionficha3_1_2,
-                    true
-                  );
-
-                  var colision3 = raycaster.intersectObjects(
-                    colisionficha3_1_3,
-                    true
-                  );
-
-                  if( colision.length > 0 ){
-                    if(colision[0].distance < 3){
-                      console.log("Estoy colisionando con la ficha huehuehue");
-                      persona.translateZ(-(forward * deltaTime));
-                      if(ficha1_tomo == false){
-                        $("#13").toggle();
-                        ficha1_tomo = true;
-                      }
-                      obtuvofichaTOMO = true;
-                                          
-                      ptsUsuario = ptsUsuario + 20;
-                      colision[0].object.scale.set(0,0,0);
-                      
-                      if(fichitaTOMO.length == 0){
-                        fichitaTOMO.push(colision[0].object.parent);
-                      }
-
-                      for(var i=0; i<fichitaTOMO.length; i++){
-                        fichitaTOMO[i].scale.set(0,0,0);
-                      }
-                      colisionofichaTOMO = true;
-                    }
+                if( colision.length > 0 ){
+                  if(colision[0].distance < 3){
+                    console.log("Estoy colisionando");
+                    persona.translateZ(-(forward * deltaTime));
                   }
+                }
+              }
 
-                  if(colisionofichaTOMO_2 == true){
-                    intermedio_1 = setInterval(function(){
-                      console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-                      for(var i=0; i<fichitaTOMO.length; i++){
-                        fichitaTOMO[i].scale.set(0.5, 0.5, 0.5);
-                        fichitaTOMO[i].children[0].scale.set(1, 1, 1);
-                      } 
+              for(var i = 0; i < persona_2.misRayos.length; i++){
+                var rayo_2 = persona_2.misRayos[i];
+
+                raycaster_2.set( persona_2.position, rayo_2 );
+
+                var colision_2 = raycaster_2.intersectObjects(
+                  objetosConColision,
+                  true
+                );
+
+                if( colision_2.length > 0 ){
+                  if(colision_2[0].distance < 3){
+                    console.log("Estoy colisionando");
+                    persona_2.translateZ(-(forward_2 * deltaTime));
+                  }
+                }
+              }
+              persona.rotation.y += yaw * deltaTime;
+              persona_2.rotation.y += yaw_2 * deltaTime;
+            }
+
+            if (isWorldReady[18]) {
+              for(var i = 0; i < persona.misRayos.length; i++){
+                    var rayo = persona.misRayos[i];
+
+                    raycaster.set( persona.position, rayo );
+
+                    var colision = raycaster.intersectObjects(
+                      colisionficha3_1,
+                      true
+                    );
+
+                    var colision2 = raycaster.intersectObjects(
+                      colisionficha3_1_2,
+                      true
+                    );
+
+                    var colision3 = raycaster.intersectObjects(
+                      colisionficha3_1_3,
+                      true
+                    );
+
+                    if( colision.length > 0 ){
+                      if(colision[0].distance < 3){
+                        console.log("Estoy colisionando con la ficha huehuehue");
+                        persona.translateZ(-(forward * deltaTime));
+                        if(ficha1_tomo == false){
+                          $("#13").toggle();
+                          ficha1_tomo = true;
+                        }
+                        obtuvofichaTOMO = true;
+                                            
+                        ptsUsuario = ptsUsuario + 20;
+                        colision[0].object.scale.set(0,0,0);
+                        
+                        if(fichitaTOMO.length == 0){
+                          fichitaTOMO.push(colision[0].object.parent);
+                        }
+
+                        for(var i=0; i<fichitaTOMO.length; i++){
+                          fichitaTOMO[i].scale.set(0,0,0);
+                        }
+                        colisionofichaTOMO = true;
+                      }
+                    }
+
+                    if(colisionofichaTOMO_2 == true){
+                      intermedio_1 = setInterval(function(){
+                        console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                        for(var i=0; i<fichitaTOMO.length; i++){
+                          fichitaTOMO[i].scale.set(0.5, 0.5, 0.5);
+                          fichitaTOMO[i].children[0].scale.set(1, 1, 1);
+                        } 
+                        colisionofichaTOMO_2 = false;
+                      }, 5000, "JavaScript");
+                      segundaColision_2 = true;
+                    }
+
+                    if(segundaColision_2 == true){
+                      if( colision.length > 0 ){
+                        if(colision[0].distance < 3){
+                          scene.remove(colision[0].object.parent);
+                          colisionficha3_1.pop(colision[0].object.parent);
+                        }
+                      }
+                      segundaColision_2 = false;
                       colisionofichaTOMO_2 = false;
-                    }, 5000, "JavaScript");
-                    segundaColision_2 = true;
-                  }
-
-                  if(segundaColision_2 == true){
-                    if( colision.length > 0 ){
-                      if(colision[0].distance < 3){
-                        scene.remove(colision[0].object.parent);
-                        colisionficha3_1.pop(colision[0].object.parent);
-                      }
                     }
-                    segundaColision_2 = false;
-                    colisionofichaTOMO_2 = false;
-                  }
 
-                if( colision2.length > 0 ){
-                    if(colision2[0].distance < 3){
-                      console.log("Estoy colisionando con la ficha huehuehue");
-                      persona.translateZ(-(forward * deltaTime));
-                      if(ficha1_dachi == false){
-                        $("#14").toggle();
-                        ficha1_dachi = true;
-                      }
-                      obtuvofichaDACHI = true;
-                                          
-                      ptsUsuario = ptsUsuario + 20;
-                      colision2[0].object.scale.set(0,0,0);
-                      
-                      if(fichitaDACHI.length == 0){
-                        fichitaDACHI.push(colision2[0].object.parent);
-                      }
-
-                      for(var i=0; i<fichitaDACHI.length; i++){
-                        fichitaDACHI[i].scale.set(0,0,0);
-                      }
-                      colisionofichaDACHI = true;
-                    }
-                }
-
-                if(colisionofichaDACHI_2 == true){
-                  intermedio_2 = setInterval(function(){
-                    console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-                    for(var i=0; i<fichitaDACHI.length; i++){
-                      fichitaDACHI[i].scale.set(0.5, 0.5, 0.5);
-                      fichitaDACHI[i].children[0].scale.set(1, 1, 1);
-                    } 
-                    colisionofichaDACHI_2 = false;
-                  }, 5000, "JavaScript");
-                  segundaColision2_2 = true;
-                }
-
-                if(segundaColision2_2 == true){
                   if( colision2.length > 0 ){
-                    if(colision2[0].distance < 3){
-                      scene.remove(colision2[0].object.parent);
-                      colisionficha3_1_2.pop(colision2[0].object.parent);
-                    }
+                      if(colision2[0].distance < 3){
+                        console.log("Estoy colisionando con la ficha huehuehue");
+                        persona.translateZ(-(forward * deltaTime));
+                        if(ficha1_dachi == false){
+                          $("#14").toggle();
+                          ficha1_dachi = true;
+                        }
+                        obtuvofichaDACHI = true;
+                                            
+                        ptsUsuario = ptsUsuario + 20;
+                        colision2[0].object.scale.set(0,0,0);
+                        
+                        if(fichitaDACHI.length == 0){
+                          fichitaDACHI.push(colision2[0].object.parent);
+                        }
+
+                        for(var i=0; i<fichitaDACHI.length; i++){
+                          fichitaDACHI[i].scale.set(0,0,0);
+                        }
+                        colisionofichaDACHI = true;
+                      }
                   }
-                  segundaColision2_2 = false;
-                  colisionofichaDACHI_2 = false;
-                }
-                  
-              if( colision3.length > 0 ){
-                if(colision3[0].distance < 3){
-                  console.log("Estoy colisionando con la ficha huehuehue");
-                  persona.translateZ(-(forward * deltaTime));
-                  if(ficha1_comodin == false){
-                    $("#15").toggle();
-                    ficha1_comodin = true;
-                  }
-                  obtuvofichaCOMODIN = true;
-                  ptsUsuario = ptsUsuario + 40;
-                  scene.remove(colision3[0].object.parent);
-                  colisionficha3_1_3.pop(colision3[0].object.parent);
-                }
-              }
 
-            }
-
-            for(var i = 0; i < persona_2.misRayos.length; i++){
-              var rayo_2 = persona_2.misRayos[i];
-
-              raycaster_2.set( persona_2.position, rayo_2 );
-
-              var colision = raycaster_2.intersectObjects(
-                    colisionficha3_1,
-                    true
-                  );
-
-                  var colision2 = raycaster_2.intersectObjects(
-                    colisionficha3_1_2,
-                    true
-                  );     
-
-                  var colision3 = raycaster_2.intersectObjects(
-                    colisionficha3_1_3,
-                    true
-                  );       
-
-                  if( colision.length > 0 ){
-                    if(colision[0].distance < 3){
-                      console.log("Estoy colisionando con la ficha huehuehue");
-                      persona_2.translateZ(-(forward_2 * deltaTime));
-                      if(ficha2_tomo == false){
-                        $("#16").toggle();
-                        ficha2_tomo = true;
-                      }
-                      obtuvofichaTOMO_2 = true;
-                      ptsJugador2 = ptsJugador2 + 20;
-                      colision[0].object.scale.set(0,0,0);
-                      
-                      if(fichitaTOMO.length == 0){
-                        fichitaTOMO.push(colision[0].object.parent);
-                      }
-
-                      for(var i=0; i<fichitaTOMO.length; i++){
-                        fichitaTOMO[i].scale.set(0,0,0);
-                      }
-                      colisionofichaTOMO_2 = true;
-                    }
-                  }  
-
-                  if(colisionofichaTOMO == true){
-                    intermedio_1 = setInterval(function(){
+                  if(colisionofichaDACHI_2 == true){
+                    intermedio_2 = setInterval(function(){
                       console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-                      for(var i=0; i<fichitaTOMO.length; i++){
-                        fichitaTOMO[i].scale.set(0.5, 0.5, 0.5);
-                        fichitaTOMO[i].children[0].scale.set(1, 1, 1);
-                      } 
-                    colisionofichaTOMO = false;
-                    }, 5000, "JavaScript");
-                    segundaColision = true;
-                  }
-
-                  if(segundaColision == true){
-                    if( colision.length > 0 ){
-                      if(colision[0].distance < 3){
-                        scene.remove(colision[0].object.parent);
-                        colisionficha3_1.pop(colision[0].object.parent);
-                      }
-                    }
-                    segundaColision = false;
-                    colisionofichaTOMO = false;
-                  }
-
-                  if( colision2.length > 0 ){
-                    if(colision2[0].distance < 3){
-                      console.log("Estoy colisionando con la ficha huehuehue");
-                      persona_2.translateZ(-(forward_2 * deltaTime));
-                      if(ficha2_dachi == false){
-                        $("#17").toggle();
-                        ficha2_dachi = true;
-                      }
-                      obtuvofichaDACHI_2 = true;
-                                          
-                      ptsJugador2 = ptsJugador2 + 20;
-                      colision2[0].object.scale.set(0,0,0);
-                      
-                      if(fichitaDACHI.length == 0){
-                        fichitaDACHI.push(colision2[0].object.parent);
-                      }
-
                       for(var i=0; i<fichitaDACHI.length; i++){
-                        fichitaDACHI[i].scale.set(0,0,0);
+                        fichitaDACHI[i].scale.set(0.5, 0.5, 0.5);
+                        fichitaDACHI[i].children[0].scale.set(1, 1, 1);
+                      } 
+                      colisionofichaDACHI_2 = false;
+                    }, 5000, "JavaScript");
+                    segundaColision2_2 = true;
+                  }
+
+                  if(segundaColision2_2 == true){
+                    if( colision2.length > 0 ){
+                      if(colision2[0].distance < 3){
+                        scene.remove(colision2[0].object.parent);
+                        colisionficha3_1_2.pop(colision2[0].object.parent);
                       }
-                      colisionofichaDACHI_2 = true;
                     }
+                    segundaColision2_2 = false;
+                    colisionofichaDACHI_2 = false;
                   }
-
-                if(colisionofichaDACHI == true){
-                  intermedio_2 = setInterval(function(){
-                    console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-                    for(var i=0; i<fichitaDACHI.length; i++){
-                      fichitaDACHI[i].scale.set(0.5, 0.5, 0.5);
-                      fichitaDACHI[i].children[0].scale.set(1, 1, 1);
-                    } 
-                    colisionofichaDACHI = false;
-                  }, 5000, "JavaScript");
-                  segundaColision2 = true;
-                }
-                if(segundaColision2 == true){
-                  if( colision2.length > 0 ){
-                    if(colision2[0].distance < 3){
-                      scene.remove(colision2[0].object.parent);
-                      colisionficha3_1_2.pop(colision2[0].object.parent);
-                    }
-                  }
-                  segundaColision2 = false;
-                  colisionofichaDACHI = false;
-                }
-
+                    
                 if( colision3.length > 0 ){
                   if(colision3[0].distance < 3){
                     console.log("Estoy colisionando con la ficha huehuehue");
-                    persona_2.translateZ(-(forward_2 * deltaTime));
-                    if(ficha2_comodin == false){
-                      $("#18").toggle();
-                      ficha2_comodin = true;
+                    persona.translateZ(-(forward * deltaTime));
+                    if(ficha1_comodin == false){
+                      $("#15").toggle();
+                      ficha1_comodin = true;
                     }
-                    obtuvofichaCOMODIN_2 = true;
-                    ptsJugador2 = ptsJugador2 + 40;
+                    obtuvofichaCOMODIN = true;
+                    ptsUsuario = ptsUsuario + 40;
                     scene.remove(colision3[0].object.parent);
                     colisionficha3_1_3.pop(colision3[0].object.parent);
                   }
                 }
+
+              }
+
+              for(var i = 0; i < persona_2.misRayos.length; i++){
+                var rayo_2 = persona_2.misRayos[i];
+
+                raycaster_2.set( persona_2.position, rayo_2 );
+
+                var colision = raycaster_2.intersectObjects(
+                      colisionficha3_1,
+                      true
+                    );
+
+                    var colision2 = raycaster_2.intersectObjects(
+                      colisionficha3_1_2,
+                      true
+                    );     
+
+                    var colision3 = raycaster_2.intersectObjects(
+                      colisionficha3_1_3,
+                      true
+                    );       
+
+                    if( colision.length > 0 ){
+                      if(colision[0].distance < 3){
+                        console.log("Estoy colisionando con la ficha huehuehue");
+                        persona_2.translateZ(-(forward_2 * deltaTime));
+                        if(ficha2_tomo == false){
+                          $("#16").toggle();
+                          ficha2_tomo = true;
+                        }
+                        obtuvofichaTOMO_2 = true;
+                        ptsJugador2 = ptsJugador2 + 20;
+                        colision[0].object.scale.set(0,0,0);
+                        
+                        if(fichitaTOMO.length == 0){
+                          fichitaTOMO.push(colision[0].object.parent);
+                        }
+
+                        for(var i=0; i<fichitaTOMO.length; i++){
+                          fichitaTOMO[i].scale.set(0,0,0);
+                        }
+                        colisionofichaTOMO_2 = true;
+                      }
+                    }  
+
+                    if(colisionofichaTOMO == true){
+                      intermedio_1 = setInterval(function(){
+                        console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                        for(var i=0; i<fichitaTOMO.length; i++){
+                          fichitaTOMO[i].scale.set(0.5, 0.5, 0.5);
+                          fichitaTOMO[i].children[0].scale.set(1, 1, 1);
+                        } 
+                      colisionofichaTOMO = false;
+                      }, 5000, "JavaScript");
+                      segundaColision = true;
+                    }
+
+                    if(segundaColision == true){
+                      if( colision.length > 0 ){
+                        if(colision[0].distance < 3){
+                          scene.remove(colision[0].object.parent);
+                          colisionficha3_1.pop(colision[0].object.parent);
+                        }
+                      }
+                      segundaColision = false;
+                      colisionofichaTOMO = false;
+                    }
+
+                    if( colision2.length > 0 ){
+                      if(colision2[0].distance < 3){
+                        console.log("Estoy colisionando con la ficha huehuehue");
+                        persona_2.translateZ(-(forward_2 * deltaTime));
+                        if(ficha2_dachi == false){
+                          $("#17").toggle();
+                          ficha2_dachi = true;
+                        }
+                        obtuvofichaDACHI_2 = true;
+                                            
+                        ptsJugador2 = ptsJugador2 + 20;
+                        colision2[0].object.scale.set(0,0,0);
+                        
+                        if(fichitaDACHI.length == 0){
+                          fichitaDACHI.push(colision2[0].object.parent);
+                        }
+
+                        for(var i=0; i<fichitaDACHI.length; i++){
+                          fichitaDACHI[i].scale.set(0,0,0);
+                        }
+                        colisionofichaDACHI_2 = true;
+                      }
+                    }
+
+                  if(colisionofichaDACHI == true){
+                    intermedio_2 = setInterval(function(){
+                      console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                      for(var i=0; i<fichitaDACHI.length; i++){
+                        fichitaDACHI[i].scale.set(0.5, 0.5, 0.5);
+                        fichitaDACHI[i].children[0].scale.set(1, 1, 1);
+                      } 
+                      colisionofichaDACHI = false;
+                    }, 5000, "JavaScript");
+                    segundaColision2 = true;
+                  }
+                  if(segundaColision2 == true){
+                    if( colision2.length > 0 ){
+                      if(colision2[0].distance < 3){
+                        scene.remove(colision2[0].object.parent);
+                        colisionficha3_1_2.pop(colision2[0].object.parent);
+                      }
+                    }
+                    segundaColision2 = false;
+                    colisionofichaDACHI = false;
+                  }
+
+                  if( colision3.length > 0 ){
+                    if(colision3[0].distance < 3){
+                      console.log("Estoy colisionando con la ficha huehuehue");
+                      persona_2.translateZ(-(forward_2 * deltaTime));
+                      if(ficha2_comodin == false){
+                        $("#18").toggle();
+                        ficha2_comodin = true;
+                      }
+                      obtuvofichaCOMODIN_2 = true;
+                      ptsJugador2 = ptsJugador2 + 40;
+                      scene.remove(colision3[0].object.parent);
+                      colisionficha3_1_3.pop(colision3[0].object.parent);
+                    }
+                  }
+              }
+            }
+
+            if(timer_3 <= 0 && !seAcaboElTiempo_2){
+              //GAMEOVER
+              $('#LOSER').css('display', 'block');
+              var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 2.0); //1.0
+              scene.add(ambientLight);
+              $('body').on('click', '#salir3', function(){
+                $(location).attr('href', '/');
+              });
+              seAcaboElTiempo_2 = true;
+            }
+
+            if((obtuvofichaTOMO == true && obtuvofichaCOMODIN == true) || 
+                  (obtuvofichaDACHI == true && obtuvofichaCOMODIN == true) || 
+                  (obtuvofichaTOMO == true && obtuvofichaDACHI == true)  && Usuario1Gano_3 == false   ){
+
+                    seAcaboElTiempo_2 = true;
+                    Usuario1Gano_3 = true;
+                    Usuario2Gano_3 = false;
+
+                    $('#TercerNivel').css('display', 'block');
+                    var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 4.5); //1.0
+                    scene.add(ambientLight);
+
+                    if(unaVez3 == false){
+                      $('#score_tercer').append("Puntos del Usuario : " + ptsUsuario);
+                      unaVez3 = true;
+                    }
+
+                    $('#puntuacionUsuario_5').val(ptsUsuario);
+
+                    $('body').on('click', '#guardarNivelTres', function(){
+                      //var score = $("#puntos").val();
+                      var idUsu = $("#usuid_tercer").val();
+                      var score = ptsUsuario;
+                      var dataToSend = { action: "/puntuaciones", puntos: score, user_id: idUsu, activo: 1 };
+                      if(unaVezguardarpuntuacion_3 == false){
+                        //debugger;
+                          $.ajax({
+                            url: '/puntuaciones',
+                            async: true,
+                            method: 'POST',
+                            data: dataToSend,
+                            dataType: 'json',
+                            success: function(respuestaDelServer){
+                              alert(respuestaDelServer.score);
+                            },
+                            error: function(x, h, r) {
+                              alert("Error: " + x + h + r);
+                            }
+                          });
+                          unaVezguardarpuntuacion_3 = true;
+                      }
+                    });
+
+                    $('body').on('click', '#salir5', function(){
+                      $(location).attr('href', '/');
+                    });
+            }
+
+            if((obtuvofichaTOMO_2 == true && obtuvofichaCOMODIN_2 == true) || 
+                  (obtuvofichaDACHI_2 == true && obtuvofichaCOMODIN_2 == true) || 
+                  (obtuvofichaTOMO_2 == true && obtuvofichaDACHI_2 == true)  && Usuario2Gano_3 == false   ){
+
+                    seAcaboElTiempo_2 = true;
+                    Usuario1Gano_3 = false;
+                    Usuario2Gano_3 = true;
+
+                    $('#TercerNivel_2').css('display', 'block');
+                    var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 4.5); //1.0
+                    scene.add(ambientLight);
+
+                    if(unaVez3_2 == false){
+                      $('#score_tercer_2').append("Puntos del Usuario : " + ptsUsuario);
+                      unaVez3_2 = true;
+                    }
+                    $('#puntuacionUsuario_6').val(ptsUsuario);
+
+                    $('body').on('click', '#guardarNivelTres_2', function(){
+                      //var score = $("#puntos").val();
+                      var idUsu = $("#usuid_tercer_2").val();
+                      var score = ptsUsuario;
+                      var dataToSend = { action: "/puntuaciones", puntos: score, user_id: idUsu, activo: 1 };
+                      if(unaVezguardarpuntuacion2_3 == false){
+                        //debugger;
+                          $.ajax({
+                            url: '/puntuaciones',
+                            async: true,
+                            method: 'POST',
+                            data: dataToSend,
+                            dataType: 'json',
+                            success: function(respuestaDelServer){
+                              alert(respuestaDelServer.score);
+                            },
+                            error: function(x, h, r) {
+                              alert("Error: " + x + h + r);
+                            }
+                          });
+                          unaVezguardarpuntuacion2_3 = true;
+                      }
+                    });
+
+                    $('body').on('click', '#salir5_2', function(){
+                      $(location).attr('href', '/');
+                    });
             }
           }
-
-          if(timer_3 <= 0 && !seAcaboElTiempo_2){
-            //GAMEOVER
-            $('#LOSER').css('display', 'block');
-            var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 5.5); //1.0
-            scene.add(ambientLight);
-            $('body').on('click', '#salir3', function(){
-              $(location).attr('href', '/');
-            });
-            seAcaboElTiempo_2 = true;
-          }
-
-          if((obtuvofichaTOMO == true && obtuvofichaCOMODIN == true) || 
-                (obtuvofichaDACHI == true && obtuvofichaCOMODIN == true) || 
-                (obtuvofichaTOMO == true && obtuvofichaDACHI == true)  && Usuario1Gano_3 == false   ){
-
-                  seAcaboElTiempo_2 = true;
-                  Usuario1Gano_3 = true;
-                  Usuario2Gano_3 = false;
-
-                  $('#TercerNivel').css('display', 'block');
-                  var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 4.5); //1.0
-                  scene.add(ambientLight);
-
-                  if(unaVez3 == false){
-                    $('#score_tercer').append("Puntos del Usuario : " + ptsUsuario);
-                    unaVez3 = true;
-                  }
-
-                  $('#puntuacionUsuario_5').val(ptsUsuario);
-
-                  $('body').on('click', '#guardarNivelTres', function(){
-                    //var score = $("#puntos").val();
-                    var idUsu = $("#usuid_tercer").val();
-                    var score = ptsUsuario;
-                    var dataToSend = { action: "/puntuaciones", puntos: score, user_id: idUsu, activo: 1 };
-                    if(unaVezguardarpuntuacion_3 == false){
-                      //debugger;
-                        $.ajax({
-                          url: '/puntuaciones',
-                          async: true,
-                          method: 'POST',
-                          data: dataToSend,
-                          dataType: 'json',
-                          success: function(respuestaDelServer){
-                            alert(respuestaDelServer.score);
-                          },
-                          error: function(x, h, r) {
-                            alert("Error: " + x + h + r);
-                          }
-                        });
-                        unaVezguardarpuntuacion_3 = true;
-                    }
-                  });
-
-                  $('body').on('click', '#salir5', function(){
-                    $(location).attr('href', '/');
-                  });
-          }
-
-          if((obtuvofichaTOMO_2 == true && obtuvofichaCOMODIN_2 == true) || 
-                (obtuvofichaDACHI_2 == true && obtuvofichaCOMODIN_2 == true) || 
-                (obtuvofichaTOMO_2 == true && obtuvofichaDACHI_2 == true)  && Usuario2Gano_3 == false   ){
-
-                  seAcaboElTiempo_2 = true;
-                  Usuario1Gano_3 = false;
-                  Usuario2Gano_3 = true;
-
-                  $('#TercerNivel_2').css('display', 'block');
-                  var ambientLight = new THREE.AmbientLight(new THREE.Color(0, 0, 1), 4.5); //1.0
-                  scene.add(ambientLight);
-
-                  if(unaVez3_2 == false){
-                    $('#score_tercer_2').append("Puntos del Usuario : " + ptsUsuario);
-                    unaVez3_2 = true;
-                  }
-                  $('#puntuacionUsuario_6').val(ptsUsuario);
-
-                  $('body').on('click', '#guardarNivelTres_2', function(){
-                    //var score = $("#puntos").val();
-                    var idUsu = $("#usuid_tercer_2").val();
-                    var score = ptsUsuario;
-                    var dataToSend = { action: "/puntuaciones", puntos: score, user_id: idUsu, activo: 1 };
-                    if(unaVezguardarpuntuacion2_3 == false){
-                      //debugger;
-                        $.ajax({
-                          url: '/puntuaciones',
-                          async: true,
-                          method: 'POST',
-                          data: dataToSend,
-                          dataType: 'json',
-                          success: function(respuestaDelServer){
-                            alert(respuestaDelServer.score);
-                          },
-                          error: function(x, h, r) {
-                            alert("Error: " + x + h + r);
-                          }
-                        });
-                        unaVezguardarpuntuacion2_3 = true;
-                    }
-                  });
-
-                  $('body').on('click', '#salir5_2', function(){
-                    $(location).attr('href', '/');
-                  });
-          }
+        
         }
 
         function setupScene() {		
