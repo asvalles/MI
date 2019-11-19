@@ -1996,6 +1996,8 @@
                 unaVez_2 = true;
               }
 
+              $('#puntuacionUsuario_4').val(puntos_per1_2);
+
               $('body').on('click', '#guardarNivelDos_2', function(){
                 //var score = $("#puntos").val();
                 var idUsu = $("#usuid3_2").val();
@@ -2548,7 +2550,7 @@
           //document.getElementById("face").addEventListener('click', saveAsImage);     ////////////////////aqui obtengo el button compartir facebook
           //document.getElementById("face2").addEventListener('click', saveAsImage2);
           //document.getElementById("book").addEventListener('click', saveAsImage);
-          document.getElementById("book_2").addEventListener('click', saveAsImage2);
+          //document.getElementById("book_2").addEventListener('click', saveAsImage2);
           document.getElementById("book_tercer").addEventListener('click', saveAsImage);
           document.getElementById("book_tercer_2").addEventListener('click', saveAsImage2);
 
@@ -2757,6 +2759,14 @@
           var strMime = "image/jpeg";
           imgData = renderer.domElement.toDataURL(strMime);
           var screenshot = document.getElementById("idscreen_3");
+          screenshot.value = imgData;
+        }
+
+        function tomarScreen_4(){
+          var imgData;
+          var strMime = "image/jpeg";
+          imgData = renderer.domElement.toDataURL(strMime);
+          var screenshot = document.getElementById("idscreen_4");
           screenshot.value = imgData;
         }
 
@@ -3168,7 +3178,15 @@
                             @auth
                             <input type="hidden" name="idUsuario" id="usuid3_2" value= "{{ Auth::user()->id }}">
                             @endauth
-                            <button id="book_2" onclick="share();">Compartir en Facebook</button><br/>
+                            <!-- <button id="book_2" onclick="share();">Compartir en Facebook</button><br/> -->
+
+                            <form action="{{route('guardarImagen_4')}}" method="POST" id="formo">
+                            {{ csrf_field() }}
+                              <input type="hidden" id="puntuacionUsuario_4" name="puntuacionUsuario_4">
+                              <input type="hidden" id="idscreen_4" name="idscreen_4">
+                              <button id="book_2" onclick="tomarScreen_4();">Compartir en Facebook</button><br/>
+                            </form>
+
                             <button id="guardarNivelDos_2">Guardar Puntuacion</button>
                             <button id="salir4_2">Salir</button><br/>
                           </div>
