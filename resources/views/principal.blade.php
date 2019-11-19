@@ -380,11 +380,10 @@
           arcoiris.arcoTexture.value.wrapS = THREE.RepeatWrapping;
           arcoiris.arcoTexture.value.wrapT = THREE.RepeatWrapping;
 
-          console.log('antes de la funcion');
-          //window.ongamepadconnected = function(event) {
-          //  console.log('esta conectado el control');
-          //  gamepad_2 = event.gamepad;
-          //};
+          //////////////////////////////////////////////////////// COLOR DEL FONDO  ///////////////////////////////////////////////////
+          var fondo = localStorage.getItem('colorFondo');
+          document.body.style.backgroundColor = fondo;
+          //////////////////////////////////////////////////////// COLOR DEL FONDO  ///////////////////////////////////////////////////
 
           window.addEventListener("gamepadconnected", function(e) {
             console.log('gamepad conectado',
@@ -793,7 +792,39 @@
               pause=true;
               console.log(pause);
             }
-				});
+        });
+        
+          $("#gris").click( function(){
+              document.body.style.backgroundColor = "LightSteelBlue";
+
+              var color_gris = document.body.style.backgroundColor; 
+              localStorage.setItem("colorFondo", color_gris);
+            }
+          );
+
+          $("#celeste").click( function(){
+              document.body.style.backgroundColor = "LightSkyBlue";
+
+              var color_celeste = document.body.style.backgroundColor; 
+              localStorage.setItem("colorFondo", color_celeste);
+            }
+          );
+
+          $("#aqua").click( function(){
+              document.body.style.backgroundColor = "LightSeaGreen";
+
+              var color_aqua = document.body.style.backgroundColor; 
+              localStorage.setItem("colorFondo", color_aqua);
+            }
+          );
+
+           $("#blanco").click( function(){
+              document.body.style.backgroundColor = "White";
+
+              var color_blanco = document.body.style.backgroundColor; 
+              localStorage.setItem("colorFondo", color_blanco);
+            }
+          );
          
           render();
           render_2();
@@ -3298,9 +3329,11 @@
                           <div id="configuracion" style="display: none">
                               <br><br><br>
                           <h1>CONFIGURACIONES</h1><br><br>
-                          <button class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="250" height="300" src="img/obj3.PNG"></img></button>
-                          <button class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="250" height="300" src="img/obj4.PNG"></img></button>
-                          <button class="btn btn-primary btn-xl js-scroll-trigger" href="#about"><img width="250" height="300" src="img/obj5.PNG"></img></button><br><br>
+                          <h3>Escoje un color para el fondo</h3><br><br>
+                          <button class="btn btn-primary btn-xl js-scroll-trigger" id="gris">Gris Claro</button>
+                          <button class="btn btn-primary btn-xl js-scroll-trigger" id="celeste">Celeste</button>
+                          <button class="btn btn-primary btn-xl js-scroll-trigger" id="aqua">Aqua</button>
+                          <button class="btn btn-primary btn-xl js-scroll-trigger" id="blanco">White</button><br><br>
                           </div>
 
                           <div id="puntuacion" style="display: none">
