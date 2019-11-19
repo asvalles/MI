@@ -21,7 +21,7 @@ class ImagenController extends Controller
             $image_full =  substr($imagen, strpos($imagen, ',') + 1);
             $image_full = base64_decode($image_full);
             Storage::disk('public')->put("screen.png",($image_full));
-            return view('publicar',[
+            return view('segundo',[
             'imagen' => $image_full, 
             'puntuacion' => $puntuacion
             ]);
