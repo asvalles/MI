@@ -3094,7 +3094,7 @@
                               <div name="pun" id="puntos"></div>
                               <button id="guardar">Guardar Puntuacion</button>
 
-                            <form action="route('guardarImagen')" method="POST" id="formo">
+                            <form action="{{route('guardarImagen')}}" method="POST" id="formo">
                               <input type="hidden" id="puntuacionUsuario">
                               <input type="hidden" id="idscreen">
                               <button id="face" onclick="tomarScreen();">Compartir en Facebook</button><br/>
