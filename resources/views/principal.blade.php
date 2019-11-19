@@ -2752,6 +2752,14 @@
           screenshot.value = imgData;
         }
 
+        function tomarScreen_3(){
+          var imgData;
+          var strMime = "image/jpeg";
+          imgData = renderer.domElement.toDataURL(strMime);
+          var screenshot = document.getElementById("idscreen_3");
+          screenshot.value = imgData;
+        }
+
   </script>
   
   <style>
