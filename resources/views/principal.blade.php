@@ -157,6 +157,29 @@
     });
   </script>
 
+    <!-- REMPLAZO LAS VARIABLES DE WEBGL POR LAS DE THREE JS 
+        con el vUv comparto las coordenadas -->
+  <div id="shader-vs" type="x-shader/x-vertex" style="display: none">
+        varying vec2 vUv;
+	    void main(void) {
+        vUv = uv;
+        vec4 modelViewPosition = modelViewMatrix * vec4(position,1.0);
+        gl_Position = projectionMatrix * modelViewPosition;
+	    }
+	</div>
+  <!-- con ayuda del texture2D obtengo el color de la imagen que le envio 
+        para que cambie la posicion, le envio un timer y en ves de texture2d se enviara ese timer-->
+	<div id="shader-fs" type="x-shader/x-fragment" style="display: none">
+          varying vec2 vUv;
+          uniform sampler2D arcoTexture;
+          uniform float time;
+	    void main(void) {
+          vec2 T2 = vUv + vec2( -1, 4.0 ) * time;
+          vec4 colores = texture2D( arcoTexture, T2 );
+	        gl_FragColor = colores;
+	    }
+	</div>
+
   <script type="text/javascript">
         var scene;
 
@@ -325,6 +348,10 @@
         var unaVezguardarpuntuacion_3 = false;
         var unaVezguardarpuntuacion2_3 = false;
 
+        var arcoiris;
+        var gamepad_2;
+        var materials = [];
+
         var intermedio = setInterval(function(){ 
           if(seAcaboElTiempo_2 == false && inicioNivelTres == true && timer_3 >= 0){
             document.getElementById("tiempo_2").innerHTML = timer_3--; 
@@ -350,6 +377,49 @@
           clock=new THREE.Clock();
 
           setupScene();
+
+          arcoiris = {
+            arcoTexture: { value: new THREE.TextureLoader().load("img/arcoiris3.jpg") },
+            time: { type: 'float', value: 0.0 }
+          };
+
+          var arcoirisMaterial = new THREE.ShaderMaterial({
+            uniforms : arcoiris,
+			      fragmentShader: document.getElementById('shader-fs').textContent,
+            vertexShader: document.getElementById('shader-vs').textContent
+          });
+
+          //CON ESTO REPITO LAS TEXTURAS, LAS "ANIMO"
+          arcoiris.arcoTexture.value.wrapS = THREE.RepeatWrapping;
+          arcoiris.arcoTexture.value.wrapT = THREE.RepeatWrapping;
+
+          console.log('antes de la funcion');
+          //window.ongamepadconnected = function(event) {
+          //  console.log('esta conectado el control');
+          //  gamepad_2 = event.gamepad;
+          //};
+
+          window.addEventListener("gamepadconnected", function(e) {
+            console.log('gamepad conectado',
+                        e.gamepad.index, e.gamepad.id,
+                        e.gamepad.buttons.length, e.gamepad.axes.length);
+                        gamepad_2 = e.gamepad;
+                        if(gamepad_2){
+                          console.log('entro addEventListener');
+                        }
+                        else{
+                          console.log('entro else');
+                        }
+          });
+
+          window.addEventListener("gamepaddisconnected", function(e) { console.log("desconectado")}, false);
+
+          //var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+          //var geomCube = new THREE.BoxGeometry(1.0,1.0,1.0);
+          //var cube = new THREE.Mesh(geomCube, arcoirisMaterial);
+          //cube.position.set(10, 5, -10);
+          //cube.scale.set(3,3,3);
+          //scene.add(cube);
 
           //SKYDOME
           var skyGeo = new THREE.SphereGeometry(900,25,25);
@@ -573,28 +643,17 @@
             ficha11.position.y = -1;
             //ficha11.rotation.y = THREE.Math.degToRad(-90);
             ficha11.scale.set(0.5, 0.5, 0.5);
+            ficha11.traverse( function ( child ) {
+              if ( child.isMesh ) {
+                child.material = arcoirisMaterial;
+              }
+            });
             colisionficha3_1_3.push(ficha11);
             scene.add(ficha11);
             NIVELTRES.push(ficha11);
           });
 
-          //loadOBJWithMTL("assets/", "Mascara1.obj", "Mascara1.mtl", (mask1) => {
-          //  mask1.position.z = -1;
-          //  mask1.scale.set(0.5, 0.5, 0.5);
-          //  objetosConColision.push(mask1);
-          //  objetosConColision_2.push(mask1);
-          //  scene.add(mask1);
-          //  isWorldReady[9] = true;
-          //});
-
-          //loadOBJWithMTL("assets/", "Mascara2.obj", "Mascara2.mtl", (mask2) => {
-          //  mask2.position.z = -1;
-          //  mask2.scale.set(0.5, 0.5, 0.5);
-          //  objetosConColision.push(mask2);
-          //  objetosConColision_2.push(mask2);
-          //  scene.add(mask2);
-          //  isWorldReady[10] = true;
-          //});
+          
 
           loadOBJWithMTL("assets/", "Puente4.obj", "Puente4.mtl", (puente) => {
             puente.position.z = -1;
@@ -811,7 +870,7 @@
           requestAnimationFrame(render);
           var bool=false;
           deltaTime = clock.getDelta();
-
+          
         
           for(var i = 0; i < NIVELUNO.length; i++){
             if(estaEnNivelUno == true){
@@ -850,21 +909,88 @@
 
           var yaw_2 = 0;
           var forward_2 = 0;
-          if (keys["J"]) {
-            yaw_2 = 2;
-          } else if (keys["L"]) {
-            yaw_2 = -2;
+          gamepad_2 = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
+          if (gamepad_2.length>0){
+              gamepad_2 = gamepad_2[0];
           }
-          if (keys["I"]) {
-            forward_2 = -20;
-          } else if (keys["K"]) {
-            forward_2 = 20;
+
+          if(gamepad_2){
+            console.log('entro gamepad_2');
+            if(gamepad_2.connected){
+              if(gamepad_2.axes[0]>.5){
+                console.log('entro button pressed');
+                yaw_2 = -8;
+              }
+              if(gamepad_2.axes[1]>.5){
+                console.log('entro axes 1 >');
+                forward_2 = 200;
+              }
+              if(gamepad_2.axes[0]<-.5){
+                console.log('entro axes 0 < ');
+                yaw_2 = 8;
+              }
+              if(gamepad_2.axes[1]<-.5){
+                console.log('entro axes 1 < ');
+                forward_2 = -200;
+              }
+              else{
+                console.log('entro al if del connected pero a ningun axes');
+              }
+              console.log(gamepad_2.axes[0] + "---" + gamepad_2.axes[1]);
+            }
+            
+            else{
+              console.log('entro al else del connected');
+            }
           }
+          else{
+            console.log('no esta entrando al if gamepad_2');
+          }
+
+          //var yaw_2 = 0;
+          //var forward_2 = 0;
+          //if (keys["J"]) {
+          //  yaw_2 = 2;
+          //} else if (keys["L"]) {
+          //  yaw_2 = -2;
+          //}
+          //if (keys["I"]) {
+          //  forward_2 = -20;
+          //} else if (keys["K"]) {
+          //  forward_2 = 20;
+          //}
+
+          // PARTICULASSSSSSSSSSSSSSSSSSSSSSSSS
+
+          var time = Date.now() * 0.00005;
+
+          for ( var i = 0; i < scene.children.length; i ++ ) {
+
+            var object = scene.children[ i ];
+
+            if ( object instanceof THREE.Points ) {
+
+              object.rotation.y = time * ( i < 4 ? i + 1 : - ( i + 1 ) );
+
+            }
+
+          }
+
+          for ( var i = 0; i < materials.length; i ++ ) {
+
+            var color = parameters[ i ][ 0 ];
+
+            var h = ( 360 * ( color[ 0 ] + time ) % 360 ) / 360;
+            materials[ i ].color.setHSL( h, color[ 1 ], color[ 2 ] );
+
+          }
+          
+          // EENNNNNDDDDDDDD PARTICULASSSSSSSSSSSSSSSSSSSS
 
           if (isWorldReady[0] && isWorldReady[1]) {
 
             persona.translateZ(forward * deltaTime);
-            persona_2.translateZ(forward_2 * deltaTime);
+            //persona_2.translateZ(forward_2 * deltaTime);
 
             for(var i = 0; i < persona.misRayos.length; i++){
               var rayo = persona.misRayos[i];
@@ -902,7 +1028,7 @@
               }
             }
             persona.rotation.y += yaw * deltaTime;
-            persona_2.rotation.y += yaw_2 * deltaTime;
+            //persona_2.rotation.y += yaw_2 * deltaTime;
           }
 
           if (isWorldReady[8]) {
@@ -1355,21 +1481,61 @@
 
           var yaw_2 = 0;
           var forward_2 = 0;
-          if (keys["J"]) {
-            yaw_2 = 2;
-          } else if (keys["L"]) {
-            yaw_2 = -2;
+          gamepad_2 = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
+          if (gamepad_2.length>0){
+              gamepad_2 = gamepad_2[0];
           }
-          if (keys["I"]) {
-            forward_2 = -20;
-          } else if (keys["K"]) {
-            forward_2 = 20;
+
+          if(gamepad_2){
+            console.log('entro gamepad_2');
+            if(gamepad_2.connected){
+              if(gamepad_2.axes[0]>.5){
+                console.log('entro button pressed');
+                yaw_2 = -8;
+              }
+              if(gamepad_2.axes[1]>.5){
+                console.log('entro axes 1 >');
+                forward_2 = 200;
+              }
+              if(gamepad_2.axes[0]<-.5){
+                console.log('entro axes 0 < ');
+                yaw_2 = 8;
+              }
+              if(gamepad_2.axes[1]<-.5){
+                console.log('entro axes 1 < ');
+                forward_2 = -200;
+              }
+              else{
+                console.log('entro al if del connected pero a ningun axes');
+              }
+              console.log(gamepad_2.axes[0] + "---" + gamepad_2.axes[1]);
+            }
+            
+            else{
+              console.log('entro al else del connected');
+            }
           }
+          else{
+            console.log('no esta entrando al if gamepad_2');
+          }
+
+          //var yaw_2 = 0;
+          //var forward_2 = 0;
+          //if (keys["J"]) {
+          //  yaw_2 = 2;
+          //} else if (keys["L"]) {
+          //  yaw_2 = -2;
+          //}
+          //if (keys["I"]) {
+          //  forward_2 = -20;
+          //} else if (keys["K"]) {
+          //  forward_2 = 20;
+          //}
 
           if (isWorldReady[0] && isWorldReady[1]) {
 
             persona.translateZ(forward * deltaTime);
-            persona_2.translateZ(forward_2 * deltaTime);
+            //persona_2.translateZ(forward_2 * deltaTime);
 
             for(var i = 0; i < persona.misRayos.length; i++){
               var rayo = persona.misRayos[i];
@@ -1407,7 +1573,7 @@
               }
             }
             persona.rotation.y += yaw * deltaTime;
-            persona_2.rotation.y += yaw_2 * deltaTime;
+            //persona_2.rotation.y += yaw_2 * deltaTime;
           }
 
           if (isWorldReady[17]) {
@@ -1449,7 +1615,7 @@
                                           
                       puntos_per1_2 = puntos_per1_2 + 15;
 
-                      colision[0].object.parent.scale.set(0,0,0);
+                      colision[0].object.scale.set(0,0,0);
                       
                       if(fichita.length == 0){
                         fichita.push(colision[0].object.parent);
@@ -1466,6 +1632,7 @@
                      inter = setInterval(function(){
                       for(var i=0; i<fichita.length; i++){
                         fichita[i].scale.set(0.5, 0.5, 0.5);
+                        fichita[i].children[0].scale.set(1, 1, 1);
                       } 
                       fichaKAColisionada_2 = false;
                       //clearInterval(inter);
@@ -1496,7 +1663,7 @@
                       //puntos_per1_2 = puntos_per1_2 + 15;
                       obtuvofichaZO = true;
 
-                      colision2[0].object.parent.scale.set(0,0,0);
+                      colision2[0].object.scale.set(0,0,0);
                       
                       if(fichita2.length == 0){
                         fichita2.push(colision2[0].object.parent);
@@ -1519,6 +1686,7 @@
                      inter_2 = setInterval(function(){
                       for(var i=0; i<fichita2.length; i++){
                         fichita2[i].scale.set(0.5, 0.5, 0.5);
+                        fichita2[i].children[0].scale.set(1, 1, 1);
                       } 
                       fichaZOColisionada_2 = false;
                       //clearInterval(inter);
@@ -1560,6 +1728,7 @@
                   if(fichaKUColisionada == true){
                     var inter4 = setInterval(function(){ 
                       fichita3[0].scale.set(1, 1, 1);
+                      fichita3[0].children[0].scale.set(1, 1, 1);
                     }, 5000, "JavaScript");
                   }  
 
@@ -1617,7 +1786,7 @@
                       puntos_per2_2 = puntos_per2_2 + 15;
                       //cantidadfichas_2_2 = cantidadfichas_2_2 + 1;
 
-                      colision[0].object.parent.scale.set(0,0,0);
+                      colision[0].object.scale.set(0,0,0);
                       
                       if(fichita.length == 0){
                         fichita.push(colision[0].object.parent);
@@ -1633,6 +1802,7 @@
                      inter = setInterval(function(){
                       for(var i=0; i<fichita.length; i++){
                         fichita[i].scale.set(0.5, 0.5, 0.5);
+                        fichita[i].children[0].scale.set(1, 1, 1);
                       } 
                       fichaKAColisionada = false;
                       //clearInterval(inter);
@@ -1667,7 +1837,7 @@
                       //puntos_per2_2 = puntos_per2_2 + 15;
                       //cantidadfichas_2_2 = cantidadfichas_2_2 + 1;
 
-                      colision2[0].object.parent.scale.set(0,0,0);
+                      colision2[0].object.scale.set(0,0,0);
                       
                       if(fichita2.length == 0){
                         fichita2.push(colision2[0].object.parent);
@@ -1690,6 +1860,7 @@
                      inter_2 = setInterval(function(){
                       for(var i=0; i<fichita2.length; i++){
                         fichita2[i].scale.set(0.5, 0.5, 0.5);
+                        fichita2[i].children[0].scale.set(1, 1, 1);
                       } 
                       fichaZOColisionada = false;
                       //clearInterval(inter);
@@ -1734,6 +1905,7 @@
                   if(fichaKUColisionada_2 == true){
                     var inter3 = setInterval(function(){ 
                       fichita3_2[0].scale.set(1, 1, 1);
+                      fichita3_2[0].children[0].scale.set(1, 1, 1);
                     }, 5000, "JavaScript");
                   }  
 
@@ -1859,6 +2031,7 @@
           var bool=false;
           deltaTime = clock.getDelta();
 
+          arcoiris.time.value += 0.5*deltaTime;
         
           for(var i = 0; i < NIVELTRES.length; i++){
             if(estaEnNivelTres == true){
@@ -1896,16 +2069,54 @@
 
           var yaw_2 = 0;
           var forward_2 = 0;
-          if (keys["J"]) {
-            yaw_2 = 2;
-          } else if (keys["L"]) {
-            yaw_2 = -2;
+          gamepad_2 = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
+          if (gamepad_2.length>0){
+              gamepad_2 = gamepad_2[0];
           }
-          if (keys["I"]) {
-            forward_2 = -20;
-          } else if (keys["K"]) {
-            forward_2 = 20;
+
+          if(gamepad_2){
+            console.log('entro gamepad_2');
+            if(gamepad_2.connected){
+              if(gamepad_2.axes[0]>.5){
+                console.log('entro button pressed');
+                yaw_2 = -7.5;
+              }
+              if(gamepad_2.axes[1]>.5){
+                console.log('entro axes 1 >');
+                forward_2 = 85;
+              }
+              if(gamepad_2.axes[0]<-.5){
+                console.log('entro axes 0 < ');
+                yaw_2 = 7.5;
+              }
+              if(gamepad_2.axes[1]<-.5){
+                console.log('entro axes 1 < ');
+                forward_2 = -85;
+              }
+              else{
+                console.log('entro al if del connected pero a ningun axes');
+              }
+              console.log(gamepad_2.axes[0] + "---" + gamepad_2.axes[1]);
+            }
+            
+            else{
+              console.log('entro al else del connected');
+            }
           }
+          else{
+            console.log('no esta entrando al if gamepad_2');
+          }
+
+          //if (keys["J"]) {
+          //  yaw_2 = 2;
+          //} else if (keys["L"]) {
+          //  yaw_2 = -2;
+          //}
+          //if (keys["I"]) {
+          //  forward_2 = -20;
+          //} else if (keys["K"]) {
+          //  forward_2 = 20;
+          //}
 
           if (isWorldReady[0] && isWorldReady[1]) {
             persona.translateZ(forward * deltaTime);
@@ -2337,6 +2548,51 @@
           document.getElementById("book_tercer").addEventListener('click', saveAsImage);
           document.getElementById("book_tercer_2").addEventListener('click', saveAsImage2);
 
+          //
+          scene.fog = new THREE.FogExp2( 0x000000, 0.0008 );
+
+            var geometry = new THREE.BufferGeometry();
+            var vertices = [];
+
+            var textureLoader = new THREE.TextureLoader();
+
+            var sprite1 = textureLoader.load( 'img/sakura.png' );
+
+            for ( var i = 0; i < 10000; i ++ ) {
+
+              var x = Math.random() * 2000 - 1000;
+              var y = Math.random() * 2000 - 1000;
+              var z = Math.random() * 2000 - 1000;
+
+              vertices.push( x, y, z );
+
+            }
+
+            geometry.addAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+
+            parameters = [
+              [[ 0.90, 0.05, 0.5 ], sprite1, 11 ]
+            ];
+
+            for ( var i = 0; i < parameters.length; i ++ ) {
+
+              var color = parameters[ i ][ 0 ];
+              var sprite = parameters[ i ][ 1 ];
+              var size = parameters[ i ][ 2 ];
+
+              materials[ i ] = new THREE.PointsMaterial( { size: size, map: sprite, blending: THREE.AdditiveBlending, depthTest: false, transparent: true } );
+              materials[ i ].color.setHSL( color[ 0 ], color[ 1 ], color[ 2 ] );
+
+              var particles = new THREE.Points( geometry, materials[ i ] );
+
+              particles.rotation.x = Math.random() * 6;
+              particles.rotation.y = Math.random() * 6;
+              particles.rotation.z = Math.random() * 6;
+
+              scene.add( particles );
+            }
+          //
+
           renderer = new THREE.WebGLRenderer({
             precision: "mediump",
             preserveDrawingBuffer: true
@@ -2356,6 +2612,8 @@
           renderer_2.setPixelRatio(window.devicePixelRatio);
           renderer_2.setSize(visibleSize.width, visibleSize.height/2);
           document.body.appendChild(renderer_2.domElement); 
+
+          
 
           var ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 1.0);
           scene.add(ambientLight);
