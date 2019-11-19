@@ -3120,7 +3120,7 @@
 
                             <form action="{{route('guardarImagen_2')}}" method="POST" id="formo">
                             {{ csrf_field() }}
-                              <input type="hidden" id="puntuacionUsuario" name="puntuacionUsuario_2">
+                              <input type="hidden" id="puntuacionUsuario_2" name="puntuacionUsuario_2">
                               <input type="hidden" id="idscreen_2" name="idscreen_2">
                               <button id="face2" onclick="tomarScreen_2();">Compartir en Facebook</button><br/>
                             </form>
