@@ -17,7 +17,7 @@ class ImagenController extends Controller
     public function GuardarImg(Request $request){
         $imagen = $request->input('idscreen');
         $puntuacion = $request->input('puntuacionUsuario');
-        if(preg_match('/^data:image/(\w+);base64,/', $imagen)){
+        //if(preg_match('/^data:image/(\w+);base64,/', $imagen)){
             $image_full =  substr($imagen, strpos($imagen, ',') + 1);
             $image_full = base64_decode($image_full);
             Storage::disk('public')->put("screen.png",($image_full));
@@ -25,6 +25,6 @@ class ImagenController extends Controller
             'imagen' => $image_full, 
             'puntuacion' => $puntuacion
             ]);
-        }
+        //}
     }
 }
