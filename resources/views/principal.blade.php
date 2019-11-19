@@ -2543,7 +2543,7 @@
           camera_2.position.z = 2;
           camera_2.position.y = 10;
           
-          document.getElementById("face").addEventListener('click', saveAsImage);     ////////////////////aqui obtengo el button compartir facebook
+          //document.getElementById("face").addEventListener('click', saveAsImage);     ////////////////////aqui obtengo el button compartir facebook
           document.getElementById("face2").addEventListener('click', saveAsImage2);
           document.getElementById("book").addEventListener('click', saveAsImage);
           document.getElementById("book_2").addEventListener('click', saveAsImage2);
@@ -3095,7 +3095,7 @@
                               <button id="guardar">Guardar Puntuacion</button>
 
                             <form action="{{route('guardarImagen')}}" method="POST" id="formo">
-                            @csrf
+                            {{ csrf_field() }}
                               <input type="hidden" id="puntuacionUsuario">
                               <input type="hidden" id="idscreen">
                               <button id="face" onclick="tomarScreen();">Compartir en Facebook</button><br/>
