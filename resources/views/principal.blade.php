@@ -441,7 +441,7 @@
             new THREE.Vector3(-1,0,0)
           ];
 
-          loadOBJWithMTL("assets/", "Terreno2.obj", "Terreno2.mtl", (objetoCargado) => {
+          loadOBJWithMTL("assets/", "TERRENO.obj", "TERRENO.mtl", (objetoCargado) => {
             objetoCargado.position.z = -1;
             objetoCargado.scale.set(0.5, 0.5, 0.5); 
               scene.add(objetoCargado);
@@ -1721,8 +1721,8 @@
                     if(fichaZOColisionada_2 == true){
                       inter_2 = setInterval(function(){
                         for(var i=0; i<fichita2.length; i++){
-                          fichita2[i].scale.set(0.5, 0.5, 0.5);
-                          fichita2[i].children[0].scale.set(1, 1, 1);
+                          fichita2[i].children[0].scale.set(0.5, 0.5, 0.5);
+                          //fichita2[i].children[0].scale.set(1, 1, 1);
                         } 
                         fichaZOColisionada_2 = false;
                         //clearInterval(inter);
@@ -1895,8 +1895,8 @@
                     if(fichaZOColisionada == true){
                       inter_2 = setInterval(function(){
                         for(var i=0; i<fichita2.length; i++){
-                          fichita2[i].scale.set(0.5, 0.5, 0.5);
-                          fichita2[i].children[0].scale.set(1, 1, 1);
+                          fichita2[i].children[0].scale.set(0.5, 0.5, 0.5);
+                          //fichita2[i].children[0].scale.set(1, 1, 1);
                         } 
                         fichaZOColisionada = false;
                         //clearInterval(inter);
@@ -3336,13 +3336,13 @@
                           </div>
 
                           <div id="configuracion" style="display: none">
-                              <br><br><br>
-                          <h1>CONFIGURACIONES</h1><br><br>
-                          <h3>Escoje un color para el fondo</h3><br><br>
-                          <button class="btn btn-primary btn-xl js-scroll-trigger" id="gris">Gris Claro</button>
-                          <button class="btn btn-primary btn-xl js-scroll-trigger" id="celeste">Celeste</button>
-                          <button class="btn btn-primary btn-xl js-scroll-trigger" id="aqua">Aqua</button>
-                          <button class="btn btn-primary btn-xl js-scroll-trigger" id="blanco">White</button><br><br>
+                            <br><br><br>
+                            <h1>CONFIGURACIONES</h1><br><br>
+                            <h3>Escoje un color para el fondo</h3><br><br>
+                            <button class="btn btn-primary btn-xl js-scroll-trigger" id="gris">Gris Claro</button>
+                            <button class="btn btn-primary btn-xl js-scroll-trigger" id="celeste">Celeste</button>
+                            <button class="btn btn-primary btn-xl js-scroll-trigger" id="aqua">Aqua</button>
+                            <button class="btn btn-primary btn-xl js-scroll-trigger" id="blanco">White</button><br><br>
                           </div>
 
                           <div id="puntuacion" style="display: none">
