@@ -394,15 +394,15 @@
                         e.gamepad.index, e.gamepad.id,
                         e.gamepad.buttons.length, e.gamepad.axes.length);
                         gamepad_2 = e.gamepad;
-                        if(gamepad_2){
-                          console.log('entro addEventListener');
-                        }
-                        else{
-                          console.log('entro else');
-                        }
+                        //if(gamepad_2){
+                        //  console.log('entro addEventListener');
+                        //}
+                        //else{
+                        //  console.log('entro else');
+                        //}
           });
 
-          window.addEventListener("gamepaddisconnected", function(e) { console.log("desconectado")}, false);
+          //window.addEventListener("gamepaddisconnected", function(e) { console.log("desconectado")}, false);
 
           //var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
           //var geomCube = new THREE.BoxGeometry(1.0,1.0,1.0);
@@ -786,15 +786,15 @@
           $("#btn_pausa").on({		
             mouseenter: function(){
               pause=true;
-              console.log(pause);
+              //console.log(pause);
             },
             mouseleave: function(){
               pause=false;
-              console.log(pause);
+              //console.log(pause);
             },
             click: function(){
               pause=true;
-              console.log(pause);
+              //console.log(pause);
             }
           });
         
@@ -952,33 +952,26 @@
             }
 
             if(gamepad_2){
-              console.log('entro gamepad_2');
+              //console.log('entro gamepad_2');
               if(gamepad_2.connected){
                 if(gamepad_2.axes[0]>.5){
-                  console.log('entro button pressed');
+                  //console.log('entro button pressed');
                   yaw_2 = -2;
                 }
                 if(gamepad_2.axes[1]>.5){
-                  console.log('entro axes 1 >');
+                  //console.log('entro axes 1 >');
                   forward_2 = 20;
                 }
                 if(gamepad_2.axes[0]<-.5){
-                  console.log('entro axes 0 < ');
+                  //console.log('entro axes 0 < ');
                   yaw_2 = 2;
                 }
                 if(gamepad_2.axes[1]<-.5){
-                  console.log('entro axes 1 < ');
+                  //console.log('entro axes 1 < ');
                   forward_2 = -20;
                 }
-                else{
-                  console.log('entro al if del connected pero a ningun axes');
-                }
-                console.log(gamepad_2.axes[0] + "---" + gamepad_2.axes[1]);
               }
               
-              else{
-                console.log('entro al else del connected');
-              }
             }
 
             //var yaw_2 = 0;
@@ -1038,7 +1031,6 @@
 
                 if( colision.length > 0 ){
                   if(colision[0].distance < 3){
-                    console.log("Estoy colisionando");
                     persona.translateZ(-(forward * deltaTime));
                   }
                 }
@@ -1056,7 +1048,6 @@
 
                 if( colision_2.length > 0 ){
                   if(colision_2[0].distance < 3){
-                    console.log("Estoy colisionando");
                     persona_2.translateZ(-(forward_2 * deltaTime));
                   }
                 }
@@ -1099,7 +1090,6 @@
 
                 if( colision.length > 0 ){
                   if(colision[0].distance < 3){
-                    console.log("Estoy colisionando con la ficha huehuehue");
                     persona.translateZ(-(forward * deltaTime));
                     if(ficha3_e == false){
                       $("#3").toggle();
@@ -1117,7 +1107,6 @@
 
                 if( colision2.length > 0 ){
                   if(colision2[0].distance < 3){
-                    console.log("Estoy colisionando con la ficha huehuehue");
                     persona.translateZ(-(forward * deltaTime));
                     if(ficha1_i == false && ficha2_i == false){
                       $("#1").toggle();
@@ -1143,7 +1132,6 @@
 
                 if( colision3.length > 0 ){
                   if(colision3[0].distance < 3){
-                    console.log("Estoy colisionando con la ficha huehuehue");
                     persona.translateZ(-(forward * deltaTime));
                     if(ficha1_i == false && ficha2_i == false){
                       $("#1").toggle();
@@ -1169,7 +1157,6 @@
 
                 if( colision4.length > 0 ){
                   if(colision4[0].distance < 3){
-                    console.log("Estoy colisionando con la ficha huehuehue");
                     persona.translateZ(-(forward * deltaTime));
                     if(ficha1_i == false && ficha2_i == false){
                       $("#1").toggle();
@@ -1195,7 +1182,6 @@
 
                 if( colision5.length > 0 ){
                   if(colision5[0].distance < 3){
-                    console.log("Estoy colisionando con la ficha huehuehue");
                     persona.translateZ(-(forward * deltaTime));
                     if(ficha1_i == false && ficha2_i == false){
                       $("#1").toggle();
@@ -1250,7 +1236,6 @@
 
                 if( colision.length > 0 ){
                   if(colision[0].distance < 3){
-                    console.log("Estoy colisionando con la ficha huehuehue");
                     persona_2.translateZ(-(forward_2 * deltaTime));
                     if(ficha3_e_2 == false){
                       $("#6").toggle();
@@ -1268,7 +1253,6 @@
 
                 if( colision2.length > 0 ){
                   if(colision2[0].distance < 3){
-                    console.log("Estoy colisionando con la ficha huehuehue");
                     persona_2.translateZ(-(forward_2 * deltaTime));
                     if(ficha1_i_2 == false && ficha2_i_2 == false){
                       $("#4").toggle();
@@ -1293,7 +1277,6 @@
 
                 if( colision3.length > 0 ){
                   if(colision3[0].distance < 3){
-                    console.log("Estoy colisionando con la ficha huehuehue");
                     persona_2.translateZ(-(forward_2 * deltaTime));
                     if(ficha1_i_2 == false && ficha2_i_2 == false){
                       $("#4").toggle();
@@ -1318,7 +1301,6 @@
 
                 if( colision4.length > 0 ){
                   if(colision4[0].distance < 3){
-                    console.log("Estoy colisionando con la ficha huehuehue");
                     persona_2.translateZ(-(forward_2 * deltaTime));
                     if(ficha1_i_2 == false && ficha2_i_2 == false){
                       $("#4").toggle();
@@ -1343,7 +1325,6 @@
 
                 if( colision5.length > 0 ){
                   if(colision5[0].distance < 3){
-                    console.log("Estoy colisionando con la ficha huehuehue");
                     persona_2.translateZ(-(forward_2 * deltaTime));
                     if(ficha1_i_2 == false && ficha2_i_2 == false){
                       $("#4").toggle();
@@ -1526,33 +1507,26 @@
             }
 
             if(gamepad_2){
-              console.log('entro gamepad_2');
+              //console.log('entro gamepad_2');
               if(gamepad_2.connected){
                 if(gamepad_2.axes[0]>.5){
-                  console.log('entro button pressed');
+                  //console.log('entro button pressed');
                   yaw_2 = -2;
                 }
                 if(gamepad_2.axes[1]>.5){
-                  console.log('entro axes 1 >');
+                  //console.log('entro axes 1 >');
                   forward_2 = 20;
                 }
                 if(gamepad_2.axes[0]<-.5){
-                  console.log('entro axes 0 < ');
+                  //console.log('entro axes 0 < ');
                   yaw_2 = 2;
                 }
                 if(gamepad_2.axes[1]<-.5){
-                  console.log('entro axes 1 < ');
+                  //console.log('entro axes 1 < ');
                   forward_2 = -20;
                 }
-                else{
-                  console.log('entro al if del connected pero a ningun axes');
-                }
-                console.log(gamepad_2.axes[0] + "---" + gamepad_2.axes[1]);
               }
               
-              else{
-                console.log('entro al else del connected');
-              }
             }
 
             //var yaw_2 = 0;
@@ -1585,7 +1559,6 @@
 
                 if( colision.length > 0 ){
                   if(colision[0].distance < 3){
-                    console.log("Estoy colisionando");
                     persona.translateZ(-(forward * deltaTime));
                   }
                 }
@@ -1603,7 +1576,6 @@
 
                 if( colision_2.length > 0 ){
                   if(colision_2[0].distance < 3){
-                    console.log("Estoy colisionando");
                     persona_2.translateZ(-(forward_2 * deltaTime));
                   }
                 }
@@ -1640,7 +1612,6 @@
 
                     if( colision.length > 0 ){
                       if(colision[0].distance < 3){
-                        console.log("Estoy colisionando con la ficha huehuehue");
                         persona.translateZ(-(forward * deltaTime));
                         if(ficha1_ka == false){
                           $("#7").toggle();
@@ -1689,7 +1660,6 @@
 
                     if( colision2.length > 0 ){
                       if(colision2[0].distance < 3){
-                        console.log("Estoy colisionando con la ficha huehuehue");
                         persona.translateZ(-(forward * deltaTime));
                         if(ficha1_zo == false){
                           $("#8").toggle();
@@ -1743,7 +1713,6 @@
 
                     if( colision3.length > 0 ){
                       if(colision3[0].distance < 3){
-                        console.log("Estoy colisionando con la ficha huehuehue");
                         persona.translateZ(-(forward * deltaTime));
                         if(ficha1_ku == false){
                           $("#9").toggle();
@@ -1770,7 +1739,6 @@
 
                     if( colision4.length > 0 ){
                       if(colision4[0].distance < 3){
-                        console.log("Estoy colisionando con el farol huehuehue");
                         persona.translateZ(-(forward * deltaTime));
                         sevefichaKUtoogle = true;
                       }
@@ -1811,7 +1779,6 @@
 
                 if( colision.length > 0 ){
                       if(colision[0].distance < 3){
-                        console.log("Estoy colisionando con la ficha huehuehue");
                         persona_2.translateZ(-(forward_2 * deltaTime));
                         if(ficha2_ka == false){
                           $("#10").toggle();
@@ -1862,7 +1829,6 @@
 
                     if( colision2.length > 0 ){
                       if(colision2[0].distance < 3){
-                        console.log("Estoy colisionando con la ficha huehuehue");
                         persona_2.translateZ(-(forward_2 * deltaTime));
                         if(ficha2_zo == false){
                           $("#11").toggle();
@@ -1919,7 +1885,6 @@
 
                     if( colision3.length > 0 ){
                       if(colision3[0].distance < 3){
-                        console.log("Estoy colisionando con la ficha huehuehue");
                         persona_2.translateZ(-(forward_2 * deltaTime));
                         if(ficha2_ku == false){
                           $("#12").toggle();
@@ -1947,7 +1912,6 @@
 
                     if( colision4.length > 0 ){
                       if(colision4[0].distance < 3){
-                        console.log("Estoy colisionando con el farol huehuehue");
                         persona_2.translateZ(-(forward_2 * deltaTime));
                         sevefichaKUtoogle = true;
                       }
@@ -2122,33 +2086,26 @@
             }
             
             if(gamepad_2){
-              console.log('entro gamepad_2');
+              //console.log('entro gamepad_2');
               if(gamepad_2.connected){
                 if(gamepad_2.axes[0]>.5){
-                  console.log('entro button pressed');
+                  //console.log('entro button pressed');
                   yaw_2 = -2;
                 }
                 if(gamepad_2.axes[1]>.5){
-                  console.log('entro axes 1 >');
+                  //console.log('entro axes 1 >');
                   forward_2 = 20;
                 }
                 if(gamepad_2.axes[0]<-.5){
-                  console.log('entro axes 0 < ');
+                  //console.log('entro axes 0 < ');
                   yaw_2 = 2;
                 }
                 if(gamepad_2.axes[1]<-.5){
-                  console.log('entro axes 1 < ');
+                  //console.log('entro axes 1 < ');
                   forward_2 = -20;
                 }
-                else{
-                  console.log('entro al if del connected pero a ningun axes');
-                }
-                console.log(gamepad_2.axes[0] + "---" + gamepad_2.axes[1]);
               }
               
-              else{
-                console.log('entro al else del connected');
-              }
             }
 
             //if (keys["J"]) {
@@ -2178,7 +2135,6 @@
 
                 if( colision.length > 0 ){
                   if(colision[0].distance < 3){
-                    console.log("Estoy colisionando");
                     persona.translateZ(-(forward * deltaTime));
                   }
                 }
@@ -2196,7 +2152,6 @@
 
                 if( colision_2.length > 0 ){
                   if(colision_2[0].distance < 3){
-                    console.log("Estoy colisionando");
                     persona_2.translateZ(-(forward_2 * deltaTime));
                   }
                 }
@@ -2228,7 +2183,6 @@
 
                     if( colision.length > 0 ){
                       if(colision[0].distance < 3){
-                        console.log("Estoy colisionando con la ficha huehuehue");
                         persona.translateZ(-(forward * deltaTime));
                         if(ficha1_tomo == false){
                           $("#13").toggle();
@@ -2252,7 +2206,6 @@
 
                     if(colisionofichaTOMO_2 == true){
                       intermedio_1 = setInterval(function(){
-                        console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
                         for(var i=0; i<fichitaTOMO.length; i++){
                           fichitaTOMO[i].scale.set(0.5, 0.5, 0.5);
                           fichitaTOMO[i].children[0].scale.set(1, 1, 1);
@@ -2275,7 +2228,6 @@
 
                   if( colision2.length > 0 ){
                       if(colision2[0].distance < 3){
-                        console.log("Estoy colisionando con la ficha huehuehue");
                         persona.translateZ(-(forward * deltaTime));
                         if(ficha1_dachi == false){
                           $("#14").toggle();
@@ -2299,7 +2251,6 @@
 
                   if(colisionofichaDACHI_2 == true){
                     intermedio_2 = setInterval(function(){
-                      console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
                       for(var i=0; i<fichitaDACHI.length; i++){
                         fichitaDACHI[i].scale.set(0.5, 0.5, 0.5);
                         fichitaDACHI[i].children[0].scale.set(1, 1, 1);
@@ -2322,7 +2273,6 @@
                     
                 if( colision3.length > 0 ){
                   if(colision3[0].distance < 3){
-                    console.log("Estoy colisionando con la ficha huehuehue");
                     persona.translateZ(-(forward * deltaTime));
                     if(ficha1_comodin == false){
                       $("#15").toggle();
@@ -2359,7 +2309,6 @@
 
                     if( colision.length > 0 ){
                       if(colision[0].distance < 3){
-                        console.log("Estoy colisionando con la ficha huehuehue");
                         persona_2.translateZ(-(forward_2 * deltaTime));
                         if(ficha2_tomo == false){
                           $("#16").toggle();
@@ -2382,7 +2331,6 @@
 
                     if(colisionofichaTOMO == true){
                       intermedio_1 = setInterval(function(){
-                        console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
                         for(var i=0; i<fichitaTOMO.length; i++){
                           fichitaTOMO[i].scale.set(0.5, 0.5, 0.5);
                           fichitaTOMO[i].children[0].scale.set(1, 1, 1);
@@ -2405,7 +2353,6 @@
 
                     if( colision2.length > 0 ){
                       if(colision2[0].distance < 3){
-                        console.log("Estoy colisionando con la ficha huehuehue");
                         persona_2.translateZ(-(forward_2 * deltaTime));
                         if(ficha2_dachi == false){
                           $("#17").toggle();
@@ -2429,7 +2376,6 @@
 
                   if(colisionofichaDACHI == true){
                     intermedio_2 = setInterval(function(){
-                      console.log("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
                       for(var i=0; i<fichitaDACHI.length; i++){
                         fichitaDACHI[i].scale.set(0.5, 0.5, 0.5);
                         fichitaDACHI[i].children[0].scale.set(1, 1, 1);
@@ -2451,7 +2397,6 @@
 
                   if( colision3.length > 0 ){
                     if(colision3[0].distance < 3){
-                      console.log("Estoy colisionando con la ficha huehuehue");
                       persona_2.translateZ(-(forward_2 * deltaTime));
                       if(ficha2_comodin == false){
                         $("#18").toggle();
@@ -2577,7 +2522,6 @@
 
         function setupScene() {		
           //var visibleSize = { width: window.innerWidth, height: window.innerHeight};
-          //console.error( $('#can').width() );
           var visibleSize = { width: $('#can').width(), height: 800};
           clock = new THREE.Clock();		
           scene = new THREE.Scene();
@@ -2668,7 +2612,7 @@
           var ambientLight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 1.0);
           scene.add(ambientLight);
 
-          var directionalLight = new THREE.DirectionalLight(new THREE.Color(1, 1, 0), 0.4);
+          var directionalLight = new THREE.DirectionalLight(new THREE.Color(1, 1, 0), 1.0);
           directionalLight.position.set(0, 0, 1);
           scene.add(directionalLight);
 
@@ -2699,8 +2643,8 @@
             //LE CONCATENAMOS LA RUTA DE LA IMAGEN EN ESTE CASO YO LO TENIA EN UN IMG ENTONCES SACO SU ATRIBUTO src
             baseUrl = baseUrl + im;
             //var score = $("#txtScore").val();
-            console.log(baseUrl);
-            console.log(im);
+            //console.log(baseUrl);
+            //console.log(im);
             //LE AGREGUE UN 2DO PARAMETRO A LA FUNCION PARA RECIBIR LA URL
             //shareScore(score,baseUrl);
 
@@ -2712,8 +2656,8 @@
             var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" ;
             var im = "test.jpg";
             baseUrl = baseUrl + im;
-            console.log(baseUrl);
-            console.log(im);
+            //console.log(baseUrl);
+            //console.log(im);
 		      shareScore(puntos_per1_2, puntos_per2_2, baseUrl);
         }
 
@@ -2722,8 +2666,8 @@
             var baseUrl = getUrl .protocol + "//www." + getUrl.host + "/" ;
             var im = "test.jpg";
             baseUrl = baseUrl + im;
-            console.log(baseUrl);
-            console.log(im);
+            //console.log(baseUrl);
+            //console.log(im);
 		      shareScore(ptsUsuario, ptsJugador2, baseUrl);
         }
 
@@ -2739,48 +2683,46 @@
           renderer_2.setSize(visibleSize.width, visibleSize.height/2);
         }
 
-        function saveAsImage() {
-          var imgData, imgNode;
-          try {
-              var strMime = "image/jpeg";
-              imgData = renderer.domElement.toDataURL(strMime);
-              saveFile(imgData.replace(strMime, strDownloadMime), "test.jpg");
-              //var w = window.open('', '');
-              //w.document.title = "Screenshot";
-              //var img = new Image();
-              //renderer.render(scene, camera);
-              //img.src = renderer.domElement.toDataURL();
-              //w.document.body.appendChild(img); 
-          } catch (e) {
-              console.log(e);
-              return;
-          }
-        }
-
-        function saveAsImage2() {
-          var imgData, imgNode;
-          try {
-              var strMime = "image/jpeg";
-              imgData = renderer_2.domElement.toDataURL(strMime);
-              saveFile(imgData.replace(strMime, strDownloadMime), "test2.jpg");
-          } catch (e) {
-              console.log(e);
-              return;
-          }
-        }
-  
-        var saveFile = function (strData, filename) {
-          var link = document.createElement('a');
-          if (typeof link.download === 'string') {
-              document.body.appendChild(link); //Firefox requires the link to be in the body
-              link.download = filename;
-              link.href = strData;
-              link.click();
-              document.body.removeChild(link); //remove the link when done
-          } else {
-              location.replace(uri);
-          }
-        }
+        //function saveAsImage() {
+        //  var imgData, imgNode;
+        //  try {
+        //      var strMime = "image/jpeg";
+        //      imgData = renderer.domElement.toDataURL(strMime);
+        //      saveFile(imgData.replace(strMime, strDownloadMime), "test.jpg");
+        //      //var w = window.open('', '');
+        //      //w.document.title = "Screenshot";
+        //      //var img = new Image();
+        //      //renderer.render(scene, camera);
+        //      //img.src = renderer.domElement.toDataURL();
+        //      //w.document.body.appendChild(img); 
+        //  } catch (e) {
+        //      console.log(e);
+        //      return;
+        //  }
+        //}
+        //function saveAsImage2() {
+        //  var imgData, imgNode;
+        //  try {
+        //      var strMime = "image/jpeg";
+        //      imgData = renderer_2.domElement.toDataURL(strMime);
+        //      saveFile(imgData.replace(strMime, strDownloadMime), "test2.jpg");
+        //  } catch (e) {
+        //      console.log(e);
+        //      return;
+        //  }
+        //}
+        //var saveFile = function (strData, filename) {
+        //  var link = document.createElement('a');
+        //  if (typeof link.download === 'string') {
+        //      document.body.appendChild(link); //Firefox requires the link to be in the body
+        //      link.download = filename;
+        //      link.href = strData;
+        //      link.click();
+        //      document.body.removeChild(link); //remove the link when done
+        //  } else {
+        //      location.replace(uri);
+        //  }
+        //}
 
         function tomarScreen(){
           var imgData;
@@ -3128,8 +3070,8 @@
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
           <br><br><h1 style="font-size: 50px">GameJap</h1>
                         <center>
-                        <!--<audio autoplay loop>
-                              <source src="music/index.mp3"></audio>-->
+                        <audio autoplay loop>
+                              <source src="music/index.mp3"></audio>
 
                           <div id="NivelUno_Texto" style="display: none">
                             <h3>Palabra a recolectar: No<br>Hitokoto: いいえ (iie)<br></h3>
