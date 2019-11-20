@@ -3244,6 +3244,7 @@
                             <button id="btn_1" class="btn btn-primary btn-xl js-scroll-trigger" onclick="Niveluno(); render()">Nivel 1</button><br><br>
                             <button id="btn_2" class="btn btn-primary btn-xl js-scroll-trigger" onclick="Niveldos(); setTimer(); render_2()">Nivel 2</button><br><br>
                             <button id="btn_3" class="btn btn-primary btn-xl js-scroll-trigger" onclick="Niveltres(); setTimer_2(); render_3()">Nivel 3</button><br><br>
+                            <img width="1000" height="500" src="img/instrucciones.jpg"><br><br><br>
                           </div>
                           @endauth
                           
