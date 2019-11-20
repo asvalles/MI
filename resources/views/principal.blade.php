@@ -235,7 +235,7 @@
         var ficha2_ku = false;
         var fichaKUtoggle;
         var sevefichaKUtoogle = false;
-        var timer = 200;
+        var timer = 120;
         var inicioNivelDos = false;
         var seAcaboElTiempo = false;
         
@@ -326,7 +326,7 @@
         var Usuario1Gano_3 = false;
         var Usuario2Gano_3 = false;
 
-        var timer_3 = 200;
+        var timer_3 = 80;
         var seAcaboElTiempo_2 = false;
         var intermedio_1;
         var intermedio_2;
@@ -844,14 +844,14 @@
         function setTimer(){
           if(inicioNivelDos == false){
             inicioNivelDos = true;
-            timer = 200;
+            timer = 120;
           }
         }
 
         function setTimer_2(){
           if(inicioNivelTres == false){
             inicioNivelTres = true;
-            timer_3 = 200;
+            timer_3 = 80;
           }
         }
 
@@ -3186,6 +3186,7 @@
                               <input type="hidden" id="idscreen" name="idscreen">
                               <button id="face" onclick="tomarScreen();">Compartir en Facebook</button><br/>
                             </form>
+
                             <button id="salir">Salir</button><br/>
                           </div>
 
