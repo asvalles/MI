@@ -3306,7 +3306,7 @@
                           </div>
                           @endguest
 
-                          <div id="can" style="display: none">
+                          <div id="can" class= "col-md-12" style="display: none">
                             <!--<canvas id="micanvas" width="1550" height="800">
                                 Tu navegador no soporta canvas.
                             </canvas>-->
