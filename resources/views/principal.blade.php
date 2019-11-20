@@ -2577,7 +2577,8 @@
 
         function setupScene() {		
           //var visibleSize = { width: window.innerWidth, height: window.innerHeight};
-          var visibleSize = { width: 1500, height: 800};
+          //console.error( $('#can').width() );
+          var visibleSize = { width: $('#can').width(), height: 800};
           clock = new THREE.Clock();		
           scene = new THREE.Scene();
           persona = new THREE.Object3D();
@@ -3306,11 +3307,13 @@
                           </div>
                           @endguest
 
+                        <div class="row">
                           <div id="can" class= "col-md-12" style="display: none">
                             <!--<canvas id="micanvas" width="1550" height="800">
                                 Tu navegador no soporta canvas.
                             </canvas>-->
                           </div>
+                        </div>
 
                           <div id="registro" style="display: none">
                               <br><br><br>
