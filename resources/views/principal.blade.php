@@ -3071,7 +3071,7 @@
           <br><br><h1 style="font-size: 50px">GameJap</h1>
                         <center>
                         <audio autoplay loop>
-                              <source src="music/index.mp3"></audio>
+                              <source src="music/naruto.mp3"></audio>
 
                           <div id="NivelUno_Texto" style="display: none">
                             <h3>Palabra a recolectar: No<br>Hitokoto: いいえ (iie)<br></h3>
